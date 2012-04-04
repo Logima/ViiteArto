@@ -1,0 +1,47 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>ViiteArto</title>
+    </head>
+    <body>
+        <h1>Hello World!</h1>
+        ${viesti}
+        
+        <h4>Lisää viite</h4>
+
+        <form action="${pageContext.request.contextPath}/LisaaViite"
+              method="post">
+            Title: <input type="text" name="title"/>
+            Author: <input type="text" name="author"/>
+            <input type="submit" value="Lisää viite"/>
+        </form>
+              
+        </br>
+        <h4>Viitteet</h4>
+
+    <c:if test="${not empty viitteet}">
+
+        <!-- Listaa viitteet -->
+        <table border="1" width="360" cellpadding="3" cellspacing="1" style="background-color: white">
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Author</th>
+            </tr>
+            <c:forEach var="viite" items="${viitteet}">
+            <tr>
+                <td>${viite.id}</a></td>
+                <td>${viite.title}</td>
+                <td>${viite.author}</td>   
+            </tr>
+            </c:forEach>
+        </table>
+    </c:if>
+    
+    </body>
+</html>
