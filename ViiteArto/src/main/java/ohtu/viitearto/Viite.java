@@ -18,6 +18,7 @@ import javax.persistence.TableGenerator;
  */
 
 @Entity
+@TableGenerator(name="tab", initialValue=0, allocationSize=1)
 public class Viite implements Serializable {
     
     @Column
@@ -51,7 +52,7 @@ public class Viite implements Serializable {
     private int number;
     
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.TABLE, generator="tab")
     private Long id;
 
     public Viite() {

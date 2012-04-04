@@ -5,7 +5,6 @@
 package ohtu.viitearto.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,37 +19,17 @@ import ohtu.viitearto.Rekisteri;
 public class ListaServlet extends HttpServlet {
 
     private Rekisteri rekisteri = new Rekisteri();
-    
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ListaServlet</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ListaServlet at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-             */
-        } finally {            
-            out.close();
-        }
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         
         request.setAttribute("viesti", "ViiteArto");
         request.setAttribute("viitteet", rekisteri.getViitteet()); // hakee viitteet tietokannasta
         
         RequestDispatcher dispatcher =
-                request.getRequestDispatcher("index.jsp");
+                request.getRequestDispatcher("WEB-INF/views/index.jsp");
         dispatcher.forward(request, response); // ohjaudutaan index.jsp-sivulle
     }
 
