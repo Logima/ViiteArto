@@ -31,6 +31,7 @@
                 <th>Id</th>
                 <th>Title</th>
                 <th>Author</th>
+                <th>Poista</th>
             </tr>
             <c:forEach var="viite" items="${viitteet}">
             <tr>

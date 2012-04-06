@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ohtu.viitearto.servlets;
 
 import java.io.IOException;
@@ -12,11 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ohtu.viitearto.Rekisteri;
 
-/**
- *
- * @author Keni
- */
-public class ListaServlet extends HttpServlet {
+
+public class ViitteetServlet extends HttpServlet {
 
     private Rekisteri rekisteri = new Rekisteri();
 
@@ -28,7 +21,7 @@ public class ListaServlet extends HttpServlet {
         request.setAttribute("viitteet", rekisteri.getViitteet()); // hakee viitteet tietokannasta
         
         RequestDispatcher dispatcher =
-                request.getRequestDispatcher("WEB-INF/views/index.jsp");
+                request.getRequestDispatcher("WEB-INF/views/viitteet.jsp");
         dispatcher.forward(request, response); // ohjaudutaan index.jsp-sivulle
     }
 
