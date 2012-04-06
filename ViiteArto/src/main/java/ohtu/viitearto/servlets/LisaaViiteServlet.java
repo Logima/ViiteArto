@@ -26,7 +26,7 @@ public class LisaaViiteServlet extends HttpServlet {
             throws ServletException, IOException {
         
         RequestDispatcher dispatcher =
-                request.getRequestDispatcher("/Viitteet"); // ohjataan pyyntö Lista-servletille
+                request.getRequestDispatcher("/Viitteet"); // ohjataan pyyntÃ¶ Lista-servletille
         dispatcher.forward(request, response);
     }
 
@@ -41,7 +41,7 @@ public class LisaaViiteServlet extends HttpServlet {
         if (title.length() > 0 && author.length() > 0) {
             Viite viite = new Viite(title, author);
             rekisteri.lisaaViite(viite);
-            request.getRequestDispatcher("/Viitteet").forward(request, response); // ohjataan pyyntö samalle sivulle
+            request.getRequestDispatcher("/Viitteet").forward(request, response); // ohjataan pyyntÃ¶ samalle sivulle
         } else {
             doGet(request, response);
             return;

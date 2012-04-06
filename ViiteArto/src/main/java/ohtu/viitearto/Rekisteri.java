@@ -20,7 +20,7 @@ public class Rekisteri {
     private EntityManagerFactory emf = null;
 
     public Rekisteri() {
-        // k‰ytet‰‰n "ViiteArtoPU"-konfiguraatiota
+        // k√§ytet√§√§n "ViiteArtoPU"-konfiguraatiota
         emf = Persistence.createEntityManagerFactory("ViiteArtoPU");
     }
     

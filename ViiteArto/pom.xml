@@ -86,9 +86,9 @@
                 <configuration>
                     <!--
                     
-                    POISTA NÄMÄ KOMMENTEISTA
-                    jos haluat että jetty käynnistää sovelluksen uudelleen 
-                    muutosten yhteydessä
+                    POISTA NÃ„MÃ„ KOMMENTEISTA
+                    jos haluat ettÃ¤ jetty kÃ¤ynnistÃ¤Ã¤ sovelluksen uudelleen 
+                    muutosten yhteydessÃ¤
                     
                     <scanIntervalSeconds>5</scanIntervalSeconds>
                     <reload>automatic</reload>
