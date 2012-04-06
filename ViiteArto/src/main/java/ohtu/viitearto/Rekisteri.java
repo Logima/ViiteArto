@@ -40,5 +40,15 @@ public class Rekisteri {
         em = getEntityManager();
         return em.createQuery("SELECT v FROM Viite v").getResultList();
     }
+
+    public void poistaViite(long id) {
+        em = getEntityManager();
+        
+        em.getTransaction().begin();
+        Viite poistettava = em.find(Viite.class, id);
+        poistettava = em.merge(poistettava);
+        em.remove(poistettava);
+        em.getTransaction().commit();
+    }
     
 }

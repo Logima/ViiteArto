@@ -36,7 +36,9 @@
             <tr>
                 <td>${viite.id}</a></td>
                 <td>${viite.title}</td>
-                <td>${viite.author}</td>   
+                <td>${viite.author}</td>
+                <td><a href="${pageContext.request.contextPath}/PoistaViite?id=${viite.id}">Poista</a></td>
+                    
             </tr>
             </c:forEach>
         </table>

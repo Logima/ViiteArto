@@ -9,6 +9,10 @@
         <servlet-name>LisaaViiteServlet</servlet-name>
         <servlet-class>ohtu.viitearto.servlets.LisaaViiteServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PoistaViiteServlet</servlet-name>
+        <servlet-class>ohtu.viitearto.servlets.PoistaViiteServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ListaServlet</servlet-name>
         <url-pattern>/Viitteet</url-pattern>
@@ -16,6 +20,10 @@
     <servlet-mapping>
         <servlet-name>LisaaViiteServlet</servlet-name>
         <url-pattern>/LisaaViite</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PoistaViiteServlet</servlet-name>
+        <url-pattern>/PoistaViite</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
