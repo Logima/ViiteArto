@@ -46,7 +46,6 @@ public class Rekisteri {
         
         em.getTransaction().begin();
         Viite poistettava = em.find(Viite.class, id);
-        poistettava = em.merge(poistettava);
         em.remove(poistettava);
         em.getTransaction().commit();
     }
