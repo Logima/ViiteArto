@@ -9,16 +9,15 @@
         <title>ViiteArto</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        ${viesti}
+        <h1>ViiteArto</h1>
         
-        <h4>LisÃ¤Ã¤ viite</h4>
+        <h4>Lisää viite</h4>
 
         <form action="${pageContext.request.contextPath}/LisaaViite"
               method="post">
             Title: <input type="text" name="title"/>
             Author: <input type="text" name="author"/>
-            <input type="submit" value="LisÃ¤Ã¤ viite"/>
+            <input type="submit" value="Lisää viite"/>
         </form>
               
         </br>

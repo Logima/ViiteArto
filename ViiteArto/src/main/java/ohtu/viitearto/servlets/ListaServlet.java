@@ -25,7 +25,6 @@ public class ListaServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         
-        request.setAttribute("viesti", "ViiteArto");
         request.setAttribute("viitteet", rekisteri.getViitteet()); // hakee viitteet tietokannasta
         
         RequestDispatcher dispatcher =
