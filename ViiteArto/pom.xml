@@ -91,15 +91,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>7.4.2.v20110526</version>
                 <configuration>
-                    <!--
                     
-                    POISTA N�M� KOMMENTEISTA
-                    jos haluat ett� jetty k�ynnist�� sovelluksen uudelleen 
-                    muutosten yhteydess�
-                    
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
-                    <reload>automatic</reload>
-                    -->
                     <stopKey>foo</stopKey>
                     <stopPort>9999</stopPort>
                     <webAppConfig>
