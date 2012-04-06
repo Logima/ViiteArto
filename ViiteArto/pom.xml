@@ -1,30 +1,31 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>ohtu</groupId>
-  <artifactId>ViiteArto</artifactId>
-  <packaging>war</packaging>
-  <version>1.0-SNAPSHOT</version>
+    <groupId>ohtu</groupId>
+    <artifactId>ViiteArto</artifactId>
+    <packaging>war</packaging>
+    <version>1.0-SNAPSHOT</version>
 
-  <name>ViiteArto</name>
-  <url>http://maven.apache.org</url>
+    <name>ViiteArto</name>
+    <url>http://maven.apache.org</url>
 
-  <dependencies>
+    <dependencies>
 
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
-      <scope>provided</scope>
-    </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
 
-    <dependency>
-      <groupId>javax.servlet.jsp</groupId>
-      <artifactId>jsp-api</artifactId>
-      <version>2.1</version>
-      <scope>provided</scope>
-    </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.1</version>
+            <scope>provided</scope>
+        </dependency>
             
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -33,46 +34,54 @@
             <scope>provided</scope>
         </dependency>
             
-    <dependency>
+        <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
-    </dependency>
+        </dependency>
     
-    <dependency>
-      <groupId>javax.servlet.jsp.jstl</groupId>
-      <artifactId>jstl-api</artifactId>
-      <version>1.2</version>
-      <classifier/>
-    </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp.jstl</groupId>
+            <artifactId>jstl-api</artifactId>
+            <version>1.2</version>
+            <classifier/>
+        </dependency>
 
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
     
-      <dependency>
-          <groupId>org.eclipse.persistence</groupId>
-          <artifactId>eclipselink</artifactId>
-          <version>2.2.0</version>
-          <scope>provided</scope>
-      </dependency>
-      <dependency>
-          <groupId>org.eclipse.persistence</groupId>
-          <artifactId>javax.persistence</artifactId>
-          <version>2.0.3</version>
-          <type>jar</type>
-          <scope>provided</scope>
-      </dependency>
-      <dependency>
-          <groupId>org.eclipse.persistence</groupId>
-          <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
-          <version>2.2.0</version>
-          <scope>provided</scope>
-      </dependency>
-  </dependencies>
+  <!-- Selenium -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>2.13.0</version> 
+            <scope>compile</scope>
+        </dependency>
+    
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>2.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>javax.persistence</artifactId>
+            <version>2.0.3</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+            <version>2.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -101,21 +110,42 @@
                             
             </plugin>
             
+            <!-- easyB -->
+            <plugin>
+                <groupId>org.easyb</groupId>
+                <artifactId>maven-easyb-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <storyType>html</storyType>
+                    <storyReport>${basedir}/target/easyb/easyb-report.html
+                    </storyReport>
+                </configuration>
+            </plugin>            
+            
         </plugins>
     </build>
-    <repositories>
-                
+    
+    <repositories>         
         <repository>
             <id>eclipselink repo</id>
             <url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>            
         </repository>
+
         <repository>
-            <url>http://ftp.ing.umu.se/mirror/eclipse/rt/eclipselink/maven.repo</url>
-            <id>eclipselink</id>
-            <layout>default</layout>
-            <name>Repository for library Library[eclipselink]</name>
-        </repository>
+            <id>JBoss Repo</id>
+            <url>https://repository.jboss.org/nexus/content/repositories/releases</url>
+            <name>JBoss Repo</name>
+        </repository>    
     </repositories>
+    
     <properties>
         <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
     </properties>
