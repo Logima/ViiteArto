@@ -1,24 +1,35 @@
 import ohtu.*
 import ohtu.viitearto.*
 import ohtu.viitearto.servlets.*
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 
-description 'Asiakas voi lis�t� viitteen'
 
-scenario "Asiakas voi lis�t� viitteen", {
-    given 'Viitteen tiedot t�ytetty', {
-       userDao = new InMemoryUserDao()
-       auth = new AuthenticationService(userDao)
-       io = new StubIO("login", "pekka", "akkep") 
-       app = new App(io, auth)
+description 'Asiakas voi lisätä viitteen'
+
+scenario "Asiakas voi lisätä viitteen", {
+    given 'Viitteen tiedot täytetty', {
+        WebDriver driver = new HtmlUnitDriver();
+ 
+        driver.get("http://localhost:8080/ViiteArto/Viitteet");
+        System.out.println( driver.getPageSource() );
+        WebElement element = driver.findElement(By.name("Title:"));
+        element.sendKeys("väinö");
+        element = driver.findElement(By.name("Author:"));
+        element.sendKeys("linna");
+        
     }
 
-    when 'a valid username and password are entered', {
-       app.run()
+    when 'kun vaadittavat kentät on syötetty', {
+       element = driver.findElement(By.name("Lisää viite"));
+       element.submit();
     }
 
-    then 'user will be logged in to system', {
-       io.getPrints().shouldHave("logged in")
+    then 'viite näkyy sivulla', {
+       driver.getPageSource().contains("väinö").shouldBe true
     }
 }
 
