@@ -12,25 +12,32 @@ scenario "asiakas voi poistaa viitteen listasta", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:8080/ViiteArto");
+    WebElement element;
+    String id;
 
     given 'viite on listalla', {
-        WebElement element = driver.findElement(By.name("title"));
-        element.sendKeys("väinö");
+        element = driver.findElement(By.name("title"));
+        element.sendKeys("pirkko");
         element = driver.findElement(By.name("author"));
-        element.sendKeys("linna");
+        element.sendKeys("väinölä");
         element = driver.findElement(By.name("lisays"));
         element.submit();
-        driver.getPageSource().contains("väinö").shouldBe true
     }
 
     when 'viite löytyy listalta', {
-        element = driver.findElement(By.name("Poista"));
-        element.submit();
+        System.out.println(driver.getPageSource());
+        element = driver.findElement(By.linkText("pirkko"));
+        String link = element.getAttribute("href");
+        id = link.substring(link.indexOf('='));
+        element = driver.findElement(By.xpath("//a[@href='/ViiteArto/PoistaViite?id" + id + "']"));
+        element.click();
+        
        
     }
 
     then 'viite on poistettu', {
-       driver.getPageSource().contains("väinö").shouldBe false
+       System.out.println(driver.getPageSource());
+       driver.getPageSource().contains(id).shouldBe false
     }
 }
 
