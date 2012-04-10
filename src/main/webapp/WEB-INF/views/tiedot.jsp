@@ -18,13 +18,13 @@
         <br/>
         <ul>
             <li>Title: ${title}</li>
-            
+
             <li>Author: ${author}</li>
-            
-            <c:if test="${year=='0'}">
-            <li>Year: ${year}</li>
+
+            <c:if test="${year!='0'}">
+                <li>Year: ${year}</li>
             </c:if>
-            
+
             <li>Publisher: ${publisher}</li>
         </ul>
 
@@ -34,7 +34,7 @@
             <input type="hidden" name="id" value="${id}"/>        
             <input type="submit" value="Poista viite">
         </form>
-            
+
         <a href="${pageContext.request.contextPath}/Viitteet">Etusivu</a>
     </body>
 </html>
