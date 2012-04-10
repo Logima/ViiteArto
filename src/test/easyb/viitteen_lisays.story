@@ -6,17 +6,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
-
-
 description 'Asiakas voi lisätä viitteen'
 
-scenario "Asiakas voi lisätä viitteen", {
+scenario "asiakas lisää viitteen oikeilla syötteillä", {
 
-        WebDriver driver = new HtmlUnitDriver();
- 
-        driver.get("http://localhost:8080/ViiteArto");
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:8080/ViiteArto");
 
-    given 'Viitteen tiedot täytetty', {
+    given 'viitteen pakolliset tiedot täytetty', {
         WebElement element = driver.findElement(By.name("title"));
         element.sendKeys("väinö");
         element = driver.findElement(By.name("author"));
@@ -24,7 +21,7 @@ scenario "Asiakas voi lisätä viitteen", {
         
     }
 
-    when 'kun vaadittavat kentät on syötetty', {
+    when 'vaadittavat kentät on syötetty', {
        WebElement element = driver.findElement(By.name("lisays"));
        element.submit();
     }
