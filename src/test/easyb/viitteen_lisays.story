@@ -11,20 +11,21 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 description 'Asiakas voi lisätä viitteen'
 
 scenario "Asiakas voi lisätä viitteen", {
-    given 'Viitteen tiedot täytetty', {
+
         WebDriver driver = new HtmlUnitDriver();
  
-        driver.get("http://localhost:8080/ViiteArto/Viitteet");
-        System.out.println( driver.getPageSource() );
-        WebElement element = driver.findElement(By.name("Title:"));
+        driver.get("http://localhost:8080/ViiteArto");
+
+    given 'Viitteen tiedot täytetty', {
+        WebElement element = driver.findElement(By.name("title"));
         element.sendKeys("väinö");
-        element = driver.findElement(By.name("Author:"));
+        element = driver.findElement(By.name("author"));
         element.sendKeys("linna");
         
     }
 
     when 'kun vaadittavat kentät on syötetty', {
-       element = driver.findElement(By.name("Lisää viite"));
+       WebElement element = driver.findElement(By.name("lisays"));
        element.submit();
     }
 

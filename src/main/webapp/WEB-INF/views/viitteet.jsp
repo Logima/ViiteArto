@@ -29,7 +29,7 @@
                     <td>Publisher:</td><td> <input type="text" name="publisher"/></td>
                 </tr>
             </table>
-            <input type="submit" value="Lisää viite"/>
+            <input type="submit" name="lisays" value="Lisää viite"/>
         </form>
 
         </br>
