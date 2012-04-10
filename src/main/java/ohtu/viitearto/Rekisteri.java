@@ -49,5 +49,11 @@ public class Rekisteri {
         em.remove(poistettava);
         em.getTransaction().commit();
     }
+
+    public Viite haeViite(long id) {
+        em = getEntityManager();
+        
+        return em.find(Viite.class, id);
+    }
     
 }

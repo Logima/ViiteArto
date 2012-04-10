@@ -36,7 +36,7 @@
             <c:forEach var="viite" items="${viitteet}">
             <tr>
                 <td>${viite.id}</a></td>
-                <td>${viite.title}</td>
+                <td><a href="${pageContext.request.contextPath}/ViitteenTiedot?id=${viite.id}">${viite.title}</a></td>
                 <td>${viite.author}</td>
                 <td><a href="${pageContext.request.contextPath}/PoistaViite?id=${viite.id}">Poista</a></td>
                     

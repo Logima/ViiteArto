@@ -17,6 +17,10 @@
         <servlet-name>IndexServlet</servlet-name>
         <servlet-class>ohtu.viitearto.servlets.IndexServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViitteenTiedotServlet</servlet-name>
+        <servlet-class>ohtu.viitearto.servlets.ViitteenTiedotServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ListaServlet</servlet-name>
         <url-pattern>/Viitteet</url-pattern>
@@ -32,6 +36,10 @@
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViitteenTiedotServlet</servlet-name>
+        <url-pattern>/ViitteenTiedot</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
