@@ -32,6 +32,7 @@ public class ViitteenTiedotServlet extends HttpServlet {
         
         request.setAttribute("title", viite.getTitle());
         request.setAttribute("author", viite.getAuthor());
+        request.setAttribute("id", viite.getId());
         
         RequestDispatcher dispatcher =
                 request.getRequestDispatcher("WEB-INF/views/tiedot.jsp");
