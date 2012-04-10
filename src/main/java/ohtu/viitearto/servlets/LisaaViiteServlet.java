@@ -38,9 +38,24 @@ public class LisaaViiteServlet extends HttpServlet {
         String title = request.getParameter("title");
         String author = request.getParameter("author");
         
+        String publisher = request.getParameter("publisher");
+        String yearString = request.getParameter("year");
+        int year;
+        
         if (title.length() > 0 && author.length() > 0) {
             Viite viite = new Viite(title, author);
-            System.out.println(viite.toString());
+            
+            try {
+                year = Integer.parseInt(yearString);
+                viite.setYear(year);
+            } catch(Exception e) {
+                
+            }
+            
+            
+            if (publisher != null)
+                viite.setPublisher(publisher);
+                    
             rekisteri.lisaaViite(viite);
             request.getRequestDispatcher("/Viitteet").forward(request, response); // ohjataan pyyntö samalle sivulle
         } else {
