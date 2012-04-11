@@ -5,7 +5,6 @@
 
     <groupId>ohtu</groupId>
     <artifactId>ViiteArto</artifactId>
-    <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
 
     <name>ViiteArto</name>
@@ -53,8 +52,26 @@
             <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>2.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>javax.persistence</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.10</version>
+            <type>jar</type>
+        </dependency>
     
-  <!-- Selenium -->
+        <!-- Selenium -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
@@ -62,24 +79,36 @@
             <scope>compile</scope>
         </dependency>
     
+        <!-- Tomcat -->
         <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>eclipselink</artifactId>
-            <version>2.2.0</version>
-            <scope>provided</scope>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>7.0.22</version>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>javax.persistence</artifactId>
-            <version>2.0.3</version>
-            <type>jar</type>
-            <scope>provided</scope>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-logging-juli</artifactId>
+            <version>7.0.22</version>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
-            <version>2.2.0</version>
-            <scope>provided</scope>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <version>7.0.22</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jasper</artifactId>
+            <version>7.0.22</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jasper-el</artifactId>
+            <version>7.0.22</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jsp-api</artifactId>
+            <version>7.0.22</version>
         </dependency>
     </dependencies>
 
@@ -128,7 +157,31 @@
                     <storyReport>${basedir}/target/easyb/easyb-report.html
                     </storyReport>
                 </configuration>
-            </plugin>            
+            </plugin>
+            
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <configuration>
+                    <assembleDirectory>target</assembleDirectory>
+                    <programs>
+                        <program>
+                            <mainClass>launch.Main</mainClass>
+                            <name>webapp</name>
+                        </program>
+                    </programs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             
         </plugins>
     </build>

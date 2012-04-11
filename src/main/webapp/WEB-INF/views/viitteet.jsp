@@ -13,8 +13,7 @@
 
         <h4>Lisää viite</h4>
 
-        <form action="${pageContext.request.contextPath}/LisaaViite"
-              method="post">
+        <form action="/LisaaViite" method="post">
             <table border="0" width="200" cellpadding="3" cellspacing="2" style="background-color: white">
                 <tr>
                     <td>Title:</td><td> <input type="text" name="title"/></td>
@@ -48,9 +47,9 @@
                 <c:forEach var="viite" items="${viitteet}">
                     <tr>
                         <td>${viite.id}</a></td>
-                        <td><a href="${pageContext.request.contextPath}/ViitteenTiedot?id=${viite.id}">${viite.title}</a></td>
+                        <td><a href="/ViitteenTiedot?id=${viite.id}">${viite.title}</a></td>
                         <td>${viite.author}</td>
-                        <td><a href="${pageContext.request.contextPath}/PoistaViite?id=${viite.id}">Poista</a></td>
+                        <td><a href="/PoistaViite?id=${viite.id}">Poista</a></td>
 
                     </tr>
                 </c:forEach>
