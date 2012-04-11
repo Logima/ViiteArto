@@ -32,7 +32,7 @@
         <form action="${pageContext.request.contextPath}/PoistaViite"
               method="GET">          
             <input type="hidden" name="id" value="${id}"/>        
-            <input type="submit" value="Poista viite">
+            <input type="submit" name="poisto" value="Poista viite">
         </form>
 
         <a href="${pageContext.request.contextPath}/Viitteet">Etusivu</a>

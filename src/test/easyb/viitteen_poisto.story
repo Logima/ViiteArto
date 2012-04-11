@@ -25,26 +25,47 @@ scenario "asiakas voi poistaa viitteen listasta", {
     }
 
     when 'viite löytyy listalta', {
-        System.out.println(driver.getPageSource());
         element = driver.findElement(By.linkText("pirkko"));
         String link = element.getAttribute("href");
         id = link.substring(link.indexOf('='));
         element = driver.findElement(By.xpath("//a[@href='/ViiteArto/PoistaViite?id" + id + "']"));
         element.click();
-        
-       
     }
 
     then 'viite on poistettu', {
-       System.out.println(driver.getPageSource());
        driver.getPageSource().contains(id).shouldBe false
     }
 }
 
-scenario "user can not login with incorrect password", {
-    given 'command login selected'
-    when 'a valid username and incorrect password are entered'
-    then 'user will not be logged in to system'
+scenario "asiakas voi poistaa viitteen sen omalta sivulta", {
+
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:8080/ViiteArto");
+    WebElement element;
+    String id;
+
+    given 'olemassaolevan viitteen linkkiä klikataan', {
+        element = driver.findElement(By.name("title"));
+        element.sendKeys("pirkko");
+        element = driver.findElement(By.name("author"));
+        element.sendKeys("väinölä");
+        element = driver.findElement(By.name("lisays"));
+        element.submit();
+        
+        element = driver.findElement(By.linkText("pirkko"));
+        String link = element.getAttribute("href");
+        id = link.substring(link.indexOf('='));
+        element.click();
+    }
+
+    when 'viite poistetaan sen omalla sivulla', {
+        element = driver.findElement(By.name("poisto"));
+        element.submit();
+    }
+
+    then 'palataan etusivulle, jossa poistettua viitettä ei näy', {
+        driver.getPageSource().contains(id).shouldBe false
+    }
 }
 
 scenario "nonexistent user can not login to ", {
