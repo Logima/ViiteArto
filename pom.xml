@@ -140,26 +140,6 @@
                             
             </plugin>
             
-            <!-- easyB -->
-            <plugin>
-                <groupId>org.easyb</groupId>
-                <artifactId>maven-easyb-plugin</artifactId>
-                <version>1.4</version>
-                <executions>
-                    <execution>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <storyType>html</storyType>
-                    <storyReport>${basedir}/target/easyb/easyb-report.html
-                    </storyReport>
-                </configuration>
-            </plugin>
-            
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>appassembler-maven-plugin</artifactId>
@@ -211,4 +191,38 @@
         <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    
+    <!-- workaround for maven to honor -DskipTests=true -->
+    <profiles>
+        <profile>
+            <id>easyb</id>
+            <activation>
+                <property>
+                    <name>!skipTests</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.easyb</groupId>
+                        <artifactId>maven-easyb-plugin</artifactId>
+                        <version>1.4</version>
+                        <executions>
+                            <execution>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <storyType>html</storyType>
+                            <storyReport>${basedir}/target/easyb/easyb-report.html
+                            </storyReport>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
