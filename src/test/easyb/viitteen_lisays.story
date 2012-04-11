@@ -11,7 +11,7 @@ description 'Asiakas voi lisätä viitteen'
 scenario "asiakas lisää viitteen oikeilla syötteillä", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/ViiteArto");
+    driver.get("http://localhost:8080/");
 
     given 'viitteen pakolliset tiedot täytetty', {
         WebElement element = driver.findElement(By.name("title"));
