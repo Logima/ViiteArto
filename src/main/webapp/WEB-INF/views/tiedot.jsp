@@ -26,12 +26,12 @@
             </c:if>
 
             <li>Publisher: ${publisher}</li>
-            <li>Publisher: ${booktitle}</li>
-            <li>Publisher: ${pages}</li>
-            <li>Publisher: ${address}</li>
-            <li>Publisher: ${volume}</li>
-            <li>Publisher: ${number}</li>
-            <li>Publisher: ${journal}</li>
+            <li>Booktitle: ${booktitle}</li>
+            <li>Pages: ${pages}</li>
+            <li>Address: ${address}</li>
+            <li>Volume: ${volume}</li>
+            <li>Number: ${number}</li>
+            <li>Journal: ${journal}</li>
         </ul>
 
         <br/>
