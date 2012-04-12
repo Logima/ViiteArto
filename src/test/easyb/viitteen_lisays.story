@@ -58,3 +58,24 @@ scenario "asiakas lisää viitteen oikeilla syötteillä", {
        driver.getPageSource().contains("linnanherra").shouldBe true
     }
 }
+
+scenario "asiakas lisää viitteen vain titlellä", {
+
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:8080/");
+
+    given 'vain vitteen title osa täytetty', {
+        WebElement element = driver.findElement(By.name("title"));
+        element.sendKeys("TäytinVainTämän");
+        
+    }
+
+    when 'kun title täytetty', {
+       WebElement element = driver.findElement(By.name("lisays"));
+       element.submit();
+    }
+
+    then 'viite ei näy sivulla', {
+       driver.getPageSource().contains("TäytinVainTämän").shouldBe false
+        }
+}

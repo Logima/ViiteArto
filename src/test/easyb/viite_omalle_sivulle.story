@@ -47,7 +47,7 @@ scenario "asiakas palaa viitteen sivulta takaisin etusivulle", {
         element = driver.findElement(By.name("title"));
         element.sendKeys("PalaanTakaisin");
         element = driver.findElement(By.name("author"));
-        element.sendKeys("Etusivulle");
+        element.sendKeys("EtusivulleTest");
         element = driver.findElement(By.name("lisays"));
         element.submit();
         element = driver.findElement(By.linkText("Avaudun"));
