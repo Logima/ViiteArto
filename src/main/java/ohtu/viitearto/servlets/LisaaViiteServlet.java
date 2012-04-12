@@ -39,13 +39,10 @@ public class LisaaViiteServlet extends HttpServlet {
 
         String title = request.getParameter("title");
         String author = request.getParameter("author");
-
-        title = secure.estaCrossSiteScripting(title);
-        author = secure.estaCrossSiteScripting(author);
-
         String publisher = request.getParameter("publisher");
         String yearString = request.getParameter("year");
-        int year;
+
+        int year = 0;
         String booktitle = request.getParameter("booktitle");
         String pages = request.getParameter("pages");
         String address = request.getParameter("address");
@@ -54,6 +51,15 @@ public class LisaaViiteServlet extends HttpServlet {
         String numberString = request.getParameter("number");
         int number;
         String journal = request.getParameter("journal");
+
+        
+        title = secure.estaCrossSiteScripting(title);
+        author = secure.estaCrossSiteScripting(author);
+        publisher = secure.estaCrossSiteScripting(publisher);
+        yearString = secure.estaCrossSiteScripting(yearString);
+        
+
+
 
         if (title.length() <= 0) {
             secure.lisaaVirhe("titleError", "Title ei saa olla tyhjä!");
@@ -81,6 +87,9 @@ public class LisaaViiteServlet extends HttpServlet {
         if (publisher != null) {
             viite.setPublisher(publisher);
         }
+        
+        if (year != 0)
+            viite.setYear(year);
 
         rekisteri.lisaaViite(viite);
         request.getRequestDispatcher("/Viitteet").forward(request, response); // ohjataan pyyntö samalle sivulle
