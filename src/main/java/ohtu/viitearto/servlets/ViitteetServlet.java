@@ -35,7 +35,7 @@ public class ViitteetServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          
-        virheIlmoitus = (String) request.getAttribute("virhe");
+        virheIlmoitus = (String) request.getAttribute("vuosiVirhe");
         response.sendRedirect(request.getRequestURI()); // POST-pyynnöt ohjataan doGetille
     }
 }

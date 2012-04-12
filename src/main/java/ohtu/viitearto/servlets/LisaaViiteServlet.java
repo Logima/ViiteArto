@@ -38,6 +38,9 @@ public class LisaaViiteServlet extends HttpServlet {
         String title = request.getParameter("title");
         String author = request.getParameter("author");
         
+        title = estaCrossSiteScripting(title);
+        author = estaCrossSiteScripting(author);
+        
         String publisher = request.getParameter("publisher");
         String yearString = request.getParameter("year");
         int year;
@@ -49,7 +52,7 @@ public class LisaaViiteServlet extends HttpServlet {
                 year = Integer.parseInt(yearString);
                 viite.setYear(year);
             } catch(Exception e) {
-                request.setAttribute("virhe", "Syötteesi failasivat");
+                request.setAttribute("vuosiVirhe", "Vain numerot sallittuja");
             }
             
             
@@ -63,4 +66,11 @@ public class LisaaViiteServlet extends HttpServlet {
             return;
         }
     }
+    
+    private String estaCrossSiteScripting(String mjono) {
+        mjono = mjono.replace("<", "&lt;");
+        mjono = mjono.replace(">", "&gt;");
+        return mjono;
+    }
+    
 }

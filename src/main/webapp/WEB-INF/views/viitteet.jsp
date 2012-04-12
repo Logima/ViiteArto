@@ -10,21 +10,26 @@
     </head>
     <body>
         <h1>ViiteArto</h1>
-        
-        ${virhe}
 
         <h4>Lisää viite</h4>
 
+        Tähdellä merkityt tiedot ovat pakollisia.
+        
         <form action="/LisaaViite" method="post">
             <table border="0" width="200" cellpadding="3" cellspacing="2" style="background-color: white">
                 <tr>
-                    <td>Title:</td><td> <input type="text" name="title"/></td>
+                    <td><font color="red">*</font> Title:</td><td> <input type="text" name="title"/></td>
                 </tr>
                 <tr>
-                    <td>Author:</td><td> <input type="text" name="author"/></td>
+                    <td><font color="red">*</font> Author:</td><td> <input type="text" name="author"/></td>
                 </tr>
                 <tr>
                     <td>Year: </td><td><input type="text" name="year"/></td>
+                    
+                    <c:if test="${not empty virhe}">
+                        <td>${virhe}</td>
+                    </c:if>
+                    
                 </tr>
                 <tr>
                     <td>Publisher:</td><td> <input type="text" name="publisher"/></td>
