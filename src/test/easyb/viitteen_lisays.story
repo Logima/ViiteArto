@@ -108,7 +108,7 @@ scenario "asiakas lisää viitteen vain vuosiluvulla", {
 
     given 'vain vitteen Year osa täytetty', {
         WebElement element = driver.findElement(By.name("year"));
-        element.sendKeys("TäytinVainTämänTest");
+        element.sendKeys("1923");
         
     }
 
@@ -142,3 +142,72 @@ scenario "asiakas lisää viitteen vain julkaisija-tiedolla", {
        driver.getPageSource().contains("TäytinVainTämänTest").shouldBe false
         }
 }
+
+scenario "virheilmoitus kun pelkkä Title täytetty", {
+
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:8080/");
+
+    given 'vain vitteen Publisher osa täytetty', {
+        WebElement element = driver.findElement(By.name("title"));
+        element.sendKeys("TuleekoVirhe_Test");
+        
+    }
+
+    when 'kun Publisher täytetty', {
+       WebElement element = driver.findElement(By.name("lisays"));
+       element.submit();
+    }
+
+    then 'ilmoittaa virheilmoituksen', {
+       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
+       driver.getPageSource().contains("Vain numerot sallittuja!").shouldBe false
+        }
+}
+
+scenario "virheilmoitus kun pelkkä Author täytetty", {
+
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:8080/");
+
+    given 'vain vitteen Publisher osa täytetty', {
+        WebElement element = driver.findElement(By.name("author"));
+        element.sendKeys("TuleekoVirhe_Test");
+        
+    }
+
+    when 'kun Author täytetty', {
+       WebElement element = driver.findElement(By.name("lisays"));
+       element.submit();
+    }
+
+    then 'ilmoittaa virheilmoituksen', {
+       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
+       driver.getPageSource().contains("Vain numerot sallittuja!").shouldBe false
+        }
+}
+
+
+scenario "virheilmoitus kun pelkkä vuosiluku täytetty", {
+
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:8080/");
+
+    given 'vain vitteen Publisher osa täytetty', {
+        WebElement element = driver.findElement(By.name("year"));
+        element.sendKeys("1923");
+        
+    }
+
+    when 'kun Author täytetty', {
+       WebElement element = driver.findElement(By.name("lisays"));
+       element.submit();
+    }
+
+    then 'ilmoittaa virheilmoituksen', {
+       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
+       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
+       driver.getPageSource().contains("Vain numerot sallittuja!").shouldBe false
+        }
+}
+
