@@ -45,9 +45,9 @@ scenario "asiakas palaa viitteen sivulta takaisin etusivulle", {
 
     given 'viite on omalla sivulla', {
         element = driver.findElement(By.name("title"));
-        element.sendKeys("Avaudun");
+        element.sendKeys("PalaanTakaisin");
         element = driver.findElement(By.name("author"));
-        element.sendKeys("OmalleSivulleTesti");
+        element.sendKeys("EtusivulleTest");
         element = driver.findElement(By.name("lisays"));
         element.submit();
         element = driver.findElement(By.linkText("Avaudun"));
