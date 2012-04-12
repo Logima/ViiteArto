@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ohtu.viitearto.Rekisteri;
+import ohtu.viitearto.Tietoturva;
 import ohtu.viitearto.Viite;
 
 /**
@@ -20,6 +21,7 @@ import ohtu.viitearto.Viite;
 public class LisaaViiteServlet extends HttpServlet {
     
     private Rekisteri rekisteri = new Rekisteri();
+    private Tietoturva secure = new Tietoturva();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,8 +40,8 @@ public class LisaaViiteServlet extends HttpServlet {
         String title = request.getParameter("title");
         String author = request.getParameter("author");
         
-        title = estaCrossSiteScripting(title);
-        author = estaCrossSiteScripting(author);
+        title = secure.estaCrossSiteScripting(title);
+        author = secure.estaCrossSiteScripting(author);
         
         String publisher = request.getParameter("publisher");
         String yearString = request.getParameter("year");
@@ -52,9 +54,8 @@ public class LisaaViiteServlet extends HttpServlet {
                 year = Integer.parseInt(yearString);
                 viite.setYear(year);
             } catch(Exception e) {
-                request.setAttribute("vuosiVirhe", "Vain numerot sallittuja");
+                secure.lisaaVirhe("yearVirhe", "Vain numerot sallittuja");
             }
-            
             
             if (publisher != null)
                 viite.setPublisher(publisher);
@@ -66,11 +67,4 @@ public class LisaaViiteServlet extends HttpServlet {
             return;
         }
     }
-    
-    private String estaCrossSiteScripting(String mjono) {
-        mjono = mjono.replace("<", "&lt;");
-        mjono = mjono.replace(">", "&gt;");
-        return mjono;
-    }
-    
 }
