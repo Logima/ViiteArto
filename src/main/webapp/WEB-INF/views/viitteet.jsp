@@ -21,40 +21,25 @@
             </select>
             <input type="submit" value="Valitse"/>
         </form>
-        
+
         <br/>
-        Tähdellä merkityt tiedot ovat pakollisia.
-        
+
+        <c:if test="${not empty tiedot}">
         <form action="/LisaaViite" method="post">
             <table border="0" width="200" cellpadding="3" cellspacing="2" style="background-color: white">
-                <tr>
-                    <c:if test="${not empty title}"><td><font color="red">*</font> Title:</td><td> <input type="text" name="title"/></td></c:if>
-                        
-                    <c:if test="${not empty titleError}">
-                        <td><font color="red">${titleError}</font></td>
-                    </c:if>
-                </tr>
-                <tr>
-                    <c:if test="${not empty author}"><td><font color="red">*</font> Author:</td><td> <input type="text" name="author"/></td></c:if>
-                        
-                    <c:if test="${not empty authorError}">
-                        <td><font color="red">${authorError}</font></td>
-                    </c:if>
-                </tr>
-                <tr>
-                    <c:if test="${not empty year}"><td>Year: </td><td><input type="text" name="year"/></td></c:if>
-
-                    <c:if test="${not empty yearError}">
-                        <td><font color="red">${yearError}</font></td>
-                    </c:if>
-
-                </tr>
-                <tr>
-                    <c:if test="${not empty publisher}"><td>Publisher:</td><td> <input type="text" name="publisher"/></td></c:if>
-                </tr>
+                <b>Tähdellä merkityt tiedot ovat pakollisia.</b>
+                
+                <c:forEach var="tiedot"
+                           items="${tiedot}">
+                    <tr>
+                        <td>${tiedot.value}</td><td><input type="text" name="${tiedot.key}"/></td>
+                    </tr>
+                </c:forEach>
             </table>
-            <input type="submit" name="lisays" value="Lisää viite"/>
+
+                <input type="submit" name="lisays" value="Lisää viite"/>
         </form>
+        </c:if>
 
         </br>
         <h4>Viitteet</h4>

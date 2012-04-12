@@ -1,6 +1,8 @@
 package ohtu.viitearto.servlets;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.TreeMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,14 +25,18 @@ public class ViitteetServlet extends HttpServlet {
  
         
         if (lomakeTyyppi != null) {
+            
+            TreeMap<String, String> lomakeTiedot = new TreeMap<String, String>();
+            
             if (lomakeTyyppi.equals("book")) {
-                bookLomake(request, response);
+                bookLomake(request, response, lomakeTiedot);
             } else if (lomakeTyyppi.equals("inproceedings")) {
-                inproceedingsLomake(request, response);
+                inproceedingsLomake(request, response, lomakeTiedot);
             } else if (lomakeTyyppi.equals("article")) {
-                articleLomake(request, response);
+                articleLomake(request, response, lomakeTiedot);
             }
-
+            
+            request.setAttribute("tiedot", lomakeTiedot);
             lomakeTyyppi = null;
         }
         
@@ -55,33 +61,33 @@ public class ViitteetServlet extends HttpServlet {
         response.sendRedirect(request.getRequestURI()); // POST-pyynnöt ohjataan doGetille
     }
     
-    private void articleLomake(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("title", "Title: ");
-        request.setAttribute("author", "Author: ");
-        request.setAttribute("publisher", "Publisher: ");
-        request.setAttribute("year", "Year: ");
-        request.setAttribute("address", "Address: ");
-        request.setAttribute("pages", "Pages: ");
-        request.setAttribute("journal", "Journal: ");
-        request.setAttribute("volume", "Volume: ");
-        request.setAttribute("number", "Number: ");
+    private void articleLomake(HttpServletRequest request, HttpServletResponse response, TreeMap<String, String> tiedot) throws ServletException, IOException {
+        tiedot.put("title", "<font color=\"red\">*</font> Title: ");
+        tiedot.put("author", "<font color=\"red\">*</font> Author: ");
+        tiedot.put("publisher", "Publisher: ");
+        tiedot.put("year", "Year: ");
+        tiedot.put("address", "Address: ");
+        tiedot.put("pages", "Pages: ");
+        tiedot.put("journal", "Journal: ");
+        tiedot.put("volume", "Volume: ");
+        tiedot.put("number", "Number: ");
     }
 
-    private void inproceedingsLomake(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("title", "Title: ");
-        request.setAttribute("author", "Author: ");
-        request.setAttribute("publisher", "Publisher: ");
-        request.setAttribute("year", "Year: ");
-        request.setAttribute("address", "Address: ");
-        request.setAttribute("booktitle", "Booktitle: ");
-        request.setAttribute("pages", "Pages: ");
+    private void inproceedingsLomake(HttpServletRequest request, HttpServletResponse response, TreeMap<String, String> tiedot) throws ServletException, IOException {
+        tiedot.put("title", "<font color=\"red\">*</font> Title: ");
+        tiedot.put("author", "<font color=\"red\">*</font> Author: ");
+        tiedot.put("publisher", "Publisher: ");
+        tiedot.put("year", "Year: ");
+        tiedot.put("address", "Address: ");
+        tiedot.put("booktitle", "Booktitle: ");
+        tiedot.put("pages", "Pages: ");
     }
 
-    private void bookLomake(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("title", "Title: ");
-        request.setAttribute("author", "Author: ");
-        request.setAttribute("publisher", "Publisher: ");
-        request.setAttribute("year", "Year: ");
-        request.setAttribute("address", "Address: ");
+    private void bookLomake(HttpServletRequest request, HttpServletResponse response, TreeMap<String, String> tiedot) throws ServletException, IOException {
+        tiedot.put("title", "<font color=\"red\">*</font> Title: ");
+        tiedot.put("author", "<font color=\"red\">*</font> Author: ");
+        tiedot.put("year", "Year: ");
+        tiedot.put("publisher", "Publisher: ");
+        tiedot.put("address", "Address: ");
     }
 }
