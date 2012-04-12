@@ -13,26 +13,36 @@
 
         <h4>Lisää viite</h4>
 
+        <form action="/Viitteet" method="post">
+            <select name="viiteTyyppi">
+                <option value="book">Book</option>
+                <option value="inproceedings">Inproceedings</option>
+                <option value="article">Article</option>
+            </select>
+            <input type="submit" value="Valitse"/>
+        </form>
+        
+        <br/>
         Tähdellä merkityt tiedot ovat pakollisia.
-
+        
         <form action="/LisaaViite" method="post">
             <table border="0" width="200" cellpadding="3" cellspacing="2" style="background-color: white">
                 <tr>
-                    <td><font color="red">*</font> Title:</td><td> <input type="text" name="title"/></td>
+                    <c:if test="${not empty title}"><td><font color="red">*</font> Title:</td><td> <input type="text" name="title"/></td></c:if>
                         
                     <c:if test="${not empty titleError}">
                         <td><font color="red">${titleError}</font></td>
                     </c:if>
                 </tr>
                 <tr>
-                    <td><font color="red">*</font> Author:</td><td> <input type="text" name="author"/></td>
+                    <c:if test="${not empty author}"><td><font color="red">*</font> Author:</td><td> <input type="text" name="author"/></td></c:if>
                         
                     <c:if test="${not empty authorError}">
                         <td><font color="red">${authorError}</font></td>
                     </c:if>
                 </tr>
                 <tr>
-                    <td>Year: </td><td><input type="text" name="year"/></td>
+                    <c:if test="${not empty year}"><td>Year: </td><td><input type="text" name="year"/></td></c:if>
 
                     <c:if test="${not empty yearError}">
                         <td><font color="red">${yearError}</font></td>
@@ -40,7 +50,7 @@
 
                 </tr>
                 <tr>
-                    <td>Publisher:</td><td> <input type="text" name="publisher"/></td>
+                    <c:if test="${not empty publisher}"><td>Publisher:</td><td> <input type="text" name="publisher"/></td></c:if>
                 </tr>
             </table>
             <input type="submit" name="lisays" value="Lisää viite"/>
