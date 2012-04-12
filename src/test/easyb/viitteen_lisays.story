@@ -28,7 +28,6 @@ scenario "asiakas lisää viitteen oikeilla syötteillä", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        System.out.println(driver.getPageSource());
         element = driver.findElement(By.name("title"));
         element.sendKeys("väinö");
         element = driver.findElement(By.name("author"));
@@ -52,7 +51,21 @@ scenario "asiakas lisää viitteen oikeilla syötteillä", {
     driver.get("http://localhost:8080/");
 
     given 'viitteen kaikki tiedot täytetty', {
-        WebElement element = driver.findElement(By.name("title"));
+
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("title"));
         element.sendKeys("väiski");
         element = driver.findElement(By.name("author"));
         element.sendKeys("linnanherra");
@@ -60,6 +73,8 @@ scenario "asiakas lisää viitteen oikeilla syötteillä", {
         element.sendKeys("2000");
         element = driver.findElement(By.name("publisher"));
         element.sendKeys("otava");
+        element = driver.findElement(By.name("address"));
+        element.sendKeys("FIN");
         
     }
 
@@ -74,48 +89,74 @@ scenario "asiakas lisää viitteen oikeilla syötteillä", {
     }
 }
 
-scenario "asiakas lisää viitteen vain Titlellä", {
+scenario "asiakas lisää viitteen vain titlellä", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:8080/");
 
-    given 'vain vitteen title osa täytetty', {
-        WebElement element = driver.findElement(By.name("title"));
-        element.sendKeys("TäytinVainTämänTest");
-        
+    given 'vain viitteen title-osa täytetty', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("title"));
+        element.sendKeys("pelkkatitle");
     }
 
-    when 'kun Title täytetty', {
+    when 'title täytetty', {
        WebElement element = driver.findElement(By.name("lisays"));
        element.submit();
     }
 
-    then 'viite ei näy sivulla', {
+    then 'viite ei näy sivulla ja tulee virheilmoitus', {
 
-       driver.getPageSource().contains("TäytinVainTämän").shouldBe false
-       driver.getPageSource().contains("Tähdellä merkityt tiedot ovat pakollisia.").shouldBe true
+       driver.getPageSource().contains("pelkkatitle").shouldBe false
+       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
 
         }
 }
 
-scenario "asiakas lisää viitteen vain Authorilla", {
+scenario "asiakas lisää viitteen vain authorilla", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:8080/");
 
-    given 'vain vitteen Author osa täytetty', {
-        WebElement element = driver.findElement(By.name("author"));
-        element.sendKeys("TäytinVainTämänTest");
+    given 'vain viitteen author-osa täytetty', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("author"));
+        element.sendKeys("pelkkaAuthor");
         
     }
 
-    when 'kun Author täytetty', {
+    when 'author täytetty', {
        WebElement element = driver.findElement(By.name("lisays"));
        element.submit();
     }
 
-    then 'viite ei näy sivulla', {
-       driver.getPageSource().contains("TäytinVainTämänTest").shouldBe false
+    then 'viite ei näy sivulla ja tulee virheilmoitus', {
+       driver.getPageSource().contains("pelkkaAuthor").shouldBe false
+       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
         }
 }
 
@@ -124,19 +165,33 @@ scenario "asiakas lisää viitteen vain vuosiluvulla", {
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:8080/");
 
-    given 'vain vitteen Year osa täytetty', {
-        WebElement element = driver.findElement(By.name("year"));
+    given 'vain viitteen year-osa täytetty', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("year"));
         element.sendKeys("1923");
         
     }
 
-    when 'kun Year täytetty', {
+    when 'year täytetty', {
        WebElement element = driver.findElement(By.name("lisays"));
        element.submit();
     }
 
-    then 'viite ei näy sivulla', {
-       driver.getPageSource().contains("TäytinVainTämänTest").shouldBe false
+    then 'viite ei näy sivulla ja tulee virheilmoitus', {
+       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
+       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
         }
 }
 
@@ -145,20 +200,33 @@ scenario "asiakas lisää viitteen vain julkaisija-tiedolla", {
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:8080/");
 
-    given 'vain vitteen Publisher osa täytetty', {
-        WebElement element = driver.findElement(By.name("publisher"));
-        element.sendKeys("TäytinVainTämänTest");
+    given 'vain viitteen publisher-osa täytetty', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("publisher"));
+        element.sendKeys("Harakka");
         
     }
 
-    when 'kun Publisher täytetty', {
+    when 'publisher täytetty', {
        WebElement element = driver.findElement(By.name("lisays"));
        element.submit();
     }
 
-    then 'viite ei näy sivulla', {
-       driver.getPageSource().contains("TäytinVainTämänTest").shouldBe false
-
+    then 'viite ei näy sivulla ja tulee virheilmoitus', {
+       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
+       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
         }
 }
 
@@ -167,20 +235,32 @@ scenario "asiakas lisää viitteen vain journal-tiedolla", {
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:8080/");
 
-    given 'vain vitteen Journal osa täytetty', {
-        WebElement element = driver.findElement(By.name("journal"));
-        element.sendKeys("TäytinVainTämänTest");
-        
+    given 'vain viitteen journal-osa täytetty', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Article")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("journal"));
+        element.sendKeys("Diary");
     }
 
-    when 'kun Journal täytetty', {
+    when 'journal täytetty', {
        WebElement element = driver.findElement(By.name("lisays"));
        element.submit();
     }
 
-    then 'viite ei näy sivulla', {
-       driver.getPageSource().contains("TäytinVainTämänTest").shouldBe false
-
+    then 'viite ei näy sivulla ja tulee virheilmoitus', {
+       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
+       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
         }
 }
 
@@ -189,86 +269,134 @@ scenario "asiakas lisää viitteen vain booktitle-tiedolla", {
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:8080/");
 
-    given 'vain vitteen Booktitle osa täytetty', {
-        WebElement element = driver.findElement(By.name("booktitle"));
-        element.sendKeys("TäytinVainTämänTest");
-        
+    given 'vain viitteen Booktitle osa täytetty', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Inproceedings")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("booktitle"));
+        element.sendKeys("Diary");
     }
 
-    when 'kun booktitle täytetty', {
+    when 'booktitle täytetty', {
        WebElement element = driver.findElement(By.name("lisays"));
        element.submit();
     }
 
-    then 'viite ei näy sivulla', {
-       driver.getPageSource().contains("TäytinVainTämänTest").shouldBe false
-
+    then 'viite ei näy sivulla ja tulee virheilmoitus', {
+       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
+       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
         }
 }
 
-scenario "asiakas lisää viitteen vain sivu-tiedolla", {
+scenario "asiakas lisää viitteen vain pages-tiedolla", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:8080/");
 
-    given 'vain vitteen Pages osa täytetty', {
-        WebElement element = driver.findElement(By.name("pages"));
-        element.sendKeys("TäytinVainTämänTest");
-        
+    given 'vain viiteen pages-osa täytetty', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Article")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("pages"));
+        element.sendKeys("200-250");
     }
 
-    when 'kun Pages täytetty', {
+    when 'pages täytetty', {
        WebElement element = driver.findElement(By.name("lisays"));
        element.submit();
     }
 
-    then 'viite ei näy sivulla', {
-       driver.getPageSource().contains("TäytinVainTämänTest").shouldBe false
-
+    then 'viite ei näy sivulla ja tulee virheilmoitus', {
+       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
+       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
         }
 }
 
-scenario "asiakas lisää viitteen vain osoite-tiedolla", {
+scenario "asiakas lisää viitteen vain address-tiedolla", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:8080/");
 
-    given 'vain vitteen Address osa täytetty', {
-        WebElement element = driver.findElement(By.name("address"));
-        element.sendKeys("TäytinVainTämänTest");
-        
+    given 'vain viitteen address-osa täytetty', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("address"));
+        element.sendKeys("FIN");
     }
 
-    when 'kun Address täytetty', {
+    when 'address täytetty', {
        WebElement element = driver.findElement(By.name("lisays"));
        element.submit();
     }
 
-    then 'viite ei näy sivulla', {
-       driver.getPageSource().contains("TäytinVainTämänTest").shouldBe false
-
+    then 'viite ei näy sivulla ja tulee virheilmoitus', {
+       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
+       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
         }
 }
 
-scenario "asiakas lisää viitteen vain volyme-tiedolla", {
+scenario "asiakas lisää viitteen vain volume-tiedolla", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:8080/");
 
-    given 'vain vitteen Volyme osa täytetty', {
-        WebElement element = driver.findElement(By.name("volyme"));
-        element.sendKeys("TäytinVainTämänTest");
-        
+    given 'vain viitteen volume-osa täytetty', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Article")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("volume"));
+        element.sendKeys("4");
     }
 
-    when 'kun Volyme täytetty', {
+    when 'volume täytetty', {
        WebElement element = driver.findElement(By.name("lisays"));
        element.submit();
     }
 
-    then 'viite ei näy sivulla', {
-       driver.getPageSource().contains("TäytinVainTämänTest").shouldBe false
-
+    then 'viite ei näy sivulla ja tulee virheilmoitus', {
+       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
+       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
         }
 }
 
@@ -277,248 +405,31 @@ scenario "asiakas lisää viitteen vain numero-tiedolla", {
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:8080/");
 
-    given 'vain vitteen Number osa täytetty', {
-        WebElement element = driver.findElement(By.name("number"));
-        element.sendKeys("TäytinVainTämänTest");
-        
-    }
+    given 'vain viitteen number-osa täytetty', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
 
-    when 'kun Number täytetty', {
-       WebElement element = driver.findElement(By.name("lisays"));
-       element.submit();
-    }
-
-    then 'viite ei näy sivulla', {
-       driver.getPageSource().contains("TäytinVainTämänTest").shouldBe false
-
+        for(WebElement option : options){
+            if(option.getText().equals("Article")){
+                option.click();
+                break;
+            }
         }
-}
 
-scenario "virheilmoitus kun pelkkä Title täytetty", {
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
 
-    WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
-
-    given 'vain vitteen Title osa täytetty', {
-        WebElement element = driver.findElement(By.name("title"));
-        element.sendKeys("TuleekoVirhe_Test");
-        
+        element = driver.findElement(By.name("number"));
+        element.sendKeys("4");
     }
 
-    when 'kun Title täytetty', {
+    when 'number täytetty', {
        WebElement element = driver.findElement(By.name("lisays"));
        element.submit();
     }
 
-    then 'ilmoittaa virheilmoituksen', {
-       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Vain numerot sallittuja!").shouldBe false
-        }
-}
-
-scenario "virheilmoitus kun pelkkä Author täytetty", {
-
-    WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
-
-    given 'vain vitteen Author osa täytetty', {
-        WebElement element = driver.findElement(By.name("author"));
-        element.sendKeys("TuleekoVirhe_Test");
-        
-    }
-
-    when 'kun Author täytetty', {
-       WebElement element = driver.findElement(By.name("lisays"));
-       element.submit();
-    }
-
-    then 'ilmoittaa virheilmoituksen', {
-       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Vain numerot sallittuja!").shouldBe false
-        }
-}
-
-
-scenario "virheilmoitus kun pelkkä vuosiluku täytetty", {
-
-    WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
-
-    given 'vain vitteen Year osa täytetty', {
-        WebElement element = driver.findElement(By.name("year"));
-        element.sendKeys("1923");
-        
-    }
-
-    when 'kun Year täytetty', {
-       WebElement element = driver.findElement(By.name("lisays"));
-       element.submit();
-    }
-
-    then 'ilmoittaa virheilmoituksen', {
+    then 'viite ei näy sivulla ja tulee virheilmoitus', {
        driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
        driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Vain numerot sallittuja!").shouldBe false
-        }
-}
-
-scenario "virheilmoitus kun pelkkä julkaisija täytetty", {
-
-    WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
-
-    given 'vain vitteen Publisher osa täytetty', {
-        WebElement element = driver.findElement(By.name("publisher"));
-        element.sendKeys("hehee");
-        
-    }
-
-    when 'kun Publisher täytetty', {
-       WebElement element = driver.findElement(By.name("lisays"));
-       element.submit();
-    }
-
-    then 'ilmoittaa virheilmoituksen', {
-       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Vain numerot sallittuja!").shouldBe false
-        }
-}
-
-scenario "virheilmoitus kun pelkkä journal täytetty", {
-
-    WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
-
-    given 'vain vitteen Journal osa täytetty', {
-        WebElement element = driver.findElement(By.name("journal"));
-        element.sendKeys("TuleekoVirhe_Test");
-        
-    }
-
-    when 'kun Journal täytetty', {
-       WebElement element = driver.findElement(By.name("lisays"));
-       element.submit();
-    }
-
-    then 'ilmoittaa virheilmoituksen', {
-       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Vain numerot sallittuja!").shouldBe false
-        }
-}
-
-scenario "virheilmoitus kun pelkkä booktitle täytetty", {
-
-    WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
-
-    given 'vain vitteen Booktitle osa täytetty', {
-        WebElement element = driver.findElement(By.name("booktitle"));
-        element.sendKeys("TuleekoVirhe_Test");
-        
-    }
-
-    when 'kun Booktitle täytetty', {
-       WebElement element = driver.findElement(By.name("lisays"));
-       element.submit();
-    }
-
-    then 'ilmoittaa virheilmoituksen', {
-       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Vain numerot sallittuja!").shouldBe false
-        }
-}
-
-scenario "virheilmoitus kun pelkkä sivut täytetty", {
-
-    WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
-
-    given 'vain vitteen Pages osa täytetty', {
-        WebElement element = driver.findElement(By.name("pages"));
-        element.sendKeys("TuleekoVirhe_Test");
-        
-    }
-
-    when 'kun Pages täytetty', {
-       WebElement element = driver.findElement(By.name("lisays"));
-       element.submit();
-    }
-
-    then 'ilmoittaa virheilmoituksen', {
-       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Vain numerot sallittuja!").shouldBe false
-        }
-}
-
-scenario "virheilmoitus kun pelkkä osoite täytetty", {
-
-    WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
-
-    given 'vain vitteen Address osa täytetty', {
-        WebElement element = driver.findElement(By.name("address"));
-        element.sendKeys("TuleekoVirhe_Test");
-        
-    }
-
-    when 'kun Address täytetty', {
-       WebElement element = driver.findElement(By.name("lisays"));
-       element.submit();
-    }
-
-    then 'ilmoittaa virheilmoituksen', {
-       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Vain numerot sallittuja!").shouldBe false
-        }
-}
-
-scenario "virheilmoitus kun pelkkä volyme täytetty", {
-
-    WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
-
-    given 'vain vitteen Volyme osa täytetty', {
-        WebElement element = driver.findElement(By.name("volyme"));
-        element.sendKeys("TuleekoVirhe_Test");
-        
-    }
-
-    when 'kun Volyme täytetty', {
-       WebElement element = driver.findElement(By.name("lisays"));
-       element.submit();
-    }
-
-    then 'ilmoittaa virheilmoituksen', {
-       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Vain numerot sallittuja!").shouldBe false
-        }
-}
-
-scenario "virheilmoitus kun pelkkä numero täytetty", {
-
-    WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
-
-    given 'vain vitteen Number osa täytetty', {
-        WebElement element = driver.findElement(By.name("number"));
-        element.sendKeys("TuleekoVirhe_Test");
-        
-    }
-
-    when 'kun Number täytetty', {
-       WebElement element = driver.findElement(By.name("lisays"));
-       element.submit();
-    }
-
-    then 'ilmoittaa virheilmoituksen', {
-       driver.getPageSource().contains("Title ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Author ei saa olla tyhjä!").shouldBe true
-       driver.getPageSource().contains("Vain numerot sallittuja!").shouldBe false
         }
 }
