@@ -16,10 +16,24 @@ scenario "asiakas valitsee listasta viitteen, joka avautuu omalle sivulleen", {
     String id;
 
     given 'viite on listalla', {
+        element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
         element = driver.findElement(By.name("title"));
         element.sendKeys("Avaudun");
         element = driver.findElement(By.name("author"));
         element.sendKeys("OmalleSivulleTesti");
+
         element = driver.findElement(By.name("lisays"));
         element.submit();
     }
@@ -44,24 +58,36 @@ scenario "asiakas palaa viitteen sivulta takaisin etusivulle", {
     String id;
 
     given 'viite on omalla sivulla', {
+        element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
         element = driver.findElement(By.name("title"));
         element.sendKeys("PalaanTakaisin");
         element = driver.findElement(By.name("author"));
         element.sendKeys("EtusivulleTest");
+
         element = driver.findElement(By.name("lisays"));
         element.submit();
-        element = driver.findElement(By.linkText("Avaudun"));
-        element.click();
     }
 
     when 'viite on avattuna omalle sivulleen', {
-        element = driver.findElement(By.linkText("Etusivu"))
+        element = driver.findElement(By.linkText("PalaanTakaisin"));
         element.click();
-    
-        
     }
 
     then 'palataan etusivulle', {
+       element = driver.findElement(By.linkText("Etusivu"))
+       element.click();     
        driver.getPageSource().contains("ViiteArto").shouldBe true
        driver.getPageSource().contains("Lisää viite").shouldBe true
     }
