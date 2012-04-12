@@ -6,9 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
-description 'Asiakas voi poistaa viitteen'
+description 'Asiakas voi avata viitteen omalle sivulleen'
 
-scenario "asiakas voi poistaa viitteen listasta", {
+scenario "asiakas valitsee listasta viitteen, joka avautuu omalle sivulleen", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:8080/");
@@ -17,22 +17,20 @@ scenario "asiakas voi poistaa viitteen listasta", {
 
     given 'viite on listalla', {
         element = driver.findElement(By.name("title"));
-        element.sendKeys("pirkko");
+        element.sendKeys("Avaudun");
         element = driver.findElement(By.name("author"));
-        element.sendKeys("väinölä");
+        element.sendKeys("OmalleSivulleTesti");
         element = driver.findElement(By.name("lisays"));
         element.submit();
     }
 
     when 'viite löytyy listalta', {
-        element = driver.findElement(By.linkText("pirkko"));
-        String link = element.getAttribute("href");
-        id = link.substring(link.indexOf('='));
-        element = driver.findElement(By.xpath("//a[@href='/PoistaViite?id" + id + "']"));
+        element = driver.findElement(By.linkText("Avaudun"));
         element.click();
     }
 
-    then 'viite on poistettu', {
-       driver.getPageSource().contains(id).shouldBe false
+    then 'viite avautuu omalle sivulleen', {
+       driver.getPageSource().contains("Viitteen tiedot").shouldBe true
+       driver.getPageSource().contains("Avaudun").shouldBe true
     }
 }
