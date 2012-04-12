@@ -19,7 +19,7 @@
                 <option value="inproceedings">Inproceedings</option>
                 <option value="article">Article</option>
             </select>
-            <input type="submit" value="Valitse"/>
+            <input type="submit" name="valinta" value="Valitse"/>
         </form>
 
         <br/>

@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.*
 
 description 'Asiakas voi lisätä viitteen'
 
@@ -14,7 +15,21 @@ scenario "asiakas lisää viitteen oikeilla syötteillä", {
     driver.get("http://localhost:8080/");
 
     given 'viitteen pakolliset tiedot täytetty', {
-        WebElement element = driver.findElement(By.name("title"));
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        System.out.println(driver.getPageSource());
+        element = driver.findElement(By.name("title"));
         element.sendKeys("väinö");
         element = driver.findElement(By.name("author"));
         element.sendKeys("linna");
