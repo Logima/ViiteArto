@@ -29,16 +29,27 @@ scenario "asiakas lisää viitteen oikeilla syötteillä", {
     then 'viite näkyy sivulla', {
        driver.getPageSource().contains("väinö").shouldBe true
     }
-}
 
-scenario "user can not login with incorrect password", {
-    given 'command login selected'
-    when 'a valid username and incorrect password are entered'
-    then 'user will not be logged in to system'
-}
 
-scenario "nonexistent user can not login to ", {
-    given 'command login selected'
-    when 'a nonexistent username and some password are entered'
-    then 'user will not be logged in to system'
+    given 'viitteen kaikki tiedot täytetty', {
+        WebElement element = driver.findElement(By.name("title"));
+        element.sendKeys("väiski");
+        element = driver.findElement(By.name("author"));
+        element.sendKeys("linnanherra");
+        element = driver.findElement(By.name("year"));
+        element.sendKeys("2000");
+        element = driver.findElement(By.name("publisher"));
+        element.sendKeys("otava");
+        
+    }
+
+    when 'kaikki kentät on syötetty', {
+       WebElement element = driver.findElement(By.name("lisays"));
+       element.submit();
+    }
+
+    then 'viite näkyy sivulla', {
+       driver.getPageSource().contains("väinö").shouldBe true
+       driver.getPageSource().contains("otava").shouldBe true
+    }
 }
