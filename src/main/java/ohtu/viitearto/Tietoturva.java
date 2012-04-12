@@ -12,14 +12,14 @@ import java.util.HashMap;
  */
 public class Tietoturva {
     
-    public static HashMap<String, String> virheet;
+    private static HashMap<String, String> virheet;
     
     public Tietoturva() {
         virheet = new HashMap<String, String>();
-        virheet.put("yearVirhe", null);
-        virheet.put("authorVirhe", null);
-        virheet.put("titleVirhe", null);
-        virheet.put("authorVirhe", null);
+        virheet.put("yearError", null);
+        virheet.put("authorError", null);
+        virheet.put("titleError", null);
+        virheet.put("publisherError", null);
     }
 
     public String estaCrossSiteScripting(String mjono) {
@@ -31,8 +31,28 @@ public class Tietoturva {
     public void lisaaVirhe(String virheenLaatu, String virhe) {
         virheet.put(virheenLaatu, virhe);
     }
+    
+    public String getYearError() {
+        return virheet.get("yearError");
+    }
+    
+    public String getAuthorError() {
+        return virheet.get("authorError");
+    }
+    
+    public String getTitleError() {
+        return virheet.get("titleError");
+    }
+    
+    public String getPublisherError() {
+        return virheet.get("publisherError");
+    }
 
     public void nollaaVirheet() {
         virheet.clear();
+    }
+    
+    public boolean onkoVirheita() {
+        return !virheet.isEmpty();
     }
 }
