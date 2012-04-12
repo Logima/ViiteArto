@@ -14,14 +14,15 @@ public class ViitteetServlet extends HttpServlet {
 
     private Tietoturva security = new Tietoturva();
     private Rekisteri rekisteri = new Rekisteri();
-    private String virheIlmoitus;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        request.setAttribute("virhe", security.virheet.get("yearVirhe"));
+        request.setAttribute("yearError", security.getYearError());
+        request.setAttribute("authorError", security.getAuthorError());
+        request.setAttribute("titleError", security.getTitleError());
         security.nollaaVirheet();
         
         request.setAttribute("viitteet", rekisteri.getViitteet()); // hakee viitteet tietokannasta
