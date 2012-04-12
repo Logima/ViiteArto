@@ -28,7 +28,7 @@ public class LisaaViiteServlet extends HttpServlet {
             throws ServletException, IOException {
 
         RequestDispatcher dispatcher =
-                request.getRequestDispatcher("/Viitteet"); // ohjataan pyyntö Lista-servletille
+                request.getRequestDispatcher("/Viitteet"); // ohjataan pyyntö Viitteet-servletille
         dispatcher.forward(request, response);
     }
 
@@ -55,19 +55,21 @@ public class LisaaViiteServlet extends HttpServlet {
             secure.lisaaVirhe("authorError", "Author ei saa olla tyhjä!");
         }
 
-        try {
-            year = Integer.parseInt(yearString);
-        } catch (Exception e) {
-            secure.lisaaVirhe("yearError", "Vain numerot sallittuja!");
+        if (yearString.length() > 0) {
+            try {
+                year = Integer.parseInt(yearString);
+            } catch (Exception e) {
+                secure.lisaaVirhe("yearError", "Vain numerot sallittuja!");
+            }
         }
 
         if (secure.onkoVirheita()) {
             doGet(request, response);
             return;
         }
-        
+
         Viite viite = new Viite(title, author);
-        
+
         if (publisher != null) {
             viite.setPublisher(publisher);
         }
