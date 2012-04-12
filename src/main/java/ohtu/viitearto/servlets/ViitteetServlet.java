@@ -1,6 +1,7 @@
 package ohtu.viitearto.servlets;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.TreeMap;
 import javax.servlet.RequestDispatcher;
@@ -40,9 +41,7 @@ public class ViitteetServlet extends HttpServlet {
             lomakeTyyppi = null;
         }
         
-        request.setAttribute("yearError", security.getYearError());
-        request.setAttribute("authorError", security.getAuthorError());
-        request.setAttribute("titleError", security.getTitleError());
+        request.setAttribute("errors", security.getVirheIlmoitukset());
         security.nollaaVirheet();
         
         request.setAttribute("viitteet", rekisteri.getViitteet()); // hakee viitteet tietokannasta

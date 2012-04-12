@@ -24,24 +24,34 @@
 
         <br/>
 
+        <!-- Listaa virheet, jos niitä tuli viitettä lisättäessä -->
+        <c:forEach var="error"
+                   items="${errors}">
+            <font color="red">${error}</font><br/>
+        </c:forEach>
+
+
+        <!-- Viitteen lisäämistä tarvittava lomake, joka looppaa kentät, joita voi täyttää
+             lomakkeessa -->
         <c:if test="${not empty tiedot}">
-        <form action="/LisaaViite" method="post">
-            <table border="0" width="200" cellpadding="3" cellspacing="2" style="background-color: white">
-                <b>Tähdellä merkityt tiedot ovat pakollisia.</b>
-                
-                <c:forEach var="tiedot"
-                           items="${tiedot}">
-                    <tr>
-                        <td>${tiedot.value}</td><td><input type="text" name="${tiedot.key}"/></td>
-                    </tr>
-                </c:forEach>
-            </table>
+            <form action="/LisaaViite" method="post">
+                <table border="0" width="200" cellpadding="3" cellspacing="2" style="background-color: white">
+                    <b>Tähdellä merkityt tiedot ovat pakollisia.</b>
+
+                    <c:forEach var="tiedot"
+                               items="${tiedot}">
+                        <tr>
+                            <td>${tiedot.value}</td><td><input type="text" name="${tiedot.key}"/></td>
+                        </tr>
+                    </c:forEach>
+                </table>
 
                 <input type="submit" name="lisays" value="Lisää viite"/>
-        </form>
+            </form>
         </c:if>
 
         </br>
+
         <h4>Viitteet</h4>
 
         <c:if test="${not empty viitteet}">

@@ -4,6 +4,8 @@
  */
 package ohtu.viitearto;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -55,5 +57,16 @@ public class Tietoturva {
     
     public boolean onkoVirheita() {
         return !virheet.isEmpty();
+    }
+    
+    public ArrayList<String> getVirheIlmoitukset() {
+        Collection<String> errors = virheet.values();
+        ArrayList<String> kopio = new ArrayList<String>();
+        
+        for (String string : errors) {
+            kopio.add(string);
+        }
+        
+        return kopio;
     }
 }
