@@ -59,23 +59,86 @@ scenario "asiakas lisää viitteen oikeilla syötteillä", {
     }
 }
 
-scenario "asiakas lisää viitteen vain titlellä", {
+scenario "asiakas lisää viitteen vain Titlellä", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:8080/");
 
     given 'vain vitteen title osa täytetty', {
         WebElement element = driver.findElement(By.name("title"));
-        element.sendKeys("TäytinVainTämän");
+        element.sendKeys("TäytinVainTämänTest");
         
     }
 
-    when 'kun title täytetty', {
+    when 'kun Title täytetty', {
        WebElement element = driver.findElement(By.name("lisays"));
        element.submit();
     }
 
     then 'viite ei näy sivulla', {
-       driver.getPageSource().contains("TäytinVainTämän").shouldBe false
+       driver.getPageSource().contains("TäytinVainTämänTest").shouldBe false
+        }
+}
+
+scenario "asiakas lisää viitteen vain Authorilla", {
+
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:8080/");
+
+    given 'vain vitteen Author osa täytetty', {
+        WebElement element = driver.findElement(By.name("author"));
+        element.sendKeys("TäytinVainTämänTest");
+        
+    }
+
+    when 'kun Author täytetty', {
+       WebElement element = driver.findElement(By.name("lisays"));
+       element.submit();
+    }
+
+    then 'viite ei näy sivulla', {
+       driver.getPageSource().contains("TäytinVainTämänTest").shouldBe false
+        }
+}
+
+scenario "asiakas lisää viitteen vain vuosiluvulla", {
+
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:8080/");
+
+    given 'vain vitteen Year osa täytetty', {
+        WebElement element = driver.findElement(By.name("year"));
+        element.sendKeys("TäytinVainTämänTest");
+        
+    }
+
+    when 'kun Year täytetty', {
+       WebElement element = driver.findElement(By.name("lisays"));
+       element.submit();
+    }
+
+    then 'viite ei näy sivulla', {
+       driver.getPageSource().contains("TäytinVainTämänTest").shouldBe false
+        }
+}
+
+scenario "asiakas lisää viitteen vain julkaisija-tiedolla", {
+
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:8080/");
+
+    given 'vain vitteen Publisher osa täytetty', {
+        WebElement element = driver.findElement(By.name("publisher"));
+        element.sendKeys("TäytinVainTämänTest");
+        
+    }
+
+    when 'kun Publisher täytetty', {
+       WebElement element = driver.findElement(By.name("lisays"));
+       element.submit();
+    }
+
+    then 'viite ei näy sivulla', {
+       driver.getPageSource().contains("TäytinVainTämänTest").shouldBe false
         }
 }
