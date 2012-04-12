@@ -49,7 +49,7 @@ public class LisaaViiteServlet extends HttpServlet {
                 year = Integer.parseInt(yearString);
                 viite.setYear(year);
             } catch(Exception e) {
-                
+                request.setAttribute("virhe", "Syötteesi failasivat");
             }
             
             

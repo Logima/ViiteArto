@@ -10,6 +10,8 @@
     </head>
     <body>
         <h1>ViiteArto</h1>
+        
+        ${virhe}
 
         <h4>Lisää viite</h4>
 

@@ -12,11 +12,17 @@ import ohtu.viitearto.Rekisteri;
 public class ViitteetServlet extends HttpServlet {
 
     private Rekisteri rekisteri = new Rekisteri();
+    private String virheIlmoitus;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+           
+        if (virheIlmoitus != null) {
+            request.setAttribute("virhe", virheIlmoitus);
+            virheIlmoitus = null;
+        }
         
         request.setAttribute("viitteet", rekisteri.getViitteet()); // hakee viitteet tietokannasta
         
@@ -28,6 +34,8 @@ public class ViitteetServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.sendRedirect(request.getRequestURI()); // POST-pyynnöt ohjataan doGetille
+         
+        virheIlmoitus = (String) request.getAttribute("virhe");
+        response.sendRedirect(request.getRequestURI()); // POST-pyynnöt ohjataan doGetille
     }
 }
