@@ -20,6 +20,7 @@ public class Tietoturva {
         virheet.put("authorError", null);
         virheet.put("titleError", null);
         virheet.put("publisherError", null);
+        virheet.clear();
     }
 
     public String estaCrossSiteScripting(String mjono) {

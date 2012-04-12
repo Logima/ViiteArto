@@ -21,21 +21,21 @@
                     <td><font color="red">*</font> Title:</td><td> <input type="text" name="title"/></td>
                         
                     <c:if test="${not empty titleError}">
-                        <td>${titleError}</td>
+                        <td><font color="red">${titleError}</font></td>
                     </c:if>
                 </tr>
                 <tr>
                     <td><font color="red">*</font> Author:</td><td> <input type="text" name="author"/></td>
                         
                     <c:if test="${not empty authorError}">
-                        <td>${authorError}</td>
+                        <td><font color="red">${authorError}</font></td>
                     </c:if>
                 </tr>
                 <tr>
                     <td>Year: </td><td><input type="text" name="year"/></td>
 
                     <c:if test="${not empty yearError}">
-                        <td>${yearError}</td>
+                        <td><font color="red">${yearError}</font></td>
                     </c:if>
 
                 </tr>
