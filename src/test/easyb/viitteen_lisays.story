@@ -77,5 +77,6 @@ scenario "asiakas lisää viitteen vain titlellä", {
 
     then 'viite ei näy sivulla', {
        driver.getPageSource().contains("TäytinVainTämän").shouldBe false
+       driver.getPageSource().contains("Tähdellä merkityt tiedot ovat pakollisia.").shouldBe true
         }
 }
