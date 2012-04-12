@@ -46,6 +46,14 @@ public class LisaaViiteServlet extends HttpServlet {
         String publisher = request.getParameter("publisher");
         String yearString = request.getParameter("year");
         int year;
+        String booktitle = request.getParameter("booktitle");
+        String pages = request.getParameter("pages");
+        String address = request.getParameter("address");
+        String volumeString = request.getParameter("volume");
+        int volume;
+        String numberString = request.getParameter("number");
+        int number;
+        String journal = request.getParameter("journal");
 
         if (title.length() <= 0) {
             secure.lisaaVirhe("titleError", "Title ei saa olla tyhjä!");

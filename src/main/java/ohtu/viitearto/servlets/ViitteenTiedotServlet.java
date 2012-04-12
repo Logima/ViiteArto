@@ -5,6 +5,8 @@
 package ohtu.viitearto.servlets;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,6 +37,13 @@ public class ViitteenTiedotServlet extends HttpServlet {
         request.setAttribute("id", viite.getId());
         request.setAttribute("year", viite.getYear());
         request.setAttribute("publisher", viite.getPublisher());
+        request.setAttribute("booktitle", viite.getBooktitle());
+        request.setAttribute("pages", viite.getPages());
+        request.setAttribute("address", viite.getAddress());
+        request.setAttribute("volume", viite.getVolume());
+        request.setAttribute("number", viite.getNumber());
+        request.setAttribute("journal", viite.getJournal());
+        
         
         RequestDispatcher dispatcher =
                 request.getRequestDispatcher("WEB-INF/views/tiedot.jsp");
