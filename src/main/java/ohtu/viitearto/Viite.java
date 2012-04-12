@@ -22,28 +22,28 @@ import javax.persistence.TableGenerator;
 public class Viite implements Serializable {
     
     @Column
-    private String title;
+    private String title;  
     
     @Column
-    private String author;
+    private String author;  
     
     @Column
     private String journal;
     
     @Column
-    private String booktitle;
+    private String booktitle; 
     
     @Column
-    private String publisher;
+    private String publisher;  
     
     @Column
-    private String pages;
+    private String pages; 
     
     @Column
     private String address;
     
     @Column
-    private int yearMade;
+    private int yearMade;   
     
     @Column
     private int volume;
