@@ -18,33 +18,39 @@ public class ViitteetServlet extends HttpServlet {
     private Tietoturva security = new Tietoturva();
     private Rekisteri rekisteri = Rekisteri.getInstance();
     private String lomakeTyyppi;
+    private TreeMap<String, String> lomakeTiedot = new TreeMap<String, String>();
+    private String viiteTyyppi;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
- 
-        
-        if (lomakeTyyppi != null) {
-            
-            TreeMap<String, String> lomakeTiedot = new TreeMap<String, String>();
+       
+        if (lomakeTyyppi != null) { // asetetaan viitteen lisäämistä varten täytettävät kentät
+            viiteTyyppi = null;
+            lomakeTiedot.clear();
             
             if (lomakeTyyppi.equals("book")) {
                 bookLomake(lomakeTiedot);
-                request.setAttribute("type", "Book");
+                viiteTyyppi = "Book";
             } else if (lomakeTyyppi.equals("inproceedings")) {
                 inproceedingsLomake(lomakeTiedot);
-                request.setAttribute("type", "Inproceedings");
+                viiteTyyppi = "Inproceedings";
             } else if (lomakeTyyppi.equals("article")) {
                 articleLomake(lomakeTiedot);
-                request.setAttribute("type", "Article");
+                viiteTyyppi = "Article";
             }
             
             request.setAttribute("tiedot", lomakeTiedot);
             lomakeTyyppi = null;
         }
         
-        request.setAttribute("errors", security.getVirheIlmoitukset());
+        request.setAttribute("type", viiteTyyppi); // viitteen tyyppi
+        
+        if (security.onkoVirheita())
+            request.setAttribute("tiedot", lomakeTiedot);
+        
+        request.setAttribute("errors", security.getVirheIlmoitukset()); // näytetään virheet, jos niitä on
         security.nollaaVirheet();
         
         request.setAttribute("viitteet", rekisteri.getViitteet()); // hakee viitteet tietokannasta

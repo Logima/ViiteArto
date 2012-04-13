@@ -30,7 +30,6 @@
             <font color="red">${error}</font><br/>
         </c:forEach>
 
-
         <!-- Viitteen lisäämistä tarvittava lomake, joka looppaa kentät, joita voi täyttää
              lomakkeessa -->
         <c:if test="${not empty tiedot}">
