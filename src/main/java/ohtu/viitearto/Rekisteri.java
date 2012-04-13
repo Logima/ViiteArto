@@ -15,11 +15,20 @@ import javax.persistence.Persistence;
  */
 public class Rekisteri {
 
+    private static Rekisteri instance;
     private EntityManager em;
     
     private EntityManagerFactory emf = null;
 
-    public Rekisteri() {
+    public static Rekisteri getInstance() {
+        if (instance == null) {
+            instance = new Rekisteri();
+        }
+        
+        return instance;
+    }
+    
+    private Rekisteri() {
         // käytetään "ViiteArtoPU"-konfiguraatiota
         emf = Persistence.createEntityManagerFactory("ViiteArtoPU");
     }

@@ -34,10 +34,13 @@
         <!-- Viitteen lisäämistä tarvittava lomake, joka looppaa kentät, joita voi täyttää
              lomakkeessa -->
         <c:if test="${not empty tiedot}">
+            
+            <b>${type}</b><br/><br/>
+            <b>Tähdellä merkityt tiedot ovat pakollisia.</b>
+            
             <form action="/LisaaViite" method="post">
                 <table border="0" width="200" cellpadding="3" cellspacing="2" style="background-color: white">
-                    <b>Tähdellä merkityt tiedot ovat pakollisia.</b>
-
+                    
                     <c:forEach var="tiedot"
                                items="${tiedot}">
                         <tr>
@@ -46,6 +49,7 @@
                     </c:forEach>
                 </table>
 
+                <input type="hidden" name="type" value="${type}"> <!-- Viitteen tyyppi -->
                 <input type="submit" name="lisays" value="Lisää viite"/>
             </form>
         </c:if>

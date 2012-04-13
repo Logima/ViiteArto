@@ -21,7 +21,7 @@ import ohtu.viitearto.Viite;
  */
 public class ViitteenTiedotServlet extends HttpServlet {
     
-    private Rekisteri rekisteri = new Rekisteri();
+    private Rekisteri rekisteri = Rekisteri.getInstance();
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -32,18 +32,9 @@ public class ViitteenTiedotServlet extends HttpServlet {
         
         Viite viite = rekisteri.haeViite(id);
         
-        request.setAttribute("title", viite.getTitle());
-        request.setAttribute("author", viite.getAuthor());
+        request.setAttribute("tiedot", viite.getTiedot());
         request.setAttribute("id", viite.getId());
-        request.setAttribute("year", viite.getYear());
-        request.setAttribute("publisher", viite.getPublisher());
-        request.setAttribute("booktitle", viite.getBooktitle());
-        request.setAttribute("pages", viite.getPages());
-        request.setAttribute("address", viite.getAddress());
-        request.setAttribute("volume", viite.getVolume());
-        request.setAttribute("number", viite.getNumber());
-        request.setAttribute("journal", viite.getJournal());
-        
+        request.setAttribute("type", viite.getType());
         
         RequestDispatcher dispatcher =
                 request.getRequestDispatcher("WEB-INF/views/tiedot.jsp");

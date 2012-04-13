@@ -18,7 +18,7 @@ import ohtu.viitearto.Rekisteri;
  */
 public class PoistaViiteServlet extends HttpServlet {
 
-    private Rekisteri rekisteri = new Rekisteri();
+    private Rekisteri rekisteri = Rekisteri.getInstance();
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

@@ -16,7 +16,7 @@ import ohtu.viitearto.Tietoturva;
 public class ViitteetServlet extends HttpServlet {
 
     private Tietoturva security = new Tietoturva();
-    private Rekisteri rekisteri = new Rekisteri();
+    private Rekisteri rekisteri = Rekisteri.getInstance();
     private String lomakeTyyppi;
 
     @Override
@@ -30,11 +30,14 @@ public class ViitteetServlet extends HttpServlet {
             TreeMap<String, String> lomakeTiedot = new TreeMap<String, String>();
             
             if (lomakeTyyppi.equals("book")) {
-                bookLomake(request, response, lomakeTiedot);
+                bookLomake(lomakeTiedot);
+                request.setAttribute("type", "Book");
             } else if (lomakeTyyppi.equals("inproceedings")) {
-                inproceedingsLomake(request, response, lomakeTiedot);
+                inproceedingsLomake(lomakeTiedot);
+                request.setAttribute("type", "Inproceedings");
             } else if (lomakeTyyppi.equals("article")) {
-                articleLomake(request, response, lomakeTiedot);
+                articleLomake(lomakeTiedot);
+                request.setAttribute("type", "Article");
             }
             
             request.setAttribute("tiedot", lomakeTiedot);
@@ -60,7 +63,7 @@ public class ViitteetServlet extends HttpServlet {
         response.sendRedirect(request.getRequestURI()); // POST-pyynnöt ohjataan doGetille
     }
     
-    private void articleLomake(HttpServletRequest request, HttpServletResponse response, TreeMap<String, String> tiedot) throws ServletException, IOException {
+    private void articleLomake(TreeMap<String, String> tiedot) {
         tiedot.put("title", "<font color=\"red\">*</font> Title: ");
         tiedot.put("author", "<font color=\"red\">*</font> Author: ");
         tiedot.put("publisher", "Publisher: ");
@@ -72,7 +75,7 @@ public class ViitteetServlet extends HttpServlet {
         tiedot.put("number", "Number: ");
     }
 
-    private void inproceedingsLomake(HttpServletRequest request, HttpServletResponse response, TreeMap<String, String> tiedot) throws ServletException, IOException {
+    private void inproceedingsLomake(TreeMap<String, String> tiedot) {
         tiedot.put("title", "<font color=\"red\">*</font> Title: ");
         tiedot.put("author", "<font color=\"red\">*</font> Author: ");
         tiedot.put("publisher", "Publisher: ");
@@ -82,7 +85,7 @@ public class ViitteetServlet extends HttpServlet {
         tiedot.put("pages", "Pages: ");
     }
 
-    private void bookLomake(HttpServletRequest request, HttpServletResponse response, TreeMap<String, String> tiedot) throws ServletException, IOException {
+    private void bookLomake(TreeMap<String, String> tiedot) {
         tiedot.put("title", "<font color=\"red\">*</font> Title: ");
         tiedot.put("author", "<font color=\"red\">*</font> Author: ");
         tiedot.put("year", "Year: ");

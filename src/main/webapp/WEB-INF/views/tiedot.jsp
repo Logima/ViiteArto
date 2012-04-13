@@ -16,22 +16,13 @@
         <h1>Viitteen tiedot</h1>
 
         <br/>
-        <ul>
-            <li>Title: ${title}</li>
-
-            <li>Author: ${author}</li>
-
-            <c:if test="${year!='0'}">
-                <li>Year: ${year}</li>
-            </c:if>
-
-            <li>Publisher: ${publisher}</li>
-            <li>Booktitle: ${booktitle}</li>
-            <li>Pages: ${pages}</li>
-            <li>Address: ${address}</li>
-            <li>Volume: ${volume}</li>
-            <li>Number: ${number}</li>
-            <li>Journal: ${journal}</li>
+        <b>${type}</b>
+        
+        <!-- Listaa viitteen kaikki olemassaolevat tiedot -->
+        <ul>           
+            <c:forEach var="info" items="${tiedot}">
+                <li>${info}</li>
+            </c:forEach>
         </ul>
 
         <br/>

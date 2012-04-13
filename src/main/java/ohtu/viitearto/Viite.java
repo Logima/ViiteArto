@@ -5,6 +5,7 @@
 package ohtu.viitearto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -51,6 +52,14 @@ public class Viite implements Serializable {
     @Column
     private int number;
     
+    @Column
+    private String type;
+    
+    /*
+     * Sisältää tiedot viitteen eri kenttien sisällöistä.
+     */
+    private ArrayList<String> tiedot;
+    
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE, generator="tab")
     private Long id;
@@ -61,6 +70,7 @@ public class Viite implements Serializable {
     public Viite(String title, String author) {
         this.title = title;
         this.author = author;
+        tiedot = new ArrayList<String>();
     }
 
     public String getAddress() {
@@ -149,5 +159,46 @@ public class Viite implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public String getType() {
+        return type;
+    }
+    
+    public void setType(String type) {
+        this.type = type;
+    }
+    
+    public ArrayList<String> getTiedot() {
+        if (tiedot.isEmpty()) {
+            
+            if (getTitle() != null && getTitle().length() > 0)
+                tiedot.add("<b>Title:</b> "+getTitle());
+
+            if (getAuthor() != null && getAuthor().length() > 0)
+                tiedot.add("<b>Author:</b> "+getAuthor());
+            
+            if (getBooktitle() != null && getBooktitle().length() > 0)
+                tiedot.add("<b>Booktitle:</b> "+getBooktitle());
+            
+            if (getJournal() != null && getJournal().length() > 0)
+                tiedot.add("<b>Journal:</b> "+getJournal());
+            
+            if (getAddress() != null && getAddress().length() > 0)
+                tiedot.add("<b>Address:</b> "+getAddress());
+            
+            if (getYear() != 0)
+                tiedot.add("<b>Year:</b> "+getYear());
+            
+            if (getVolume() != 0)
+                tiedot.add("<b>Volume:</b> "+getVolume());
+            
+            if (getNumber() != 0)
+                tiedot.add("<b>Number:</b> "+getNumber());
+            
+            if (getPages() != null && getPages().length() > 0)
+                tiedot.add("<b>Pages:</b> "+getPages());
+        }
+        return tiedot;
     }
 }

@@ -20,7 +20,7 @@ import ohtu.viitearto.Viite;
  */
 public class LisaaViiteServlet extends HttpServlet {
 
-    private Rekisteri rekisteri = new Rekisteri();
+    private Rekisteri rekisteri = Rekisteri.getInstance();
     private Tietoturva secure = new Tietoturva();
 
     @Override
@@ -41,8 +41,10 @@ public class LisaaViiteServlet extends HttpServlet {
         String author = request.getParameter("author");
         String publisher = request.getParameter("publisher");
         String yearString = request.getParameter("year");
+        String[] type = request.getParameterValues("type");
 
         int year = 0;
+        
         String booktitle = request.getParameter("booktitle");
         String pages = request.getParameter("pages");
         String address = request.getParameter("address");
@@ -83,6 +85,7 @@ public class LisaaViiteServlet extends HttpServlet {
         }
 
         Viite viite = new Viite(title, author);
+        viite.setType(type[0]);
 
         if (publisher != null) {
             viite.setPublisher(publisher);
