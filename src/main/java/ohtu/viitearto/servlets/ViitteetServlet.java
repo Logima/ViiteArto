@@ -76,7 +76,7 @@ public class ViitteetServlet extends HttpServlet {
         tiedot.put("year", "Year: ");
         tiedot.put("address", "Address: ");
         tiedot.put("pages", "Pages: ");
-        tiedot.put("journal", "Journal: ");
+        tiedot.put("journal", "<font color=\"red\">*</font> Journal: ");
         tiedot.put("volume", "Volume: ");
         tiedot.put("number", "Number: ");
     }
@@ -87,7 +87,7 @@ public class ViitteetServlet extends HttpServlet {
         tiedot.put("publisher", "Publisher: ");
         tiedot.put("year", "Year: ");
         tiedot.put("address", "Address: ");
-        tiedot.put("booktitle", "Booktitle: ");
+        tiedot.put("booktitle", "<font color=\"red\">*</font> Booktitle: ");
         tiedot.put("pages", "Pages: ");
     }
 

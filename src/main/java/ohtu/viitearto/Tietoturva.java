@@ -22,6 +22,11 @@ public class Tietoturva {
         virheet.put("authorError", null);
         virheet.put("titleError", null);
         virheet.put("publisherError", null);
+        virheet.put("booktitleError", null);
+        virheet.put("pagesError", null);
+        virheet.put("addressError", null);
+        virheet.put("volumeError", null);
+        virheet.put("numberError", null);
         virheet.clear();
     }
 
@@ -49,6 +54,26 @@ public class Tietoturva {
     
     public String getPublisherError() {
         return virheet.get("publisherError");
+    }
+    
+    public String getBooktitleError() {
+        return virheet.get("booktitleError");
+    }
+    
+    public String getPagesError() {
+        return virheet.get("pagesError");
+    }
+    
+    public String getAddressError() {
+        return virheet.get("addressError");
+    }
+    
+    public String getVolumeError() {
+        return virheet.get("volumeError");
+    }
+    
+    public String getNumberError() {
+        return virheet.get("numberError");
     }
 
     public void nollaaVirheet() {
