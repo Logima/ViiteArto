@@ -18,14 +18,12 @@ public class Tietoturva {
     
     public Tietoturva() {
         virheet = new HashMap<String, String>();
-        virheet.put("yearError", null);
         virheet.put("authorError", null);
         virheet.put("titleError", null);
         virheet.put("publisherError", null);
         virheet.put("booktitleError", null);
         virheet.put("pagesError", null);
         virheet.put("addressError", null);
-        virheet.put("volumeError", null);
         virheet.put("numberError", null);
         virheet.clear();
     }
@@ -40,8 +38,54 @@ public class Tietoturva {
         virheet.put(virheenLaatu, virhe);
     }
     
-    public String getYearError() {
-        return virheet.get("yearError");
+    public void tarkistaPakollisetTiedot(String title, String author, String journal, String booktitle) {
+       if (title.length() <= 0) {
+            lisaaVirhe("titleError", "Title ei saa olla tyhjä!");
+        }
+
+        if (author.length() <= 0) {
+            lisaaVirhe("authorError", "Author ei saa olla tyhjä!");
+        }
+        
+        if (booktitle != null && booktitle.length() <= 0) {
+            lisaaVirhe("booktitleError", "Booktitle ei saa olla tyhjä!");
+        }
+        
+        if (journal != null && journal.length() <= 0) {
+            lisaaVirhe("journalError", "Journal ei saa olla tyhjä!");
+        }
+    }
+    
+    public void tarkistaNumeroTiedot(String yearString, String volumeString, String numberString) {
+        int year = 0;
+        int volume = 0;
+        int number = 0;
+        
+        if (yearString != null && yearString.length() > 0) {
+            try {
+                year = Integer.parseInt(yearString);
+            } catch (Exception e) {
+                lisaaVirhe("numberError", "Vain numerot sallittuja!");
+                return;
+            }
+        }
+        
+        if (volumeString != null && volumeString.length() > 0) {
+            try {
+                volume = Integer.parseInt(volumeString);
+            } catch (Exception e) {
+                lisaaVirhe("numberError", "Vain numerot sallittuja!");
+                return;
+            }
+        }
+        
+        if (numberString != null && numberString.length() > 0) {
+            try {
+                number = Integer.parseInt(numberString);
+            } catch (Exception e) {
+                lisaaVirhe("numberError", "Vain numerot sallittuja!");
+            }
+        } 
     }
     
     public String getAuthorError() {
@@ -66,10 +110,6 @@ public class Tietoturva {
     
     public String getAddressError() {
         return virheet.get("addressError");
-    }
-    
-    public String getVolumeError() {
-        return virheet.get("volumeError");
     }
     
     public String getNumberError() {
