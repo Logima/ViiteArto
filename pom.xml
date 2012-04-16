@@ -192,25 +192,6 @@
                     </execution>
                 </executions>
             </plugin>
-            
-            <!-- git commit info -->
-            <plugin>
-                <groupId>pl.project13.maven</groupId>
-                <artifactId>git-commit-id-plugin</artifactId>
-                <version>2.0.3</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>revision</goal>
-                         </goals>
-                    </execution>
-                </executions>
-
-                <configuration>
-                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                    <generateGitPropertiesFilename>src/main/resources/git.properties</generateGitPropertiesFilename>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
     

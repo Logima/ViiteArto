@@ -22,7 +22,7 @@
             <input type="submit" name="valinta" value="Valitse"/>
         </form>
 
-        <br>
+        <br/>
 
         <!-- Listaa virheet, jos niitä tuli viitettä lisättäessä -->
         <c:forEach var="error"
@@ -53,7 +53,7 @@
             </form>
         </c:if>
 
-        <br>
+        </br>
 
         <h4>Viitteet</h4>
 
@@ -78,10 +78,6 @@
                 </c:forEach>
             </table>
         </c:if>
-        <br><br><br><br>
-        <pre>Commit id: ${git.commitId} @ ${git.commitTime}
-By user: ${git.commitUserName}
-Message: ${git.commitMessageFull}
-Build time: ${git.buildTime}</pre>
+
     </body>
 </html>
