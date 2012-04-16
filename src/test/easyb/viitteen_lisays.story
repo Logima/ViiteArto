@@ -12,7 +12,7 @@ description 'Asiakas voi lisätä viitteen'
 scenario "asiakas lisää viitteen oikeilla syötteillä", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
 
     given 'viitteen pakolliset tiedot täytetty', {
         WebElement element = driver.findElement(By.name("viiteTyyppi"));
@@ -48,7 +48,7 @@ scenario "asiakas lisää viitteen oikeilla syötteillä", {
  scenario "asiakas lisää viitteen kaikilla syötteillä", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
 
     given 'viitteen kaikki tiedot täytetty', {
 
@@ -92,7 +92,7 @@ scenario "asiakas lisää viitteen oikeilla syötteillä", {
 scenario "asiakas lisää viitteen vain titlellä", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
 
     given 'vain viitteen title-osa täytetty', {
         WebElement element = driver.findElement(By.name("viiteTyyppi"));
@@ -128,7 +128,7 @@ scenario "asiakas lisää viitteen vain titlellä", {
 scenario "asiakas lisää viitteen vain authorilla", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
 
     given 'vain viitteen author-osa täytetty', {
         WebElement element = driver.findElement(By.name("viiteTyyppi"));
@@ -163,7 +163,7 @@ scenario "asiakas lisää viitteen vain authorilla", {
 scenario "asiakas lisää viitteen vain vuosiluvulla", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
 
     given 'vain viitteen year-osa täytetty', {
         WebElement element = driver.findElement(By.name("viiteTyyppi"));
@@ -198,7 +198,7 @@ scenario "asiakas lisää viitteen vain vuosiluvulla", {
 scenario "asiakas lisää viitteen vain julkaisija-tiedolla", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
 
     given 'vain viitteen publisher-osa täytetty', {
         WebElement element = driver.findElement(By.name("viiteTyyppi"));
@@ -233,7 +233,7 @@ scenario "asiakas lisää viitteen vain julkaisija-tiedolla", {
 scenario "asiakas lisää viitteen vain journal-tiedolla", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
 
     given 'vain viitteen journal-osa täytetty', {
         WebElement element = driver.findElement(By.name("viiteTyyppi"));
@@ -267,7 +267,7 @@ scenario "asiakas lisää viitteen vain journal-tiedolla", {
 scenario "asiakas lisää viitteen vain booktitle-tiedolla", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
 
     given 'vain viitteen Booktitle osa täytetty', {
         WebElement element = driver.findElement(By.name("viiteTyyppi"));
@@ -301,7 +301,7 @@ scenario "asiakas lisää viitteen vain booktitle-tiedolla", {
 scenario "asiakas lisää viitteen vain pages-tiedolla", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
 
     given 'vain viiteen pages-osa täytetty', {
         WebElement element = driver.findElement(By.name("viiteTyyppi"));
@@ -335,7 +335,7 @@ scenario "asiakas lisää viitteen vain pages-tiedolla", {
 scenario "asiakas lisää viitteen vain address-tiedolla", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
 
     given 'vain viitteen address-osa täytetty', {
         WebElement element = driver.findElement(By.name("viiteTyyppi"));
@@ -369,7 +369,7 @@ scenario "asiakas lisää viitteen vain address-tiedolla", {
 scenario "asiakas lisää viitteen vain volume-tiedolla", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
 
     given 'vain viitteen volume-osa täytetty', {
         WebElement element = driver.findElement(By.name("viiteTyyppi"));
@@ -403,7 +403,7 @@ scenario "asiakas lisää viitteen vain volume-tiedolla", {
 scenario "asiakas lisää viitteen vain numero-tiedolla", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
 
     given 'vain viitteen number-osa täytetty', {
         WebElement element = driver.findElement(By.name("viiteTyyppi"));

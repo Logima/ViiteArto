@@ -11,7 +11,7 @@ description 'Asiakas voi avata viitteen omalle sivulleen ja palata takaisin etus
 scenario "asiakas valitsee listasta viitteen, joka avautuu omalle sivulleen", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
     WebElement element;
     String id;
 
@@ -53,7 +53,7 @@ scenario "asiakas valitsee listasta viitteen, joka avautuu omalle sivulleen", {
 scenario "asiakas palaa viitteen sivulta takaisin etusivulle", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
     WebElement element;
     String id;
 

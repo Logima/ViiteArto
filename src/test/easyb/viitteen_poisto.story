@@ -12,7 +12,7 @@ description 'Asiakas voi poistaa viitteen'
 scenario "asiakas voi poistaa viitteen listasta", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
     String id;
 
     given 'viite on listalla', {
@@ -54,7 +54,7 @@ scenario "asiakas voi poistaa viitteen listasta", {
 scenario "asiakas voi poistaa viitteen sen omalta sivulta", {
 
     WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:8080/");
+    driver.get("http://localhost:7190/");
     String id;
 
     given 'olemassaolevan viitteen linkkiä klikataan', {

@@ -3,13 +3,9 @@
         <action>
             <actionName>run</actionName>
             <goals>
-                <goal>process-classes</goal>
-                <goal>org.codehaus.mojo:exec-maven-plugin:1.2:exec</goal>
+                <goal>package</goal>
+                <goal>jetty:run</goal>
+                
             </goals>
-            <properties>
-                <exec.args>-classpath %classpath launch.Main</exec.args>
-                <exec.executable>java</exec.executable>
-                <exec.classpathScope>runtime</exec.classpathScope>
-            </properties>
         </action>
     </actions>
