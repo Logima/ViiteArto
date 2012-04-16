@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import ohtu.viitearto.GitState;
 import ohtu.viitearto.Rekisteri;
 import ohtu.viitearto.Tietoturva;
 
@@ -55,6 +56,7 @@ public class ViitteetServlet extends HttpServlet {
         security.nollaaVirheet();
         
         request.setAttribute("viitteet", rekisteri.getViitteet()); // hakee viitteet tietokannasta
+        request.setAttribute("git", new GitState());
         
         RequestDispatcher dispatcher =
                 request.getRequestDispatcher("WEB-INF/views/viitteet.jsp");

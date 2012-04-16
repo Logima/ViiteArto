@@ -1,3 +1,4 @@
 target/
 tomcat*/
 .netrc
+git.properties
