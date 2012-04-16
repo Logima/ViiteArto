@@ -6,12 +6,8 @@ package ohtu.viitearto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.TableGenerator;
+import java.util.List;
+import javax.persistence.*;
 
 /**
  *
@@ -63,6 +59,10 @@ public class Viite implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE, generator="tab")
     private Long id;
+    
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
+    @JoinColumn
+    private List<Tag> tagit; // lista tageista, jotka viitteellä on
 
     public Viite() {
     }
@@ -200,5 +200,23 @@ public class Viite implements Serializable {
                 tiedot.add("<b>Pages:</b> "+getPages());
         }
         return tiedot;
+    }
+    
+    public void setTagit(List<Tag> tagit) {
+        if (tagit == null) {
+            this.tagit = null;
+            return;
+        }
+        this.tagit = tagit;
+        
+        for (int i=0; i < tagit.size(); ++i) { // kun viite saa listan siihen kuuluvista tageista
+            if (!tagit.get(i).getViitteet().contains(this)) { // lisätään kyseinen viite jokaiselle
+                tagit.get(i).getViitteet().add(this); // tagille
+            }
+        }
+    }
+    
+    public List<Tag> getTagit() {
+        return tagit;
     }
 }

@@ -3,6 +3,7 @@
   <persistence-unit name="ViiteArtoPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>ohtu.viitearto.Viite</class>
+    <class>ohtu.viitearto.Tag</class>
     <properties>
       <property name="eclipselink.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
       <property name="eclipselink.jdbc.url" value="jdbc:hsqldb:file:target/db;shutdown=true"/>

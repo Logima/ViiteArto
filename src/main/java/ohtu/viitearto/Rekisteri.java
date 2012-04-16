@@ -41,7 +41,14 @@ public class Rekisteri {
         em = getEntityManager();
         
         em.getTransaction().begin();
-        em.persist(viite);
+        em.merge(viite);
+        em.getTransaction().commit();
+    }
+    
+    public void lisaaTagi(Tag uusi) {
+        em = getEntityManager();
+        em.getTransaction().begin();
+        em.persist(uusi);
         em.getTransaction().commit();
     }
     
@@ -63,6 +70,12 @@ public class Rekisteri {
         em = getEntityManager();
         
         return em.find(Viite.class, id);
+    }
+    
+    public Viite haeTag(String tunniste) {
+        em = getEntityManager();
+        
+        return em.find(Viite.class, tunniste);
     }
     
 }
