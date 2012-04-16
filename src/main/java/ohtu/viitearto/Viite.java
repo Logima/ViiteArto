@@ -71,6 +71,7 @@ public class Viite implements Serializable {
         this.title = title;
         this.author = author;
         tiedot = new ArrayList<String>();
+        tagit = new ArrayList<Tag>();
     }
 
     public String getAddress() {

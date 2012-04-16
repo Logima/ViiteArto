@@ -24,6 +24,13 @@
                 <li>${info}</li>
             </c:forEach>
         </ul>
+        
+        <b>Tagit:</b> 
+        <ul>
+            <c:forEach var="tag" items="${tagit}">
+                <li>${tag.nimi}</li>
+            </c:forEach>
+        </ul>
 
         <br/>
         <form action="/PoistaViite" method="GET">          

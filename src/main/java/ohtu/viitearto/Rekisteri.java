@@ -59,9 +59,18 @@ public class Rekisteri {
 
     public void poistaViite(long id) {
         em = getEntityManager();
-        
         em.getTransaction().begin();
+
         Viite poistettava = em.find(Viite.class, id);
+        List<Tag> tagit = poistettava.getTagit();
+
+        if (tagit != null) {
+            for (int i = 0; i < tagit.size(); ++i) {
+                tagit.get(i).getViitteet().remove(poistettava); // tuhotaan tageilta viitteet poistettavaan
+            }                                                   // viitteeseen
+
+            poistettava.setTagit(null); // poistetaan viitteet tageihin poistettavalta viitteeltä
+        }
         em.remove(poistettava);
         em.getTransaction().commit();
     }
@@ -77,5 +86,4 @@ public class Rekisteri {
         
         return em.find(Viite.class, tunniste);
     }
-    
 }

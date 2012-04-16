@@ -5,12 +5,15 @@
 package ohtu.viitearto.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ohtu.viitearto.Rekisteri;
+import ohtu.viitearto.Tag;
 import ohtu.viitearto.Tietoturva;
 import ohtu.viitearto.Viite;
 
@@ -187,6 +190,17 @@ public class LisaaViiteServlet extends HttpServlet {
         
         if (year != 0)
             uusiBook.setYear(year);
+        
+        String tag = request.getParameter("tag");
+        String[] tagit = tag.split(",");
+        List<Tag> tagiLista = new ArrayList<Tag>();
+        
+        for (int i=0; i < tagit.length; ++i) {
+            Tag uusi = new Tag(tagit[i]);
+            tagiLista.add(uusi);
+        }
+        
+        uusiBook.setTagit(tagiLista);     
         
         return uusiBook;
     }
