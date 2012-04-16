@@ -75,6 +75,8 @@ public class LisaaViiteServlet extends HttpServlet {
             return null;
         }
         
+        year = Integer.parseInt(yearString);
+        
         Viite uusiInproceedings = new Viite(author, title);
         uusiInproceedings.setType("Inproceedings");
         uusiInproceedings.setBooktitle(booktitle);
@@ -108,6 +110,10 @@ public class LisaaViiteServlet extends HttpServlet {
             return null;
         }
         
+        year = Integer.parseInt(yearString);
+        number = Integer.parseInt(numberString);
+        volume = Integer.parseInt(volumeString);
+        
         Viite uusiArticle = new Viite(title, author);
         uusiArticle.setType("Article");
         uusiArticle.setJournal(journal);
@@ -134,6 +140,8 @@ public class LisaaViiteServlet extends HttpServlet {
             doGet(request, response);
             return null;
         }
+        
+        year = Integer.parseInt(yearString);
         
         Viite uusiBook = new Viite(title, author);
         uusiBook.setType("Book");

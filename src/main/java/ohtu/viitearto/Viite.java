@@ -179,6 +179,9 @@ public class Viite implements Serializable {
             if (getAuthor() != null && getAuthor().length() > 0)
                 tiedot.add("<b>Author:</b> "+getAuthor());
             
+            if (getPublisher() != null && getPublisher().length() > 0)
+                tiedot.add("<b>Publisher:</b> "+getPublisher());
+            
             if (getBooktitle() != null && getBooktitle().length() > 0)
                 tiedot.add("<b>Booktitle:</b> "+getBooktitle());
             
