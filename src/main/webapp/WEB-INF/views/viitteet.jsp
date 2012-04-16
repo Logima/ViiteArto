@@ -38,7 +38,7 @@
             <b>Tähdellä merkityt tiedot ovat pakollisia.</b>
             
             <form action="/LisaaViite" method="post">
-                <table border="0" width="200" cellpadding="3" cellspacing="2" style="background-color: white">
+                <table border="0" width="300" cellpadding="3" cellspacing="2" style="background-color: white">
                     
                     <c:forEach var="tiedot"
                                items="${tiedot}">

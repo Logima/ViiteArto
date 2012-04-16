@@ -87,7 +87,7 @@ scenario "asiakas palaa viitteen sivulta takaisin etusivulle", {
 
     then 'palataan etusivulle', {
        element = driver.findElement(By.linkText("Etusivu"))
-       element.click();     
+       element.click();  
        driver.getPageSource().contains("ViiteArto").shouldBe true
        driver.getPageSource().contains("Lisää viite").shouldBe true
     }

@@ -66,10 +66,10 @@ public class Rekisteri {
 
         if (tagit != null) {
             for (int i = 0; i < tagit.size(); ++i) {
-                tagit.get(i).getViitteet().remove(poistettava); // tuhotaan tageilta viitteet poistettavaan
+                tagit.get(i).getViitteet().remove(poistettava); // tuhotaan tageilta tiedot poistettavaan
             }                                                   // viitteeseen
 
-            poistettava.setTagit(null); // poistetaan viitteet tageihin poistettavalta viitteeltä
+            poistettava.setTagit(null); // poistetaan tiedot tageihin poistettavalta viitteeltä
         }
         em.remove(poistettava);
         em.getTransaction().commit();
