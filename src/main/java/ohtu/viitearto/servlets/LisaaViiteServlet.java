@@ -56,23 +56,16 @@ public class LisaaViiteServlet extends HttpServlet {
 
     private Viite lisaaInproceedingsViite(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String title = request.getParameter("title");
-        String author = request.getParameter("author");
-        String publisher = request.getParameter("publisher");
-        String yearString = request.getParameter("year");   
-        String booktitle = request.getParameter("booktitle");
-        String address = request.getParameter("address");
-        String pages = request.getParameter("pages");
+        
+        String title = secure.estaCrossSiteScripting(request.getParameter("title"));
+        String author = secure.estaCrossSiteScripting(request.getParameter("author"));
+        String publisher = secure.estaCrossSiteScripting(request.getParameter("publisher"));
+        String yearString = secure.estaCrossSiteScripting(request.getParameter("year"));
+        String booktitle = secure.estaCrossSiteScripting(request.getParameter("booktitle"));
+        String address = secure.estaCrossSiteScripting(request.getParameter("address"));
+        String pages = secure.estaCrossSiteScripting(request.getParameter("pages"));
         
         int year = 0;
-        
-        title = secure.estaCrossSiteScripting(title);
-        author = secure.estaCrossSiteScripting(author);
-        publisher = secure.estaCrossSiteScripting(publisher);
-        yearString = secure.estaCrossSiteScripting(yearString);
-        address = secure.estaCrossSiteScripting(address);
-        pages = secure.estaCrossSiteScripting(pages);
-        booktitle = secure.estaCrossSiteScripting(booktitle);
 
         secure.tarkistaPakollisetTiedot(title, author, null, booktitle);
         secure.tarkistaNumeroTiedot(yearString, null, null);
@@ -86,43 +79,22 @@ public class LisaaViiteServlet extends HttpServlet {
         uusiInproceedings.setType("Inproceedings");
         uusiInproceedings.setBooktitle(booktitle);
         
-        if (publisher.length() > 0)
-            uusiInproceedings.setPublisher(publisher);
-        
-        if (address.length() > 0)
-            uusiInproceedings.setAddress(address);
-        
-        if (year != 0)
-            uusiInproceedings.setYear(year);
-        
-        if (pages.length() > 0)
-            uusiInproceedings.setPages(pages);
-        
+        lisaaOptionaalisetTiedot(uusiInproceedings, publisher, address, pages, year, 0, 0);
         lisaaTagit(request, uusiInproceedings);
         
         return uusiInproceedings;
     }
 
     private Viite lisaaArticleViite(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String title = request.getParameter("title");
-        String author = request.getParameter("author");
-        String publisher = request.getParameter("publisher");
-        String yearString = request.getParameter("year");        
-        String address = request.getParameter("address");
-        String pages = request.getParameter("pages");
-        String journal = request.getParameter("journal");
-        String volumeString = request.getParameter("volume");
-        String numberString = request.getParameter("number");
-        
-        title = secure.estaCrossSiteScripting(title);
-        author = secure.estaCrossSiteScripting(author);
-        publisher = secure.estaCrossSiteScripting(publisher);
-        yearString = secure.estaCrossSiteScripting(yearString);
-        address = secure.estaCrossSiteScripting(address);
-        pages = secure.estaCrossSiteScripting(pages);
-        journal = secure.estaCrossSiteScripting(journal);
-        volumeString = secure.estaCrossSiteScripting(volumeString);
-        numberString = secure.estaCrossSiteScripting(numberString);
+        String title = secure.estaCrossSiteScripting(request.getParameter("title"));
+        String author = secure.estaCrossSiteScripting(request.getParameter("author"));
+        String publisher = secure.estaCrossSiteScripting(request.getParameter("publisher"));
+        String yearString = secure.estaCrossSiteScripting(request.getParameter("year"));
+        String address = secure.estaCrossSiteScripting(request.getParameter("address"));
+        String pages = secure.estaCrossSiteScripting(request.getParameter("pages"));
+        String journal = secure.estaCrossSiteScripting(request.getParameter("journal"));
+        String volumeString = secure.estaCrossSiteScripting(request.getParameter("volume"));
+        String numberString = secure.estaCrossSiteScripting(request.getParameter("number"));
         
         int year = 0;
         int number = 0;        
@@ -140,40 +112,20 @@ public class LisaaViiteServlet extends HttpServlet {
         uusiArticle.setType("Article");
         uusiArticle.setJournal(journal);
         
-        if (publisher.length() > 0)
-            uusiArticle.setPublisher(publisher);
-        
-        if (address.length() > 0)
-            uusiArticle.setAddress(address);
-        
-        if (year != 0)
-            uusiArticle.setYear(year);
-        if (volume != 0)
-            uusiArticle.setVolume(volume);
-        if (number != 0)
-            uusiArticle.setNumber(number);
-        
-        if (pages.length() > 0)
-            uusiArticle.setPages(pages);
-        
+        lisaaOptionaalisetTiedot(uusiArticle, publisher, address, pages, year, volume, number);
         lisaaTagit(request, uusiArticle);
         
         return uusiArticle;
     }
 
     private Viite lisaaBookViite(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String title = request.getParameter("title");
-        String author = request.getParameter("author");
-        String publisher = request.getParameter("publisher");
-        String yearString = request.getParameter("year");        
-        String address = request.getParameter("address");
-        int year = 0;
+        String title = secure.estaCrossSiteScripting(request.getParameter("title"));
+        String author = secure.estaCrossSiteScripting(request.getParameter("author"));
+        String publisher = secure.estaCrossSiteScripting(request.getParameter("publisher"));
+        String yearString = secure.estaCrossSiteScripting(request.getParameter("year"));
+        String address = secure.estaCrossSiteScripting(request.getParameter("address"));
         
-        title = secure.estaCrossSiteScripting(title);
-        author = secure.estaCrossSiteScripting(author);
-        publisher = secure.estaCrossSiteScripting(publisher);
-        yearString = secure.estaCrossSiteScripting(yearString);
-        address = secure.estaCrossSiteScripting(address);
+        int year = 0;
         
         secure.tarkistaPakollisetTiedot(title, author, null, null);
         secure.tarkistaNumeroTiedot(yearString, null, null);
@@ -186,15 +138,7 @@ public class LisaaViiteServlet extends HttpServlet {
         Viite uusiBook = new Viite(title, author);
         uusiBook.setType("Book");
         
-        if (publisher.length() > 0)
-            uusiBook.setPublisher(publisher);
-        
-        if (address.length() > 0)
-            uusiBook.setAddress(address);
-        
-        if (year != 0)
-            uusiBook.setYear(year);
-        
+        lisaaOptionaalisetTiedot(uusiBook, publisher, address, null, year, 0, 0);
         lisaaTagit(request, uusiBook);
         
         return uusiBook;
@@ -215,5 +159,27 @@ public class LisaaViiteServlet extends HttpServlet {
 
             viite.setTagit(tagiLista);
         }
+    }
+    
+    private void lisaaOptionaalisetTiedot(Viite uusi, String publisher, String address, String pages,
+            int year, int volume, int number) {
+        
+        if (publisher != null && publisher.length() > 0)
+            uusi.setPublisher(publisher);
+        
+        if (address != null && address.length() > 0)
+            uusi.setAddress(address);
+        
+        if (year != 0)
+            uusi.setYear(year);
+        
+        if (volume != 0)
+            uusi.setVolume(volume);
+        
+        if (number != 0)
+            uusi.setNumber(number);
+        
+        if (pages != null && pages.length() > 0)
+            uusi.setPages(pages);
     }
 }
