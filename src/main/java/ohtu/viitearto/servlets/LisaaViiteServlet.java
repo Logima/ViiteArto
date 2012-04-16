@@ -98,6 +98,8 @@ public class LisaaViiteServlet extends HttpServlet {
         if (pages.length() > 0)
             uusiInproceedings.setPages(pages);
         
+        lisaaTagit(request, uusiInproceedings);
+        
         return uusiInproceedings;
     }
 
@@ -154,6 +156,8 @@ public class LisaaViiteServlet extends HttpServlet {
         if (pages.length() > 0)
             uusiArticle.setPages(pages);
         
+        lisaaTagit(request, uusiArticle);
+        
         return uusiArticle;
     }
 
@@ -191,17 +195,25 @@ public class LisaaViiteServlet extends HttpServlet {
         if (year != 0)
             uusiBook.setYear(year);
         
-        String tag = request.getParameter("tag");
-        String[] tagit = tag.split(",");
-        List<Tag> tagiLista = new ArrayList<Tag>();
-        
-        for (int i=0; i < tagit.length; ++i) {
-            Tag uusi = new Tag(tagit[i]);
-            tagiLista.add(uusi);
-        }
-        
-        uusiBook.setTagit(tagiLista);     
+        lisaaTagit(request, uusiBook);
         
         return uusiBook;
+    }
+    
+    private void lisaaTagit(HttpServletRequest request, Viite viite) {
+        String tag = request.getParameter("tag");
+
+        if (tag.length() > 0) {
+
+            String[] tagit = tag.split(",");
+            List<Tag> tagiLista = new ArrayList<Tag>();
+
+            for (int i = 0; i < tagit.length; ++i) {
+                Tag uusi = new Tag(tagit[i]);
+                tagiLista.add(uusi);
+            }
+
+            viite.setTagit(tagiLista);
+        }
     }
 }
