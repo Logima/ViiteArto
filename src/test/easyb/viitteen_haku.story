@@ -509,7 +509,7 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä, 
         List<WebElement> options3 = element.findElements(By.tagName("option"));
 
         for(WebElement option : options3){
-            if(option.getText().equals("")){
+            if(option.getText().equals("Article")){
                 option.click();
                 break;
             }

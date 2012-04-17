@@ -112,7 +112,7 @@ public class Rekisteri {
         Query q = null;
         
         if (viiteTyyppi != null) {
-            q = em.createQuery("SELECT v FROM Viite v WHERE v."+ekaKentta+" LIKE :firstParam "+operand+" v."+tokaKentta+" LIKE :secondParam "+operand+" v.type = :typeParam");
+            q = em.createQuery("SELECT v FROM Viite v WHERE v."+ekaKentta+" LIKE :firstParam "+operand+" v."+tokaKentta+" LIKE :secondParam and v.type = :typeParam");
             q.setParameter("firstParam", ekaHaku + "%").setParameter("secondParam", tokaHaku+"%").setParameter("typeParam", viiteTyyppi);
         } else {
             q = em.createQuery("SELECT v FROM Viite v WHERE v."+ekaKentta+" LIKE :firstParam "+operand+" v."+tokaKentta+" LIKE :secondParam");

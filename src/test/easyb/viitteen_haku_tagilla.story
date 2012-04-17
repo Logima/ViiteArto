@@ -60,7 +60,7 @@ scenario "asiakas hakee viitettä tagilla pelkistä kirjoista", {
     then 'oikea viite löytyy', {
        
        driver.getPageSource().contains("Hakutulokset").shouldBe true
-       driver.getPageSource().contains("hemulia").shouldBe true
+       driver.getPageSource().contains("apinakin osaa koodata").shouldBe true
     }
 }
 
