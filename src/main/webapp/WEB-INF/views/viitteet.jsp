@@ -76,7 +76,7 @@
                 <br/>
 
                 <input type="radio" name="operand" value="and" checked="checked"/> AND
-                <input type="radio" name="operand" value="or" /> OR <br/>
+                <input type="radio" name="operand" value="or" id="disjunction"/> OR <br/>
                 
                 Hakusana: <input type="text" name="tokaSana">
                                 

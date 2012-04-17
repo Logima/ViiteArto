@@ -417,8 +417,8 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä",
         element.sendKeys("pelle peloton");
         element = driver.findElement(By.name("tokaSana"));
         element.sendKeys("testien maailma");
-        element = driver.findElement(By.name("OR"));
-        element.submit();
+        element = driver.findElement(By.ID("disjunction"));
+        element.click();
         element = driver.findElement(By.name("haku"));
         element.submit();
 
