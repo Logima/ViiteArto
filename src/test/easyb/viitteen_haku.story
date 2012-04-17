@@ -476,6 +476,8 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä, 
         element.sendKeys("testien maailma");
         element = driver.findElement(By.name("author"));
         element.sendKeys("myllyrinne");
+        element = driver.findElement(By.name("journal"));
+        element.sendKeys("linkki");
         element = driver.findElement(By.name("lisays"));
         element.submit();
 
@@ -517,16 +519,13 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä, 
         element.sendKeys("testien maailma");
         element = driver.findElement(By.name("tokaSana"));
         element.sendKeys("pelle peloton");
-        element = driver.findElement(By.name("OR"));
-        element.submit();
+        element = driver.findElement(By.id("disjunction"));
+        element.click();
         element = driver.findElement(By.name("haku"));
         element.submit();
-
     }
 
-    then 'viitettä ei löydy', {
-       
+    then 'viitettä ei löydy', { 
        driver.getPageSource().contains("Hakutulokset").shouldBe false
-
     }
 }
