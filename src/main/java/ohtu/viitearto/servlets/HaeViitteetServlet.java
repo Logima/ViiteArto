@@ -39,11 +39,18 @@ public class HaeViitteetServlet extends HttpServlet {
         
         String haku = turva.estaCrossSiteScripting(request.getParameter("sana"));
         String viiteTyyppi = turva.estaCrossSiteScripting(request.getParameter("tyyppi"));
-        
+        System.out.println("TÄÄLLÄ OLLAAN PERKELE");
+        System.out.println("HEAOIGHAOEIGHEAOIHGEAOIHGEAIH");
         if (haku.length() > 0) {
             if (viiteTyyppi.length() > 0) {
+                List<Viite> viitteet = rekisteri.haeViiteHaunTuloksena(haku, viiteTyyppi);
+                System.out.println("KOKO ON ");
+                System.out.println(viitteet.size());
                 request.setAttribute("tulokset", rekisteri.haeViiteHaunTuloksena(haku, viiteTyyppi));
             } else {
+                List<Viite> viitteet = rekisteri.haeViiteHaunTuloksena(haku, null);
+                System.out.println("KOKO ON ");
+                System.out.println(viitteet.size());
                 request.setAttribute("tulokset", rekisteri.haeViiteHaunTuloksena(haku, null));
             }
         }
