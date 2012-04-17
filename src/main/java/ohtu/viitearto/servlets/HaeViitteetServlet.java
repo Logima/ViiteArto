@@ -40,6 +40,8 @@ public class HaeViitteetServlet extends HttpServlet {
         String ekaHakusana = turva.estaCrossSiteScripting(request.getParameter("ekaSana"));
         String tokaHakusana = turva.estaCrossSiteScripting(request.getParameter("tokaSana"));
         
+        String operand = request.getParameter("operand");
+        
         String ekaKentta = request.getParameter("ekaKentta");
         String tokaKentta = request.getParameter("tokaKentta");
         String viiteTyyppi = request.getParameter("tyyppi");
@@ -54,9 +56,9 @@ public class HaeViitteetServlet extends HttpServlet {
         
         if (ekaHakusana.length() > 0 && tokaHakusana.length() > 0) { // haetaan kahdella hakusanalla
             if (viiteTyyppi.length() > 0) {
-                request.setAttribute("tulokset", rekisteri.haeViiteKahdellaHakuSanalla(ekaHakusana, tokaHakusana, viiteTyyppi, ekaKentta, tokaKentta)); // haetaan viitetyypin kanssa
+                request.setAttribute("tulokset", rekisteri.haeViiteKahdellaHakuSanalla(ekaHakusana, tokaHakusana, viiteTyyppi, ekaKentta, tokaKentta, operand)); // haetaan viitetyypin kanssa
             } else {
-                request.setAttribute("tulokset", rekisteri.haeViiteKahdellaHakuSanalla(ekaHakusana, tokaHakusana, null, ekaKentta, tokaKentta)); // haetaan ilman viitetyyppiä
+                request.setAttribute("tulokset", rekisteri.haeViiteKahdellaHakuSanalla(ekaHakusana, tokaHakusana, null, ekaKentta, tokaKentta, operand)); // haetaan ilman viitetyyppiä
             }
         }
         

@@ -104,17 +104,20 @@ public class Rekisteri {
         return q.getResultList();
     }
     
-    public List<Viite> haeViiteKahdellaHakuSanalla(String ekaHaku, String tokaHaku, String viiteTyyppi, String ekaKentta, String tokaKentta) {
+    public List<Viite> haeViiteKahdellaHakuSanalla(String ekaHaku, String tokaHaku, String viiteTyyppi, String ekaKentta, String tokaKentta, String operand) {
         em = getEntityManager();
+        
+        if (operand == null)
+            operand = "and";
         
         Query q = null;
 
         System.out.println("VIITETYYPPI ON "+viiteTyyppi);
         if (viiteTyyppi != null) {
-            q = em.createQuery("SELECT v FROM Viite v WHERE v."+ekaKentta+" LIKE :firstParam and v."+tokaKentta+" LIKE :secondParam and v.type = :typeParam");
+            q = em.createQuery("SELECT v FROM Viite v WHERE v."+ekaKentta+" LIKE :firstParam "+operand+" v."+tokaKentta+" LIKE :secondParam "+operand+" v.type = :typeParam");
             q.setParameter("firstParam", ekaHaku + "%").setParameter("secondParam", tokaHaku+"%").setParameter("typeParam", viiteTyyppi);
         } else {
-            q = em.createQuery("SELECT v FROM Viite v WHERE v."+ekaKentta+" LIKE :firstParam and v."+tokaKentta+" LIKE :secondParam");
+            q = em.createQuery("SELECT v FROM Viite v WHERE v."+ekaKentta+" LIKE :firstParam "+operand+" v."+tokaKentta+" LIKE :secondParam");
             q.setParameter("firstParam", ekaHaku + "%").setParameter("secondParam", tokaHaku+"%");
         }
         return q.getResultList();

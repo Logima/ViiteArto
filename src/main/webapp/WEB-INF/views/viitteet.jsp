@@ -70,8 +70,8 @@
                 
                 <br/>
 
-                <input type="radio" name="and" /> AND
-                <input type="radio" name="or" /> OR <br/>
+                <input type="radio" name="operand" value="and" /> AND
+                <input type="radio" name="operand" value="or" /> OR <br/>
                 
                 Hakusana: <input type="text" name="tokaSana">
                                 
@@ -108,7 +108,7 @@
         <c:if test="${not empty hakuTulokset}">
             <c:forEach var="tulos"
                        items="${hakuTulokset}">
-                Hakutulokset: ${tulos.tiedot}
+                Hakutulokset: ${tulos.tiedot}<br/>
 
             </c:forEach>
         </c:if>
