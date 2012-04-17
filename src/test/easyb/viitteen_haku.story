@@ -434,8 +434,7 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä",
     }
 }
 
-scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä,
-          joista kumpikaan ei ole oikea", {
+scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä, joista kumpikaan ei ole oikea", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:7190/");
