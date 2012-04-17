@@ -245,7 +245,6 @@ scenario "asiakas hakee olemassa olevan viitteen kahdella (JA) syötteillä", {
         element.sendKeys("pelle peloton");
         element = driver.findElement(By.name("tokaSana"));
         element.sendKeys("apinakin osaa koodata");
-        element = driver.findElement(By.name("AND"));
         element.submit();
         element = driver.findElement(By.name("haku"));
         element.submit();
