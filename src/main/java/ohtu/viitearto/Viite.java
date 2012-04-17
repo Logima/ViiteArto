@@ -65,13 +65,14 @@ public class Viite implements Serializable {
     private List<Tag> tagit; // lista tageista, jotka viitteellä on
 
     public Viite() {
+        tiedot = new ArrayList<String>();
+        tagit = new ArrayList<Tag>();
     }
 
     public Viite(String title, String author) {
+        this();
         this.title = title;
         this.author = author;
-        tiedot = new ArrayList<String>();
-        tagit = new ArrayList<Tag>();
     }
 
     public String getAddress() {
