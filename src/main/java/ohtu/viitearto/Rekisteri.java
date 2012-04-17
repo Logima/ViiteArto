@@ -6,6 +6,7 @@ package ohtu.viitearto;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,6 +19,8 @@ import javax.persistence.Query;
  */
 public class Rekisteri {
 
+    
+    private HashMap<String, String> komennot;
     private static Rekisteri instance;
     private EntityManager em;
     
@@ -33,6 +36,11 @@ public class Rekisteri {
     
     private Rekisteri() {
         // käytetään "ViiteArtoPU"-konfiguraatiota
+        komennot = new HashMap<String,String>();
+        komennot.put("address", "getAddress()");
+        komennot.put("title", "getTitle()");
+        komennot.put("author", "getAuthor()");
+        
         emf = Persistence.createEntityManagerFactory("ViiteArtoPU");
     }
     
@@ -137,5 +145,41 @@ public class Rekisteri {
         }
         
         return kopio;
+    }
+    
+    public List<Viite> haeViiteTagJaHakusana(String ekaHaku, String tokaHaku, String viiteTyyppi, String ekaKentta, String tokaKentta, String operand) {
+        em = getEntityManager();
+        
+        Query q = null;
+        
+        if (ekaKentta.equals("tag")) {
+
+            if (viiteTyyppi != null) {
+                q = em.createQuery("SELECT v FROM Viite v WHERE v." + tokaKentta + " LIKE :firstParam " + operand + " v.type = :typeParam");
+                q.setParameter("firstParam", tokaHaku + "%").setParameter("typeParam", viiteTyyppi);
+            } else {
+                q = em.createQuery("SELECT v FROM Viite v WHERE v." + tokaKentta + " LIKE :firstParam");
+                q.setParameter("firstParam", tokaHaku + "%");
+            }
+
+            List<Viite> kysely = q.getResultList(); // hakusanan perusteella haetut
+
+            List<Viite> haettavat = haeTag(ekaHaku).getViitteet(); // tagien perusteella haetut
+            List<Viite> kopio = new ArrayList<Viite>();
+
+            for (Viite viite : haettavat) {
+                kopio.add(viite);
+            }
+
+            if (viiteTyyppi != null) {
+                for (int i = 0; i < kopio.size(); ++i) {
+                    if (!kopio.get(i).getType().equals(viiteTyyppi)) {
+                        kopio.remove(kopio.get(i));
+                    }
+                }
+            }
+        }
+        
+        return null;
     }
 }
