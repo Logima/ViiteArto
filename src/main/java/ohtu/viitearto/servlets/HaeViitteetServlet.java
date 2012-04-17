@@ -37,14 +37,26 @@ public class HaeViitteetServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         
-        String haku = turva.estaCrossSiteScripting(request.getParameter("sana"));
-        String viiteTyyppi = turva.estaCrossSiteScripting(request.getParameter("tyyppi"));
+        String ekaHakusana = turva.estaCrossSiteScripting(request.getParameter("ekaSana"));
+        String tokaHakusana = turva.estaCrossSiteScripting(request.getParameter("tokaSana"));
+        
+        String ekaKentta = request.getParameter("ekaKentta");
+        String tokaKentta = request.getParameter("tokaKentta");
+        String viiteTyyppi = request.getParameter("tyyppi");
 
-        if (haku.length() > 0) {
+        if (ekaHakusana.length() > 0 && tokaHakusana.length() <= 0) { // haetaan yhdellä hakusanalla
             if (viiteTyyppi.length() > 0) {
-                request.setAttribute("tulokset", rekisteri.haeViiteHaunTuloksena(haku, viiteTyyppi));
+                request.setAttribute("tulokset", rekisteri.haeViiteYhdellaHakuSanalla(ekaHakusana, viiteTyyppi, ekaKentta)); // haetaan viitetyypin kanssa
             } else {
-                request.setAttribute("tulokset", rekisteri.haeViiteHaunTuloksena(haku, null));
+                request.setAttribute("tulokset", rekisteri.haeViiteYhdellaHakuSanalla(ekaHakusana, null, ekaKentta)); // haetaan ilman viitetyyppiä
+            }
+        }
+        
+        if (ekaHakusana.length() > 0 && tokaHakusana.length() > 0) { // haetaan kahdella hakusanalla
+            if (viiteTyyppi.length() > 0) {
+                request.setAttribute("tulokset", rekisteri.haeViiteKahdellaHakuSanalla(ekaHakusana, tokaHakusana, viiteTyyppi, ekaKentta, tokaKentta)); // haetaan viitetyypin kanssa
+            } else {
+                request.setAttribute("tulokset", rekisteri.haeViiteKahdellaHakuSanalla(ekaHakusana, tokaHakusana, null, ekaKentta, tokaKentta)); // haetaan ilman viitetyyppiä
             }
         }
         

@@ -41,7 +41,6 @@ scenario "asiakas lisää viitteen oikeilla syötteillä", {
     }
 
     then 'viite näkyy sivulla', {
-        System.out.println(driver.getPageSource());
        driver.getPageSource().contains("väinö").shouldBe true
     }
 }

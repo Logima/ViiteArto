@@ -53,21 +53,58 @@
             </form>
         </c:if>
 
+            <!-- Viitteiden haku -->
+            
             <h4> Hae viitteitä </h4>
             <form action="/HaeViitteet" method="post">
-                Hakusana: <input type="text" name="sana"><br/> <!-- Viitteen tyyppi -->
+                Hakusana: <input type="text" name="ekaSana">
+                                
+                <select name="ekaKentta">
+                    <option value="author">Author</option>
+                    <option value="title">Title</option>
+                    <option value="booktitle">Booktitle</option>
+                    <option value="journal">Journal</option>
+                    <option value="publisher">Publisher</option>
+                    <option value="tag">Tag</option>
+                </select><br/>
+                
+                <br/>
 
+                <input type="radio" name="and" /> AND
+                <input type="radio" name="or" /> OR <br/>
+                
+                Hakusana: <input type="text" name="tokaSana">
+                                
+                <select name="tokaKentta">
+                    <option value="author">Author</option>
+                    <option value="title">Title</option>
+                    <option value="booktitle">Booktitle</option>
+                    <option value="journal">Journal</option>
+                    <option value="publisher">Publisher</option>
+                    <option value="tag">Tag</option>
+                    <option value="address">Address</option>
+                    <option value="pages">Pages</option>
+                    <option value="number">Number</option>
+                    <option value="volume">Volume</option>
+                </select><br/>
+                
+                <!-- Viitteen tyyppi -->
+                Viitteen tyyppi:
+                
                 <select name="tyyppi">
                     <option></option>
                     <option value="Book">Book</option>
                     <option value="Inproceedings">Inproceedings</option>
                     <option value="Article">Article</option>
                 </select><br/>
+                
                 <input type="submit" name="haku" value="Hae"/>
             </form>
                 
         </br>
 
+        <!-- Viitehaun tulokset -->
+        
         <c:if test="${not empty hakuTulokset}">
             <c:forEach var="tulos"
                        items="${hakuTulokset}">
@@ -75,12 +112,13 @@
 
             </c:forEach>
         </c:if>
-
+   
+        <!-- Viitteiden listaus -->
+        
         <h4>Viitteet</h4>
 
         <c:if test="${not empty viitteet}">
 
-            <!-- Listaa viitteet -->
             <table border="1" width="360" cellpadding="3" cellspacing="1" style="background-color: white">
                 <tr>
                     <th>Id</th>

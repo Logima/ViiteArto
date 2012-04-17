@@ -88,18 +88,34 @@ public class Rekisteri {
         return em.find(Viite.class, tunniste);
     }
 
-    public List<Viite> haeViiteHaunTuloksena(String haku, String viiteTyyppi) {
+    public List<Viite> haeViiteYhdellaHakuSanalla(String haku, String viiteTyyppi, String kentta) {
         em = getEntityManager();
         
         Query q = null;
 
         System.out.println("VIITETYYPPI ON "+viiteTyyppi);
         if (viiteTyyppi != null) {
-            q = em.createQuery("SELECT v FROM Viite v WHERE v.title LIKE :titleParam and v.type = :typeParam");
-            q.setParameter("titleParam", haku + "%").setParameter("typeParam", viiteTyyppi);
+            q = em.createQuery("SELECT v FROM Viite v WHERE v."+kentta+" LIKE :fieldParam and v.type = :typeParam");
+            q.setParameter("fieldParam", haku + "%").setParameter("typeParam", viiteTyyppi);
         } else {
-            q = em.createQuery("SELECT v FROM Viite v WHERE v.title LIKE :titleParam");
-            q.setParameter("titleParam", haku + "%");
+            q = em.createQuery("SELECT v FROM Viite v WHERE v."+kentta+" LIKE :fieldParam");
+            q.setParameter("fieldParam", haku + "%");
+        }
+        return q.getResultList();
+    }
+    
+    public List<Viite> haeViiteKahdellaHakuSanalla(String ekaHaku, String tokaHaku, String viiteTyyppi, String ekaKentta, String tokaKentta) {
+        em = getEntityManager();
+        
+        Query q = null;
+
+        System.out.println("VIITETYYPPI ON "+viiteTyyppi);
+        if (viiteTyyppi != null) {
+            q = em.createQuery("SELECT v FROM Viite v WHERE v."+ekaKentta+" LIKE :firstParam and v."+tokaKentta+" LIKE :secondParam and v.type = :typeParam");
+            q.setParameter("firstParam", ekaHaku + "%").setParameter("secondParam", tokaHaku+"%").setParameter("typeParam", viiteTyyppi);
+        } else {
+            q = em.createQuery("SELECT v FROM Viite v WHERE v."+ekaKentta+" LIKE :firstParam and v."+tokaKentta+" LIKE :secondParam");
+            q.setParameter("firstParam", ekaHaku + "%").setParameter("secondParam", tokaHaku+"%");
         }
         return q.getResultList();
     }
