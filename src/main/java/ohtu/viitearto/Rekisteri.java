@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
@@ -85,5 +86,21 @@ public class Rekisteri {
         em = getEntityManager();
         
         return em.find(Viite.class, tunniste);
+    }
+
+    public List<Viite> haeViiteHaunTuloksena(String haku, String viiteTyyppi) {
+        em = getEntityManager();
+        
+        Query q = null;
+
+        System.out.println("VIITETYYPPI ON "+viiteTyyppi);
+        if (viiteTyyppi != null) {
+            q = em.createQuery("SELECT v FROM Viite v WHERE v.title LIKE :titleParam and v.type = :typeParam");
+            q.setParameter("titleParam", haku + "%").setParameter("typeParam", viiteTyyppi);
+        } else {
+            q = em.createQuery("SELECT v FROM Viite v WHERE v.title LIKE :titleParam");
+            q.setParameter("titleParam", haku + "%");
+        }
+        return q.getResultList();
     }
 }

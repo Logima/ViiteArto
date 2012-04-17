@@ -21,6 +21,10 @@
         <servlet-name>ViitteenTiedotServlet</servlet-name>
         <servlet-class>ohtu.viitearto.servlets.ViitteenTiedotServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HaeViitteetServlet</servlet-name>
+        <servlet-class>ohtu.viitearto.servlets.HaeViitteetServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ViitteetServlet</servlet-name>
         <url-pattern>/Viitteet</url-pattern>
@@ -40,6 +44,10 @@
     <servlet-mapping>
         <servlet-name>ViitteenTiedotServlet</servlet-name>
         <url-pattern>/ViitteenTiedot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HaeViitteetServlet</servlet-name>
+        <url-pattern>/HaeViitteet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

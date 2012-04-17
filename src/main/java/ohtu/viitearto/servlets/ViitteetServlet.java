@@ -3,6 +3,7 @@ package ohtu.viitearto.servlets;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.TreeMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ohtu.viitearto.Rekisteri;
 import ohtu.viitearto.Tietoturva;
+import ohtu.viitearto.Viite;
 
 
 public class ViitteetServlet extends HttpServlet {
@@ -20,12 +22,16 @@ public class ViitteetServlet extends HttpServlet {
     private String lomakeTyyppi;
     private TreeMap<String, String> lomakeTiedot = new TreeMap<String, String>();
     private String viiteTyyppi;
+    private List<Viite> hakuTulokset;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-       
+        
+        if (hakuTulokset != null)
+            request.setAttribute("hakuTulokset", hakuTulokset);
+        
         if (lomakeTyyppi != null) { // asetetaan viitteen lisäämistä varten täytettävät kentät
             viiteTyyppi = null;
             lomakeTiedot.clear();
@@ -65,6 +71,7 @@ public class ViitteetServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        hakuTulokset = (List<Viite>) request.getAttribute("tulokset");
         lomakeTyyppi = request.getParameter("viiteTyyppi");
         
         response.sendRedirect(request.getRequestURI()); // POST-pyynnöt ohjataan doGetille

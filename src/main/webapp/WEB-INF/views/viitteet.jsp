@@ -53,7 +53,28 @@
             </form>
         </c:if>
 
+            <h4> Hae viitteitä </h4>
+            <form action="/HaeViitteet" method="post">
+                Hakusana: <input type="text" name="sana"><br/> <!-- Viitteen tyyppi -->
+
+                <select name="tyyppi">
+                    <option></option>
+                    <option value="Book">Book</option>
+                    <option value="Inproceedings">Inproceedings</option>
+                    <option value="Article">Article</option>
+                </select><br/>
+                <input type="submit" name="haku" value="Hae"/>
+            </form>
+                
         </br>
+
+        <c:if test="${not empty hakuTulokset}">
+            <c:forEach var="tulos"
+                       items="${hakuTulokset}">
+                Hakutulokset: ${tulos.tiedot}
+
+            </c:forEach>
+        </c:if>
 
         <h4>Viitteet</h4>
 
