@@ -141,22 +141,12 @@ public class Rekisteri {
     }
     
     public List<Viite> haeViiteTagJaHakusana(String ekaHaku, String tokaHaku, String viiteTyyppi, String ekaKentta, String tokaKentta, String operand) {
-        em = getEntityManager();
-        
-        Query q = null;
         
         if (ekaKentta.equals("tag")) {
+
+            if (haeTag(ekaHaku).getViitteet() == null)
+                return null;
             
-            if (viiteTyyppi != null) {
-                q = em.createQuery("SELECT v FROM Viite v WHERE v." + tokaKentta + " LIKE :firstParam " + operand + " v.type = :typeParam");
-                q.setParameter("firstParam", tokaHaku + "%").setParameter("typeParam", viiteTyyppi);
-            } else {
-                q = em.createQuery("SELECT v FROM Viite v WHERE v." + tokaKentta + " LIKE :firstParam");
-                q.setParameter("firstParam", tokaHaku + "%");
-            }
-
-            List<Viite> kysely = q.getResultList(); // hakusanan perusteella haetut
-
             List<Viite> haettavat = haeTag(ekaHaku).getViitteet(); // tagien perusteella haetut
             
             List<Viite> kopio = new ArrayList<Viite>();
@@ -208,7 +198,10 @@ public class Rekisteri {
             return kopio;
         } else if (tokaKentta.equals("tag")) {
 
-            List<Viite> haettavat = haeTag(tokaHaku).getViitteet(); // tagien perusteella haetut
+            if (haeTag(tokaHaku).getViitteet() == null)
+                return null;
+            
+                List<Viite> haettavat = haeTag(tokaHaku).getViitteet(); // tagien perusteella haetut
             
             List<Viite> kopio = new ArrayList<Viite>();
 
