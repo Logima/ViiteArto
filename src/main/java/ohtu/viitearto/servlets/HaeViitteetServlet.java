@@ -64,17 +64,17 @@ public class HaeViitteetServlet extends HttpServlet {
         }
         
         if (ekaHakusana.length() > 0 && tokaHakusana.length() > 0) { // haetaan kahdella hakusanalla
-            if (ekaKentta.equals("tag")) {
-                if (viiteTyyppi.length() > 0) {
-                    request.setAttribute("tulokset", rekisteri.haeViiteTagJaHakusana(ekaHakusana, tokaHakusana, viiteTyyppi, ekaKentta, tokaKentta, operand));
-                } else
-                    request.setAttribute("tulokset", rekisteri.haeViiteTagJaHakusana(ekaHakusana, tokaHakusana, null, ekaKentta, tokaKentta, operand));
-            } else if (tokaKentta.equals("tag")) {
-               if (viiteTyyppi.length() > 0) {
-                    request.setAttribute("tulokset", rekisteri.haeViiteTagJaHakusana(ekaHakusana, tokaHakusana, viiteTyyppi, ekaKentta, tokaKentta, operand));
-                } else
-                    request.setAttribute("tulokset", rekisteri.haeViiteTagJaHakusana(ekaHakusana, tokaHakusana, null, ekaKentta, tokaKentta, operand));
-            }
+//            if (ekaKentta.equals("tag")) {
+//                if (viiteTyyppi.length() > 0) {
+//                    request.setAttribute("tulokset", rekisteri.haeViiteTagJaHakusana(ekaHakusana, tokaHakusana, viiteTyyppi, ekaKentta, tokaKentta, operand));
+//                } else
+//                    request.setAttribute("tulokset", rekisteri.haeViiteTagJaHakusana(ekaHakusana, tokaHakusana, null, ekaKentta, tokaKentta, operand));
+//            } else if (tokaKentta.equals("tag")) {
+//               if (viiteTyyppi.length() > 0) {
+//                    request.setAttribute("tulokset", rekisteri.haeViiteTagJaHakusana(ekaHakusana, tokaHakusana, viiteTyyppi, ekaKentta, tokaKentta, operand));
+//                } else
+//                    request.setAttribute("tulokset", rekisteri.haeViiteTagJaHakusana(ekaHakusana, tokaHakusana, null, ekaKentta, tokaKentta, operand));
+//            }
             
             if (viiteTyyppi.length() > 0) {
                 request.setAttribute("tulokset", rekisteri.haeViiteKahdellaHakuSanalla(ekaHakusana, tokaHakusana, viiteTyyppi, ekaKentta, tokaKentta, operand)); // haetaan viitetyypin kanssa
