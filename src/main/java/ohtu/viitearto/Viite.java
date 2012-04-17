@@ -223,17 +223,4 @@ public class Viite implements Serializable {
     public List<Tag> getTagit() {
         return tagit;
     }
-    
-    @Override
-    public String toString() {
-        String info = "";
-        
-        for (int i=0; i < tiedot.size(); ++i) {
-            info += tiedot.get(i);
-            info += "\n";
-        }
-        
-        
-        return info;
-    }
 }

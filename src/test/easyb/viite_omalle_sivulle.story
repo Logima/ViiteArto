@@ -39,6 +39,7 @@ scenario "asiakas valitsee listasta viitteen, joka avautuu omalle sivulleen", {
     }
 
     when 'viite löytyy listalta', {
+        System.out.println(driver.getPageSource());
         element = driver.findElement(By.linkText("Avaudun"));
         element.click();
     }

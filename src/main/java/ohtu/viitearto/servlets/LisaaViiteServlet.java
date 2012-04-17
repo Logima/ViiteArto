@@ -64,8 +64,6 @@ public class LisaaViiteServlet extends HttpServlet {
         String booktitle = secure.estaCrossSiteScripting(request.getParameter("booktitle"));
         String address = secure.estaCrossSiteScripting(request.getParameter("address"));
         String pages = secure.estaCrossSiteScripting(request.getParameter("pages"));
-        
-        int year = 0;
 
         secure.tarkistaPakollisetTiedot(title, author, null, booktitle);
         secure.tarkistaNumeroTiedot(yearString, null, null);
@@ -75,14 +73,11 @@ public class LisaaViiteServlet extends HttpServlet {
             return null;
         }
         
-        if (yearString.length() > 0)
-            year = Integer.parseInt(yearString);
-        
         Viite uusiInproceedings = new Viite(author, title);
         uusiInproceedings.setType("Inproceedings");
         uusiInproceedings.setBooktitle(booktitle);
         
-        lisaaOptionaalisetTiedot(uusiInproceedings, publisher, address, pages, year, 0, 0);
+        lisaaOptionaalisetTiedot(uusiInproceedings, publisher, address, pages, yearString, null, null);
         lisaaTagit(request, uusiInproceedings);
         
         return uusiInproceedings;
@@ -99,10 +94,6 @@ public class LisaaViiteServlet extends HttpServlet {
         String volumeString = secure.estaCrossSiteScripting(request.getParameter("volume"));
         String numberString = secure.estaCrossSiteScripting(request.getParameter("number"));
         
-        int year = 0;
-        int number = 0;        
-        int volume = 0;
-        
         secure.tarkistaPakollisetTiedot(title, author, journal, null);
         secure.tarkistaNumeroTiedot(yearString, volumeString, numberString);
         
@@ -111,18 +102,11 @@ public class LisaaViiteServlet extends HttpServlet {
             return null;
         }
         
-        if (yearString.length() > 0)
-            year = Integer.parseInt(yearString);
-        if (numberString.length() > 0)
-            number = Integer.parseInt(numberString);
-        if (volumeString.length() > 0)
-            volume = Integer.parseInt(volumeString);
-        
         Viite uusiArticle = new Viite(title, author);
         uusiArticle.setType("Article");
         uusiArticle.setJournal(journal);
         
-        lisaaOptionaalisetTiedot(uusiArticle, publisher, address, pages, year, volume, number);
+        lisaaOptionaalisetTiedot(uusiArticle, publisher, address, pages, yearString, volumeString, numberString);
         lisaaTagit(request, uusiArticle);
         
         return uusiArticle;
@@ -135,8 +119,6 @@ public class LisaaViiteServlet extends HttpServlet {
         String yearString = secure.estaCrossSiteScripting(request.getParameter("year"));
         String address = secure.estaCrossSiteScripting(request.getParameter("address"));
         
-        int year = 0;
-        
         secure.tarkistaPakollisetTiedot(title, author, null, null);
         secure.tarkistaNumeroTiedot(yearString, null, null);
         
@@ -145,13 +127,10 @@ public class LisaaViiteServlet extends HttpServlet {
             return null;
         }
         
-        if (yearString.length() > 0)
-            year = Integer.parseInt(yearString);
-        
         Viite uusiBook = new Viite(title, author);
         uusiBook.setType("Book");
         
-        lisaaOptionaalisetTiedot(uusiBook, publisher, address, null, year, 0, 0);
+        lisaaOptionaalisetTiedot(uusiBook, publisher, address, null, yearString, null, null);
         lisaaTagit(request, uusiBook);
         
         return uusiBook;
@@ -175,7 +154,11 @@ public class LisaaViiteServlet extends HttpServlet {
     }
     
     private void lisaaOptionaalisetTiedot(Viite uusi, String publisher, String address, String pages,
-            int year, int volume, int number) {
+            String yearString, String volumeString, String numberString) {
+        
+        int year = 0;
+        int volume = 0;
+        int number = 0;
         
         if (publisher != null && publisher.length() > 0)
             uusi.setPublisher(publisher);
@@ -183,14 +166,26 @@ public class LisaaViiteServlet extends HttpServlet {
         if (address != null && address.length() > 0)
             uusi.setAddress(address);
         
-        if (year != 0)
-            uusi.setYear(year);
+        if (yearString != null && yearString.length() > 0) {
+            year = Integer.parseInt(yearString);
+            
+            if (year != 0)
+                uusi.setYear(year);
+        }
         
-        if (volume != 0)
-            uusi.setVolume(volume);
+        if (volumeString != null && volumeString.length() > 0) {
+            volume = Integer.parseInt(volumeString);
+            
+            if (volume != 0)
+                uusi.setVolume(volume);
+        }
         
-        if (number != 0)
-            uusi.setNumber(number);
+        if (numberString != null && numberString.length() > 0) {
+            number = Integer.parseInt(numberString);
+            
+            if (number != 0)
+                uusi.setNumber(number);
+        }
         
         if (pages != null && pages.length() > 0)
             uusi.setPages(pages);
