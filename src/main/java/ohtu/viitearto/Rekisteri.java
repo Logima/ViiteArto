@@ -4,6 +4,8 @@
  */
 package ohtu.viitearto;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -82,18 +84,17 @@ public class Rekisteri {
         return em.find(Viite.class, id);
     }
     
-    public Viite haeTag(String tunniste) {
+    public Tag haeTag(String tunniste) {
         em = getEntityManager();
         
-        return em.find(Viite.class, tunniste);
+        return em.find(Tag.class, tunniste);
     }
 
     public List<Viite> haeViiteYhdellaHakuSanalla(String haku, String viiteTyyppi, String kentta) {
         em = getEntityManager();
         
         Query q = null;
-
-        System.out.println("VIITETYYPPI ON "+viiteTyyppi);
+        
         if (viiteTyyppi != null) {
             q = em.createQuery("SELECT v FROM Viite v WHERE v."+kentta+" LIKE :fieldParam and v.type = :typeParam");
             q.setParameter("fieldParam", haku + "%").setParameter("typeParam", viiteTyyppi);
@@ -107,12 +108,8 @@ public class Rekisteri {
     public List<Viite> haeViiteKahdellaHakuSanalla(String ekaHaku, String tokaHaku, String viiteTyyppi, String ekaKentta, String tokaKentta, String operand) {
         em = getEntityManager();
         
-        if (operand == null)
-            operand = "and";
-        
         Query q = null;
-
-        System.out.println("VIITETYYPPI ON "+viiteTyyppi);
+        
         if (viiteTyyppi != null) {
             q = em.createQuery("SELECT v FROM Viite v WHERE v."+ekaKentta+" LIKE :firstParam "+operand+" v."+tokaKentta+" LIKE :secondParam "+operand+" v.type = :typeParam");
             q.setParameter("firstParam", ekaHaku + "%").setParameter("secondParam", tokaHaku+"%").setParameter("typeParam", viiteTyyppi);
@@ -121,5 +118,24 @@ public class Rekisteri {
             q.setParameter("firstParam", ekaHaku + "%").setParameter("secondParam", tokaHaku+"%");
         }
         return q.getResultList();
+    }
+
+    public List<Viite> haeViiteTageilla(String haku, String viiteTyyppi) {
+        List<Viite> haettavat = haeTag(haku).getViitteet();
+        List<Viite> kopio = new ArrayList<Viite>();
+        
+        for (Viite viite : haettavat) {
+            kopio.add(viite);
+        }  
+        
+        if (viiteTyyppi != null) {
+            for (int i=0; i < kopio.size(); ++i) {
+                if (!kopio.get(i).getType().equals(viiteTyyppi)) {
+                    kopio.remove(kopio.get(i));
+                }
+            }
+        }
+        
+        return kopio;
     }
 }

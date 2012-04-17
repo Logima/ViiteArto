@@ -66,11 +66,16 @@
                     <option value="journal">Journal</option>
                     <option value="publisher">Publisher</option>
                     <option value="tag">Tag</option>
+                    <option value="year">Year</option>
+                    <option value="address">Address</option>
+                    <option value="pages">Pages</option>
+                    <option value="number">Number</option>
+                    <option value="volume">Volume</option>
                 </select><br/>
                 
                 <br/>
 
-                <input type="radio" name="operand" value="and" /> AND
+                <input type="radio" name="operand" value="and" checked="checked"/> AND
                 <input type="radio" name="operand" value="or" /> OR <br/>
                 
                 Hakusana: <input type="text" name="tokaSana">
@@ -82,6 +87,7 @@
                     <option value="journal">Journal</option>
                     <option value="publisher">Publisher</option>
                     <option value="tag">Tag</option>
+                    <option value="year">Year</option>
                     <option value="address">Address</option>
                     <option value="pages">Pages</option>
                     <option value="number">Number</option>

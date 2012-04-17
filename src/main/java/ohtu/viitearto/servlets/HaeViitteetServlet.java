@@ -47,14 +47,35 @@ public class HaeViitteetServlet extends HttpServlet {
         String viiteTyyppi = request.getParameter("tyyppi");
 
         if (ekaHakusana.length() > 0 && tokaHakusana.length() <= 0) { // haetaan yhdellä hakusanalla
-            if (viiteTyyppi.length() > 0) {
-                request.setAttribute("tulokset", rekisteri.haeViiteYhdellaHakuSanalla(ekaHakusana, viiteTyyppi, ekaKentta)); // haetaan viitetyypin kanssa
+            if (ekaKentta.equals("tag")) {
+                
+                if (viiteTyyppi.length() > 0)
+                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(ekaHakusana, viiteTyyppi));
+                else
+                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(ekaHakusana, null));
+                
             } else {
-                request.setAttribute("tulokset", rekisteri.haeViiteYhdellaHakuSanalla(ekaHakusana, null, ekaKentta)); // haetaan ilman viitetyyppiä
+                
+                if (viiteTyyppi.length() > 0)
+                    request.setAttribute("tulokset", rekisteri.haeViiteYhdellaHakuSanalla(ekaHakusana, viiteTyyppi, ekaKentta)); // haetaan viitetyypin kanssa
+                else
+                    request.setAttribute("tulokset", rekisteri.haeViiteYhdellaHakuSanalla(ekaHakusana, null, ekaKentta)); // haetaan ilman viitetyyppiä
             }
         }
         
         if (ekaHakusana.length() > 0 && tokaHakusana.length() > 0) { // haetaan kahdella hakusanalla
+            if (ekaKentta.equals("tag")) {
+                if (viiteTyyppi.length() > 0) {
+                    request.setAttribute("tulokset", rekisteri.haeViiteTagJaHakusana(ekaHakusana, tokaHakusana, viiteTyyppi, ekaKentta, tokaKentta, operand));
+                } else
+                    request.setAttribute("tulokset", rekisteri.haeViiteTagJaHakusana(ekaHakusana, tokaHakusana, null, ekaKentta, tokaKentta, operand));
+            } else if (tokaKentta.equals("tag")) {
+               if (viiteTyyppi.length() > 0) {
+                    request.setAttribute("tulokset", rekisteri.haeViiteTagJaHakusana(ekaHakusana, tokaHakusana, viiteTyyppi, ekaKentta, tokaKentta, operand));
+                } else
+                    request.setAttribute("tulokset", rekisteri.haeViiteTagJaHakusana(ekaHakusana, tokaHakusana, null, ekaKentta, tokaKentta, operand));
+            }
+            
             if (viiteTyyppi.length() > 0) {
                 request.setAttribute("tulokset", rekisteri.haeViiteKahdellaHakuSanalla(ekaHakusana, tokaHakusana, viiteTyyppi, ekaKentta, tokaKentta, operand)); // haetaan viitetyypin kanssa
             } else {
