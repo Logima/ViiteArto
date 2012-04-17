@@ -260,8 +260,7 @@ scenario "asiakas hakee olemassa olevan viitteen kahdella (JA) syötteillä", {
     }
 }
 
-scenario "asiakas hakee olemassa olevan viitteen kahdella (JA) syötteillä,
-          joista toinen syöte on väärä", {
+scenario "asiakas hakee olemassa olevan viitteen kahdella (JA) syötteillä joista toinen syöte on väärä", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:7190/");
