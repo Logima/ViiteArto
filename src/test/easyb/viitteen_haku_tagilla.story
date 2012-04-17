@@ -76,7 +76,7 @@ scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
-            if(option.getText().equals("Inproceeding")){
+            if(option.getText().equals("Inproceedings")){
                 option.click();
                 break;
             }
@@ -84,6 +84,7 @@ scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
 
         element = driver.findElement(By.name("valinta"));
         element.submit();
+
         element = driver.findElement(By.name("title"));
         element.sendKeys("apinakin osaa koodata");
         element = driver.findElement(By.name("booktitle"));
@@ -91,7 +92,8 @@ scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
         element = driver.findElement(By.name("author"));
         element.sendKeys("henkka ei");
         element = driver.findElement(By.name("tag"));
-        element.sendKeys(hemulia);
+        element.sendKeys("hemulia");
+
         element = driver.findElement(By.name("lisays"));
         element.submit();
     }
@@ -110,6 +112,7 @@ scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
 
         element = driver.findElement(By.name("ekaSana"));
         element.sendKeys("hemulia");
+
         element = driver.findElement(By.name("haku"));
         element.submit();
 
@@ -118,6 +121,7 @@ scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
     then 'oikea viite löytyy', {
        
        driver.getPageSource().contains("Hakutulokset").shouldBe true
+       driver.getPageSource().contains("TKTL").shouldBe true
        driver.getPageSource().contains("hemulia").shouldBe true
     }
 }
