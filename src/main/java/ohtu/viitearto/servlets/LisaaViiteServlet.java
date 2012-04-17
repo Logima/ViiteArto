@@ -138,18 +138,22 @@ public class LisaaViiteServlet extends HttpServlet {
     
     private void lisaaTagit(HttpServletRequest request, Viite viite) {
         String tag = request.getParameter("tag");
-
+        
         if (tag.length() > 0) {
 
             String[] tagit = tag.split(",");
             List<Tag> tagiLista = new ArrayList<Tag>();
 
             for (int i = 0; i < tagit.length; ++i) {
-                Tag uusi = new Tag(tagit[i]);
-                tagiLista.add(uusi);
+                if (rekisteri.haeTag(tagit[i]) == null) { // tarkistetaan onko saman niminen tag jo olemassa
+                    Tag uusi = new Tag(tagit[i]);
+                    tagiLista.add(uusi);
+                } else {
+                    tagiLista.add(rekisteri.haeTag(tagit[i]));
+                }
             }
-
             viite.setTagit(tagiLista);
+            
         }
     }
     
