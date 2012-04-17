@@ -125,12 +125,12 @@ scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
        driver.getPageSource().contains("hemulia").shouldBe true
     }
 }
-scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
+scenario "asiakas hakee viitettä tagilla articlesta", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:7190/");
 
-    given 'lisätään inproceeding tagilla', {
+    given 'lisätään article tagilla', {
         WebElement element = driver.findElement(By.name("viiteTyyppi"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
@@ -143,14 +143,19 @@ scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
 
         element = driver.findElement(By.name("valinta"));
         element.submit();
+
         element = driver.findElement(By.name("title"));
         element.sendKeys("apinakin osaa koodata");
+
         element = driver.findElement(By.name("journal"));
         element.sendKeys("TKTL");
+
         element = driver.findElement(By.name("author"));
         element.sendKeys("henkka ei");
+
         element = driver.findElement(By.name("tag"));
-        element.sendKeys(hemulia);
+        element.sendKeys("hemulia");
+
         element = driver.findElement(By.name("lisays"));
         element.submit();
     }
@@ -169,6 +174,7 @@ scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
 
         element = driver.findElement(By.name("ekaSana"));
         element.sendKeys("hemulia");
+
         element = driver.findElement(By.name("haku"));
         element.submit();
 
@@ -177,6 +183,7 @@ scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
     then 'oikea viite löytyy', {
        
        driver.getPageSource().contains("Hakutulokset").shouldBe true
+       driver.getPageSource().contains("TKTL").shouldBe true
        driver.getPageSource().contains("hemulia").shouldBe true
     }
 }
