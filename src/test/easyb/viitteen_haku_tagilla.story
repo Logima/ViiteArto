@@ -33,7 +33,7 @@ scenario "asiakas hakee viitettä tagilla pelkistä kirjoista", {
         element = driver.findElement(By.name("author"));
         element.sendKeys("henkka ei");
         element = driver.findElement(By.name("tag"));
-        element.sendKeys(hemulia);
+        element.sendKeys("hemulia");
         element = driver.findElement(By.name("lisays"));
         element.submit();
     }
@@ -60,7 +60,7 @@ scenario "asiakas hakee viitettä tagilla pelkistä kirjoista", {
     then 'oikea viite löytyy', {
        
        driver.getPageSource().contains("Hakutulokset").shouldBe true
-       driver.getPageSource().contains("apinakin osaa koodata").shouldBe true
+       driver.getPageSource().contains("hemulia").shouldBe true
     }
 }
 
