@@ -376,6 +376,8 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä",
         element.sendKeys("testien maailma");
         element = driver.findElement(By.name("author"));
         element.sendKeys("myllyrinne");
+        element = driver.findElement(By.name("journal));
+        element.sendKeys("linkki");
         element = driver.findElement(By.name("lisays"));
         element.submit();
 
