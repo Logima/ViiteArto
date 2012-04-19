@@ -656,7 +656,7 @@ scenario "asiakas hakee viitteitä kahdella (TAI) syötteillä eikä tuloslistas
         element = driver.findElement(By.name("author"));
         element.sendKeys("Beck, Kent and Andres, Cynthia");
         element = driver.findElement(By.name("publisher"));
-        element.sendKeys("OhtuGroup");
+        element.sendKeys("Addison-Wesley");
 
         element = driver.findElement(By.name("lisays"));
         element.submit();
@@ -701,7 +701,8 @@ scenario "asiakas hakee viitteitä kahdella (TAI) syötteillä eikä tuloslistas
 
        System.out.println(driver.getPageSource());
        driver.getPageSource().contains("Hakutulokset").shouldBe true
-       driver.getPageSource().contains("Title: Extreme Apprenticeship").shouldBe true
-       driver.getPageSource().contains("Title: Extreme Programming").shouldBe true
+       driver.getPageSource().contains("Extreme Apprenticeship").shouldBe true
+       driver.getPageSource().contains("Extreme Programming").shouldBe true
+       driver.getPageSource().indexOf("Addison-Wesley").shouldEqual driver.getPageSource().lastIndexOf("Addison-Wesley")
     }
 }
