@@ -1,6 +1,7 @@
 package ohtu.viitearto;
 
 import java.io.*;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,6 +43,44 @@ public class Bibtex {
     
     public static boolean output(Viite v, Writer writer) {
         BibTeXDatabase db = new BibTeXDatabase();
+        
+        addEntry(db, v);
+        
+        try {
+            BibTeXFormatter formatter = new BibTeXFormatter();
+            formatter.format(db, writer);
+        } catch (Exception ex) {
+            return false;
+        }
+        return true;
+    }
+    
+    private static BibTeXDatabase parse(File file) {
+        try {
+            Reader reader = new FileReader(file);
+            BibTeXParser parser = new BibTeXParser();
+            return parser.parse(reader);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static boolean output(List<Viite> viitteet, PrintWriter writer) {
+        BibTeXDatabase db = new BibTeXDatabase();
+        for (Viite viite : viitteet) {
+            addEntry(db, viite);
+        }
+        
+        try {
+            BibTeXFormatter formatter = new BibTeXFormatter();
+            formatter.format(db, writer);
+        } catch (Exception ex) {
+            return false;
+        }
+        return true;
+    }
+    
+    private static void addEntry(BibTeXDatabase db, Viite v){
         BibTeXEntry e = new BibTeXEntry(new Key(v.getType()), new Key(v.getId().toString()));
         
         if (v.getTitle() != null && v.getTitle().length() > 0)
@@ -62,35 +101,18 @@ public class Bibtex {
         if (v.getAddress() != null && v.getAddress().length() > 0)
             e.addField(new Key("Address"), new StringValue(v.getAddress(), StringValue.Style.BRACED));
 
-        if (v.getYear() != null && v.getAddress().length() > 0)
+        if (v.getYear() != null && v.getYear().length() > 0)
             e.addField(new Key("Year"), new StringValue(v.getYear() + "", StringValue.Style.BRACED));
 
-        if (v.getVolume() != null && v.getAddress().length() > 0)
+        if (v.getVolume() != null && v.getVolume().length() > 0)
             e.addField(new Key("Volume"), new StringValue(v.getVolume() + "", StringValue.Style.BRACED));
 
-        if (v.getNumber() != null && v.getAddress().length() > 0)
+        if (v.getNumber() != null && v.getNumber().length() > 0)
             e.addField(new Key("Number"), new StringValue(v.getNumber() + "", StringValue.Style.BRACED));
 
         if (v.getPages() != null && v.getPages().length() > 0)
             e.addField(new Key("Pages"), new StringValue(v.getPages(), StringValue.Style.BRACED));
         
         db.addObject(e);
-        try {
-            BibTeXFormatter formatter = new BibTeXFormatter();
-            formatter.format(db, writer);
-        } catch (Exception ex) {
-            return false;
-        }
-        return true;
-    }
-    
-    private static BibTeXDatabase parse(File file) {
-        try {
-            Reader reader = new FileReader(file);
-            BibTeXParser parser = new BibTeXParser();
-            return parser.parse(reader);
-        } catch (Exception e) {
-            return null;
-        }
     }
 }

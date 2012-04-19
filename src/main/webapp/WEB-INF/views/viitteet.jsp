@@ -144,6 +144,8 @@
                     </tr>
                 </c:forEach>
             </table>
+            <br>
+            <a href="/BibtexTulostin">BibTeX</a>
         </c:if>
 
     </body>

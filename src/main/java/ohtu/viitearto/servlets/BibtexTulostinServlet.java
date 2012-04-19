@@ -2,6 +2,7 @@ package ohtu.viitearto.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +44,17 @@ public class BibtexTulostinServlet extends HttpServlet {
             Bibtex.output(viite, out);
             out.close();
         } catch (Exception e) {
+            List<Viite> viitteet = rekisteri.getViitteet();
+            if (viitteet == null) {
+                return;
+            }
+
+            response.setHeader("Content-Disposition", "attachment; filename=\"viitteet.bib\"");
+
+            PrintWriter out = response.getWriter();
+            
+            Bibtex.output(viitteet, out);
+            out.close();
         }
         
     }
