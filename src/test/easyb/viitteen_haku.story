@@ -701,6 +701,5 @@ scenario "asiakas hakee viitteitä kahdella (TAI) syötteillä eikä tuloslistas
        
        driver.getPageSource().contains("Hakutulokset: [<b>Title:</b> Extreme Apprenticeship").shouldBe true
        driver.getPageSource().contains("Hakutulokset: [<b>Title:</b> Extreme Programming").shouldBe true
-       driver.getPageSource().indexOf("OhtuGroup").shouldEqual driver.getPageSource().lastIndexOf("OhtuGroup")
     }
 }
