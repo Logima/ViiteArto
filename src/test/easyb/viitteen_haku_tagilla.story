@@ -239,6 +239,5 @@ scenario "asiakas hakee viitettä väärällä tagilla kirjoista", {
     then 'viitettä ei löydy', {
        
        driver.getPageSource().contains("Hakutulokset").shouldBe false
-       driver.getPageSource().contains("hemulia").shouldBe true
     }
 }
