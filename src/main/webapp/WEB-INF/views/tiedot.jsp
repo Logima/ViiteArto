@@ -18,6 +18,15 @@
         <br/>
         <b>${type}</b>
 
+        <!-- Listaa virheet, jos niitä tuli viitettä lisättäessä -->
+        <c:if test="${not empty errors}">
+            <br/>
+            <c:forEach var="error"
+                       items="${errors}">
+                <font color="red">${error}</font><br/>
+            </c:forEach>
+        </c:if>
+        
         <!-- Listaa viitteen kaikki olemassaolevat tiedot -->
         <ul>           
             <c:forEach var="info" items="${tiedot}">

@@ -23,12 +23,13 @@ import ohtu.viitearto.Viite;
 public class MuokkaaViitettaServlet extends HttpServlet {
     private Rekisteri rekisteri = Rekisteri.getInstance();
     private Tietoturva turva = new Tietoturva();
+    private long id;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        response.sendError(response.SC_BAD_REQUEST, "Väärät syötteet!");
+        response.sendRedirect(request.getContextPath()+"/ViitteenTiedot?id="+id);
     }
 
     @Override
@@ -45,13 +46,11 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         else
             muokkaaInproceedings(request, response);
         
-        long id = Long.parseLong(request.getParameter("id"));
-        
         response.sendRedirect(request.getContextPath()+"/ViitteenTiedot?id="+id);
     }
 
     private void muokkaaBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        long id = Long.parseLong(request.getParameter("id"));
+        id = Long.parseLong(request.getParameter("id"));
         
         String title = turva.estaCrossSiteScripting(request.getParameter("title"));
         String author = turva.estaCrossSiteScripting(request.getParameter("author"));
@@ -75,7 +74,7 @@ public class MuokkaaViitettaServlet extends HttpServlet {
     }
 
     private void muokkaaArticle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        long id = Long.parseLong(request.getParameter("id"));
+        id = Long.parseLong(request.getParameter("id"));
         
         String title = turva.estaCrossSiteScripting(request.getParameter("title"));
         String author = turva.estaCrossSiteScripting(request.getParameter("author"));
@@ -99,7 +98,7 @@ public class MuokkaaViitettaServlet extends HttpServlet {
     }
 
     private void muokkaaInproceedings(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        long id = Long.parseLong(request.getParameter("id"));
+        id = Long.parseLong(request.getParameter("id"));
         
         String title = turva.estaCrossSiteScripting(request.getParameter("title"));
         String author = turva.estaCrossSiteScripting(request.getParameter("author"));
