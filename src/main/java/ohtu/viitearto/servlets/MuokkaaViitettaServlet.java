@@ -27,6 +27,8 @@ public class MuokkaaViitettaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        response.sendError(response.SC_BAD_REQUEST, "Väärät syötteet!");
     }
 
     @Override
@@ -72,7 +74,7 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         rekisteri.lisaaViite(muokattava);
     }
 
-    private void muokkaaArticle(HttpServletRequest request, HttpServletResponse response) {
+    private void muokkaaArticle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         long id = Long.parseLong(request.getParameter("id"));
         
         String title = turva.estaCrossSiteScripting(request.getParameter("title"));
@@ -84,6 +86,11 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         String journal = turva.estaCrossSiteScripting(request.getParameter("journal"));
         String volumeString = turva.estaCrossSiteScripting(request.getParameter("volume"));
         String numberString = turva.estaCrossSiteScripting(request.getParameter("number"));
+        
+        if (turva.onkoVirheita()) {
+            doGet(request, response);
+            return;
+        }        
         
         Viite muokattava = rekisteri.haeViite(id);
         
@@ -110,12 +117,10 @@ public class MuokkaaViitettaServlet extends HttpServlet {
             return;
         }
         
-        Viite uusiInproceedings = new Viite(author, title);
-        uusiInproceedings.setType("Inproceedings");
-        uusiInproceedings.setBooktitle(booktitle);
+        Viite muokattava = rekisteri.haeViite(id);
         
-//        lisaaOptionaalisetTiedot(uusiInproceedings, publisher, address, pages, yearString, null, null);
-//        rekisteri.lisaaViite(muokattava);
+        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, null, null);
+        rekisteri.lisaaViite(muokattava);
     }
     
     private void muutaTiedot(Viite muokattava, String title, String author, String publisher, String address, String pages,

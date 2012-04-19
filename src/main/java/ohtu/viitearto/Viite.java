@@ -185,13 +185,13 @@ public class Viite implements Serializable {
             if (getAddress() != null && getAddress().length() > 0)
                 fieldsHtml.add("<b>Address:</b> "+getAddress());
             
-            if (getYear() != null && getAddress().length() > 0)
+            if (getYear() != null && getYear().length() > 0)
                 fieldsHtml.add("<b>Year:</b> "+getYear());
             
-            if (getVolume() != null && getAddress().length() > 0)
+            if (getVolume() != null && getVolume().length() > 0)
                 fieldsHtml.add("<b>Volume:</b> "+getVolume());
             
-            if (getNumber() != null && getAddress().length() > 0)
+            if (getNumber() != null && getNumber().length() > 0)
                 fieldsHtml.add("<b>Number:</b> "+getNumber());
             
             if (getPages() != null && getPages().length() > 0)
