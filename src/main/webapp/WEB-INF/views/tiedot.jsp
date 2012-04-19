@@ -51,7 +51,7 @@
 
                 <input type="hidden" name="id" value="${id}"/>
                 <input type="hidden" name="type" value="${type}"/>
-                <input type="submit" name="muokkaa" value="Tallenna"/>
+                <input type="submit" name="tallennus" value="Tallenna"/>
             </form>
             <br/>
         </c:if>
