@@ -32,6 +32,8 @@
             </c:forEach>
         </ul>
         
+        
+        <!-- Listaa kentät, joiden avulla muokataan viitettä -->
         <c:if test="${not empty mtiedot}">
             <form action="/MuokkaaViitetta" method="post">
                 <table border="0" width="300" cellpadding="3" cellspacing="2" style="background-color: white">
@@ -40,11 +42,12 @@
                     <c:forEach var="tiedot"
                                items="${mtiedot}">
                         <tr>
-                            <td>${tiedot.value}</td><td><input type="text" value="höhö" name="${tiedot.key}"/></td>
+                            <td>${tiedot.value}</td><td><input type="text" value="" name="${tiedot.key}"/></td>
                         </tr>
                     </c:forEach>
                 </table>
 
+                <input type="hidden" name="id" value="${id}"/>
                 <input type="submit" name="muokkaa" value="Tallenna"/>
             </form>
             <br/>
