@@ -5,10 +5,7 @@
 package ohtu.viitearto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 import javax.persistence.*;
 
 /**
@@ -269,5 +266,9 @@ public class Viite implements Serializable {
     
     public List<Tag> getTagit() {
         return tagit;
+    }
+    
+    public HashMap<String, String> getFields() {
+        return fields;
     }
 }

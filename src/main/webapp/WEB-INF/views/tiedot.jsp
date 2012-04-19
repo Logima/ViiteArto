@@ -50,7 +50,7 @@
                     <c:forEach var="tiedot"
                                items="${mtiedot}">
                         <tr>
-                            <td>${tiedot.value}</td><td><input type="text" value="" name="${tiedot.key}"/></td>
+                            <td>${tiedot.value}</td><td><input type="text" value="${viiteFields[tiedot.key]}" name="${tiedot.key}"/></td>
                         </tr>
                     </c:forEach>
                 </table>

@@ -104,7 +104,7 @@ public class Rekisteri {
         }
         List<Viite> results = q.getResultList();
         for (Viite v : results) {
-            if (!v.getField(kentta).equals(haku)) results.remove(v);
+            if (!v.getField(kentta).contains(haku)) results.remove(v);
         }
         return results;
     }
@@ -115,13 +115,16 @@ public class Rekisteri {
         Query q = null;
         
         if (viiteTyyppi != null) {
-            q = em.createQuery("SELECT v FROM Viite v WHERE v."+ekaKentta+" LIKE :firstParam "+operand+" v."+tokaKentta+" LIKE :secondParam and v.type = :typeParam");
-            q.setParameter("firstParam", ekaHaku + "%").setParameter("secondParam", tokaHaku+"%").setParameter("typeParam", viiteTyyppi);
+            q = em.createQuery("SELECT v FROM Viite v WHERE v.type = :typeParam");
+            q.setParameter("typeParam", viiteTyyppi);
         } else {
-            q = em.createQuery("SELECT v FROM Viite v WHERE v."+ekaKentta+" LIKE :firstParam "+operand+" v."+tokaKentta+" LIKE :secondParam");
-            q.setParameter("firstParam", ekaHaku + "%").setParameter("secondParam", tokaHaku+"%");
+            q = em.createQuery("SELECT v FROM Viite v");
         }
-        return q.getResultList();
+        List<Viite> results = q.getResultList();
+        for (Viite v : results) {
+            if (!v.getField(ekaKentta).contains(ekaHaku) || !v.getField(tokaKentta).contains(tokaHaku)) results.remove(v);
+        }
+        return results;
     }
 
     public List<Viite> haeViiteTageilla(String haku, String viiteTyyppi) {
@@ -144,159 +147,29 @@ public class Rekisteri {
     }
     
     public List<Viite> haeViiteTagJaHakusana(String ekaHaku, String tokaHaku, String viiteTyyppi, String ekaKentta, String tokaKentta, String operand) {
-
+        
+        List<Viite> ekaTulos, tokaTulos;
+        
         if (ekaKentta.equals("tag")) {
-
-            if (haeTag(ekaHaku) == null || haeTag(ekaHaku).getViitteet() == null) {
-            } else {
-
-                List<Viite> haettavat = haeTag(ekaHaku).getViitteet(); // tagien perusteella haetut
-
-                List<Viite> kopio = new ArrayList<Viite>();
-
-                for (Viite viite : haettavat) {
-                    kopio.add(viite);
-                }
-
-                if (viiteTyyppi != null) {
-                    for (int i = 0; i < kopio.size(); ++i) {
-                        if (!kopio.get(i).getType().equals(viiteTyyppi)) {
-                            kopio.remove(kopio.get(i));
-                        }
-                    }
-                }
-
-                if (tokaKentta.equals("author")) {
-                    for (int i = 0; i < kopio.size(); ++i) {
-                        if (!kopio.get(i).getAuthor().contains(tokaHaku)) {
-                            kopio.remove(kopio.get(i));
-                        }
-                    }
-                } else if (tokaKentta.equals("address")) {
-                    for (int i = 0; i < kopio.size(); ++i) {
-                        if (!kopio.get(i).getAddress().contains(tokaHaku)) {
-                            kopio.remove(kopio.get(i));
-                        }
-                    }
-                } else if (tokaKentta.equals("title")) {
-                    for (int i = 0; i < kopio.size(); ++i) {
-                        if (!kopio.get(i).getTitle().contains(tokaHaku)) {
-                            kopio.remove(kopio.get(i));
-                        }
-                    }
-                } else if (tokaKentta.equals("booktitle")) {
-                    for (int i = 0; i < kopio.size(); ++i) {
-                        if (!kopio.get(i).getBooktitle().contains(tokaHaku)) {
-                            kopio.remove(kopio.get(i));
-                        }
-                    }
-                } else if (tokaKentta.equals("journal")) {
-                    for (int i = 0; i < kopio.size(); ++i) {
-                        if (!kopio.get(i).getJournal().contains(tokaHaku)) {
-                            kopio.remove(kopio.get(i));
-                        }
-                    }
-                } else if (tokaKentta.equals("publisher")) {
-                    for (int i = 0; i < kopio.size(); ++i) {
-                        if (!kopio.get(i).getPublisher().contains(tokaHaku)) {
-                            kopio.remove(kopio.get(i));
-                        }
-                    }
-                }
-
-                return kopio;
-            }
-        } else if (tokaKentta.equals("tag")) {
-
-            if (haeTag(tokaHaku) == null || haeTag(tokaHaku).getViitteet() == null) {
-            } else {
-
-                List<Viite> haettavat = haeTag(tokaHaku).getViitteet(); // tagien perusteella haetut
-
-                List<Viite> kopio = new ArrayList<Viite>();
-
-                for (Viite viite : haettavat) {
-                    kopio.add(viite);
-                }
-
-                if (viiteTyyppi != null) {
-                    for (int i = 0; i < kopio.size(); ++i) {
-                        if (!kopio.get(i).getType().equals(viiteTyyppi)) {
-                            kopio.remove(kopio.get(i));
-                        }
-                    }
-                }
-
-                if (ekaKentta.equals("author")) {
-                    for (int i = 0; i < kopio.size(); ++i) {
-                        if (!kopio.get(i).getAuthor().contains(ekaHaku)) {
-                            kopio.remove(kopio.get(i));
-                        }
-                    }
-                } else if (ekaKentta.equals("address")) {
-                    for (int i = 0; i < kopio.size(); ++i) {
-                        if (!kopio.get(i).getAddress().contains(ekaHaku)) {
-                            kopio.remove(kopio.get(i));
-                        }
-                    }
-                } else if (ekaKentta.equals("title")) {
-                    for (int i = 0; i < kopio.size(); ++i) {
-                        if (!kopio.get(i).getTitle().contains(ekaHaku)) {
-                            kopio.remove(kopio.get(i));
-                        }
-                    }
-                } else if (ekaKentta.equals("booktitle")) {
-                    for (int i = 0; i < kopio.size(); ++i) {
-                        if (!kopio.get(i).getBooktitle().contains(ekaHaku)) {
-                            kopio.remove(kopio.get(i));
-                        }
-                    }
-                } else if (ekaKentta.equals("journal")) {
-                    for (int i = 0; i < kopio.size(); ++i) {
-                        if (!kopio.get(i).getJournal().contains(ekaHaku)) {
-                            kopio.remove(kopio.get(i));
-                        }
-                    }
-                } else if (ekaKentta.equals("publisher")) {
-                    for (int i = 0; i < kopio.size(); ++i) {
-                        if (!kopio.get(i).getPublisher().contains(ekaHaku)) {
-                            kopio.remove(kopio.get(i));
-                        }
-                    }
-                }
-
-                return kopio;
-            }
+            ekaTulos = haeViiteTageilla(ekaHaku, viiteTyyppi);
+        } else {
+            ekaTulos = haeViiteYhdellaHakuSanalla(ekaHaku, viiteTyyppi, ekaKentta);
         }
-
-        if (ekaKentta.equals("tag")) {
-            em = getEntityManager();
-            Query q;
-
-            if (viiteTyyppi != null) {
-                q = em.createQuery("SELECT v FROM Viite v WHERE v." + tokaKentta + " LIKE :firstParam " + operand + " v.type = :typeParam");
-                q.setParameter("firstParam", tokaHaku + "%").setParameter("typeParam", viiteTyyppi);
-            } else {
-                q = em.createQuery("SELECT v FROM Viite v WHERE v." + tokaKentta + " LIKE :firstParam");
-                q.setParameter("firstParam", tokaHaku + "%");
-            }
-
-            return q.getResultList();
-        } else if (tokaKentta.equals("tag")) {
-            em = getEntityManager();
-            Query q;
-
-            if (viiteTyyppi != null) {
-                q = em.createQuery("SELECT v FROM Viite v WHERE v." + ekaKentta + " LIKE :firstParam " + operand + " v.type = :typeParam");
-                q.setParameter("firstParam", ekaHaku + "%").setParameter("typeParam", viiteTyyppi);
-            } else {
-                q = em.createQuery("SELECT v FROM Viite v WHERE v." + ekaKentta + " LIKE :firstParam");
-                q.setParameter("firstParam", ekaHaku + "%");
-            }
-
-            return q.getResultList();
+        
+        if (tokaKentta.equals("tag")) {
+            tokaTulos = haeViiteTageilla(tokaHaku, viiteTyyppi);
+        } else {
+            tokaTulos = haeViiteYhdellaHakuSanalla(tokaHaku, viiteTyyppi, tokaKentta);
         }
-
-        return null;
+        
+        if (operand.equals("or")) {
+            for (Viite viite : ekaTulos) {
+                if (!tokaTulos.contains(viite)) ekaTulos.remove(viite);
+            }
+        } else { // and
+            ekaTulos.addAll(tokaTulos);
+        }
+        
+        return ekaTulos;
     }
 }
