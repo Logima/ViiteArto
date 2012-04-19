@@ -300,5 +300,12 @@ public class Viite implements Serializable {
         return hash;
     }
     
+    @Override
+    public String toString() {
+        return "Title: "+getTitle()+"\n Author: "+getAuthor()+"\n Publisher: "+getPublisher()+
+                "\n Pages: "+getPages()+"\n Address: "+getAddress()+"\n Year: "+getYear()+
+                "\n Booktitle: "+getBooktitle()+"\n Journal: "+getJournal()+"\n Volume: "+
+                getVolume()+"\n Number: "+getNumber();
+    }
     
 }

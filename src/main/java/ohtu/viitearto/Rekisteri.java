@@ -151,8 +151,38 @@ public class Rekisteri {
                 Viite v = (Viite) i.next();
                 if (!tokaTulos.contains(v)) i.remove();
             }
-        } else { // or
-            ekaTulos.addAll(tokaTulos);
+        } else { // or          
+            if (!ovatkoTuloksetSamat(ekaTulos, tokaTulos)) {
+                ekaTulos.addAll(tokaTulos);
+                ekaTulos = poistaDuplikaatit(ekaTulos);
+            }
+        }
+        
+        
+        return ekaTulos;
+    }
+
+    private boolean ovatkoTuloksetSamat(List<Viite> ekaTulos, List<Viite> tokaTulos) {
+        if (ekaTulos.size() != tokaTulos.size())
+            return false;
+        
+        for (int i=0; i < ekaTulos.size(); ++i) {
+            if (!ekaTulos.get(i).toString().equals(tokaTulos.get(i).toString()))
+                return false;
+        }
+        
+        return true;
+    }
+    
+    private List<Viite> poistaDuplikaatit(List<Viite> ekaTulos) {
+        for (int i=0; i < ekaTulos.size(); ++i) {
+            for (int j=0; j < ekaTulos.size(); ++j) {
+                if (j == i)
+                    continue;
+                
+                if (ekaTulos.get(i).toString().equals(ekaTulos.get(j).toString()))
+                    ekaTulos.remove(ekaTulos.get(j));
+            }
         }
         
         return ekaTulos;
