@@ -111,6 +111,10 @@ public class Tietoturva {
     public String getNumberError() {
         return virheet.get("numberError");
     }
+    
+    public String getJournalError() {
+        return virheet.get("journalError");
+    }
 
     public void nollaaVirheet() {
         virheet.clear();

@@ -62,7 +62,7 @@ public class ViitteenTiedotServlet extends HttpServlet {
         long id = Long.parseLong(request.getParameter("id"));
         muokattava = rekisteri.haeViite(id);
         muokataanko = true;
-        System.out.println(request.getRequestURI().toString()+" AHAOEGIHAEO");
+        
         response.sendRedirect(request.getRequestURI()+"?id="+muokattava.getId()); // POST-pyynnöt ohjataan doGetille
     }
 
