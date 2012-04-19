@@ -58,14 +58,6 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         String yearString = turva.estaCrossSiteScripting(request.getParameter("year"));
         String address = turva.estaCrossSiteScripting(request.getParameter("address"));
         
-        turva.tarkistaPakollisetTiedot(title, author, null, null);
-        turva.tarkistaNumeroTiedot(yearString, null, null);
-        
-        if (turva.onkoVirheita()) {
-            doGet(request, response);
-            return;
-        }
-        
         Viite muokattava = rekisteri.haeViite(id);
         
         muutaTiedot(muokattava, title, author, publisher, address, null, yearString, null, null);
@@ -84,12 +76,7 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         String pages = turva.estaCrossSiteScripting(request.getParameter("pages"));
         String journal = turva.estaCrossSiteScripting(request.getParameter("journal"));
         String volumeString = turva.estaCrossSiteScripting(request.getParameter("volume"));
-        String numberString = turva.estaCrossSiteScripting(request.getParameter("number"));
-        
-        if (turva.onkoVirheita()) {
-            doGet(request, response);
-            return;
-        }        
+        String numberString = turva.estaCrossSiteScripting(request.getParameter("number"));   
         
         Viite muokattava = rekisteri.haeViite(id);
         
@@ -107,14 +94,6 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         String booktitle = turva.estaCrossSiteScripting(request.getParameter("booktitle"));
         String address = turva.estaCrossSiteScripting(request.getParameter("address"));
         String pages = turva.estaCrossSiteScripting(request.getParameter("pages"));
-        
-        turva.tarkistaPakollisetTiedot(title, author, null, booktitle);
-        turva.tarkistaNumeroTiedot(yearString, null, null);
-        
-        if (turva.onkoVirheita()) {
-            doGet(request, response);
-            return;
-        }
         
         Viite muokattava = rekisteri.haeViite(id);
         
@@ -135,15 +114,30 @@ public class MuokkaaViitettaServlet extends HttpServlet {
             muokattava.setAddress(address);
         
         if (year != null && year.length() > 0) {
-            muokattava.setYear(year);
+            try {
+                int nro = Integer.parseInt(year);
+                muokattava.setYear(year);
+            } catch (Exception e) {
+                muokattava.setYear("");
+            }
         }
         
         if (volume != null && volume.length() > 0) {
-            muokattava.setVolume(volume);
+            try {
+                int nro = Integer.parseInt(volume);
+                muokattava.setVolume(volume);
+            } catch (Exception e) {
+                muokattava.setVolume("");
+            }
         }
         
         if (number != null && number.length() > 0) {
-            muokattava.setNumber(number);
+            try {
+                int nro = Integer.parseInt(number);
+                muokattava.setNumber(number);
+            } catch (Exception e) {
+                muokattava.setNumber("");
+            }
         }
         
         if (pages != null && pages.length() > 0)
