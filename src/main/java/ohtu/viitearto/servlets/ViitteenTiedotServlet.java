@@ -101,7 +101,9 @@ public class ViitteenTiedotServlet extends HttpServlet {
         request.setAttribute("type", muokattava.getType());
     }
     private void asetaMahdollisetVirheIlmoitukset(HttpServletRequest request) {
-        request.setAttribute("errors", turva.getVirheIlmoitukset()); // näytetään virheet, jos niitä on
+        if (turva.onkoVirheita())
+            request.setAttribute("error", "Vialliset syötteet, muutoksia ei kirjattu!");
+        
         turva.nollaaVirheet();
     }
 }
