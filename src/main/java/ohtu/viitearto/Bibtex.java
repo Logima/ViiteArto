@@ -44,9 +44,6 @@ public class Bibtex {
         BibTeXDatabase db = new BibTeXDatabase();
         BibTeXEntry e = new BibTeXEntry(new Key(v.getType()), new Key(v.getId().toString()));
         
-        e.addField(new Key("key1"), new StringValue(v.getAddress(), StringValue.Style.BRACED));
-        e.addField(new Key("key1"), new StringValue("value1", StringValue.Style.BRACED));
-        
         if (v.getTitle() != null && v.getTitle().length() > 0)
             e.addField(new Key("Title"), new StringValue(v.getTitle(), StringValue.Style.BRACED));
 
