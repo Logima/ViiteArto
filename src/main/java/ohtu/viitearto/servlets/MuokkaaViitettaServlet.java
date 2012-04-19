@@ -65,9 +65,11 @@ public class MuokkaaViitettaServlet extends HttpServlet {
             return;
         }
         
-//        lisaaOptionaalisetTiedot(uusiBook, publisher, address, null, yearString, null, null);
+        Viite muokattava = rekisteri.haeViite(id);
         
-        rekisteri.paivitaBookViite(id, author, title, publisher, yearString, address);
+        muutaTiedot(muokattava, title, author, publisher, address, null, yearString, null, null);
+        
+        rekisteri.lisaaViite(muokattava);
     }
 
     private void muokkaaArticle(HttpServletRequest request, HttpServletResponse response) {
@@ -83,7 +85,10 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         String volumeString = turva.estaCrossSiteScripting(request.getParameter("volume"));
         String numberString = turva.estaCrossSiteScripting(request.getParameter("number"));
         
-//        rekisteri.paivitaArticleViite(id, author, title, publisher, yearString, address);
+        Viite muokattava = rekisteri.haeViite(id);
+        
+        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, volumeString, numberString);
+        rekisteri.lisaaViite(muokattava);
     }
 
     private void muokkaaInproceedings(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -110,7 +115,35 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         uusiInproceedings.setBooktitle(booktitle);
         
 //        lisaaOptionaalisetTiedot(uusiInproceedings, publisher, address, pages, yearString, null, null);
-//        rekisteri.paivitaInproceedingsViite(id, author, title, publisher, yearString, address);
+//        rekisteri.lisaaViite(muokattava);
+    }
+    
+    private void muutaTiedot(Viite muokattava, String title, String author, String publisher, String address, String pages,
+            String year, String volume, String number) {
+        
+        muokattava.setTitle(title);
+        muokattava.setAuthor(author);
+        
+        if (publisher != null && publisher.length() > 0)
+            muokattava.setPublisher(publisher);
+        
+        if (address != null && address.length() > 0)
+            muokattava.setAddress(address);
+        
+        if (year != null && year.length() > 0) {
+            muokattava.setYear(year);
+        }
+        
+        if (volume != null && volume.length() > 0) {
+            muokattava.setVolume(volume);
+        }
+        
+        if (number != null && number.length() > 0) {
+            muokattava.setNumber(number);
+        }
+        
+        if (pages != null && pages.length() > 0)
+            muokattava.setPages(pages);
     }
 
 }

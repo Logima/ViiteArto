@@ -299,19 +299,4 @@ public class Rekisteri {
 
         return null;
     }
-
-    public void paivitaBookViite(long id, String author, String title, String publisher, String yearString, String address) {
-        em = getEntityManager();
-        em.getTransaction().begin();
-        
-        Viite muokattava = em.find(Viite.class, id);
-        muokattava.setTitle(title);
-        muokattava.setAuthor(author);
-        muokattava.setPublisher(publisher);
-        muokattava.setYear(yearString);
-        muokattava.setAddress(address);
-        
-        em.merge(muokattava);
-        em.getTransaction().commit();
-    }
 }
