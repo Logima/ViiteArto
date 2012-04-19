@@ -33,6 +33,7 @@
         </ul>
 
         <br/>
+        <a href="/BibtexTulostin?id=${id}">BibTeX</a><br>
         <form action="/PoistaViite" method="GET">          
             <input type="hidden" name="id" value="${id}"/>        
             <input type="submit" name="poisto" value="Poista viite">

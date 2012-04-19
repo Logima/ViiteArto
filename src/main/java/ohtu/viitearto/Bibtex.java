@@ -40,7 +40,7 @@ public class Bibtex {
         return true;
     }
     
-    public static boolean output(Viite v, File file) {
+    public static boolean output(Viite v, Writer writer) {
         BibTeXDatabase db = new BibTeXDatabase();
         BibTeXEntry e = new BibTeXEntry(new Key(v.getType()), new Key(v.getId().toString()));
         
@@ -79,10 +79,8 @@ public class Bibtex {
         
         db.addObject(e);
         try {
-            Writer writer = new FileWriter(file);
             BibTeXFormatter formatter = new BibTeXFormatter();
             formatter.format(db, writer);
-            writer.close();
         } catch (Exception ex) {
             return false;
         }
