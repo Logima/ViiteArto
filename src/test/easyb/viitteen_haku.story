@@ -584,16 +584,6 @@ scenario "asiakas muokkaa viitettä ja hakee sen tietokannasta", {
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
-            if(option.getText().equals("Author")){
-                option.click();
-                break;
-            }
-        }
-
-        element = driver.findElement(By.name("tokaKentta"));
-        List<WebElement> options2 = element.findElements(By.tagName("option"));
-
-        for(WebElement option : options2){
             if(option.getText().equals("Title")){
                 option.click();
                 break;
@@ -611,8 +601,6 @@ scenario "asiakas muokkaa viitettä ja hakee sen tietokannasta", {
         }
 
         element = driver.findElement(By.name("ekaSana"));
-        element.sendKeys("Snafu");
-        element = driver.findElement(By.name("tokaSana"));
         element.sendKeys("KustiPolkee");
         element = driver.findElement(By.name("haku"));
         element.submit();
