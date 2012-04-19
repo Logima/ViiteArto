@@ -4,10 +4,7 @@
  */
 package ohtu.viitearto;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -103,32 +100,18 @@ public class Rekisteri {
             q = em.createQuery("SELECT v FROM Viite v");
         }
         List<Viite> results = q.getResultList();
-        for (Viite v : results) {
-            if (!v.getField(kentta).contains(haku)) results.remove(v);
-        }
-        return results;
-    }
-    
-    public List<Viite> haeViiteKahdellaHakuSanalla(String ekaHaku, String tokaHaku, String viiteTyyppi, String ekaKentta, String tokaKentta, String operand) {
-        em = getEntityManager();
-        
-        Query q = null;
-        
-        if (viiteTyyppi != null) {
-            q = em.createQuery("SELECT v FROM Viite v WHERE v.type = :typeParam");
-            q.setParameter("typeParam", viiteTyyppi);
-        } else {
-            q = em.createQuery("SELECT v FROM Viite v");
-        }
-        List<Viite> results = q.getResultList();
-        for (Viite v : results) {
-            if (!v.getField(ekaKentta).contains(ekaHaku) || !v.getField(tokaKentta).contains(tokaHaku)) results.remove(v);
+        Iterator i = results.iterator();
+        while (i.hasNext()) {
+            Viite v = (Viite) i.next();
+            if (!v.getField(kentta).contains(haku)) i.remove();
         }
         return results;
     }
 
     public List<Viite> haeViiteTageilla(String haku, String viiteTyyppi) {
-        List<Viite> haettavat = haeTag(haku).getViitteet();
+        Tag t = haeTag(haku);
+        if(t == null) return null;
+        List<Viite> haettavat = t.getViitteet();
         List<Viite> kopio = new ArrayList<Viite>();
         
         for (Viite viite : haettavat) {
@@ -146,7 +129,7 @@ public class Rekisteri {
         return kopio;
     }
     
-    public List<Viite> haeViiteTagJaHakusana(String ekaHaku, String tokaHaku, String viiteTyyppi, String ekaKentta, String tokaKentta, String operand) {
+    public List<Viite> haeViiteKahdellaHakuSanalla(String ekaHaku, String tokaHaku, String viiteTyyppi, String ekaKentta, String tokaKentta, String operand) {
         
         List<Viite> ekaTulos, tokaTulos;
         
@@ -162,11 +145,13 @@ public class Rekisteri {
             tokaTulos = haeViiteYhdellaHakuSanalla(tokaHaku, viiteTyyppi, tokaKentta);
         }
         
-        if (operand.equals("or")) {
-            for (Viite viite : ekaTulos) {
-                if (!tokaTulos.contains(viite)) ekaTulos.remove(viite);
+        if (operand.equals("and")) {
+            Iterator i = ekaTulos.iterator();
+            while (i.hasNext()) {
+                Viite v = (Viite) i.next();
+                if (!tokaTulos.contains(v)) i.remove();
             }
-        } else { // and
+        } else { // or
             ekaTulos.addAll(tokaTulos);
         }
         

@@ -64,20 +64,13 @@ public class HaeViitteetServlet extends HttpServlet {
         }
         
         if (ekaHakusana.length() > 0 && tokaHakusana.length() > 0) { // haetaan kahdella hakusanalla
-            if (ekaKentta.equals("tag") || tokaKentta.equals("tag")) {
-                if (viiteTyyppi.length() > 0) {
-                    request.setAttribute("tulokset", rekisteri.haeViiteTagJaHakusana(ekaHakusana, tokaHakusana, viiteTyyppi, ekaKentta, tokaKentta, operand));
-                } else {
-                    request.setAttribute("tulokset", rekisteri.haeViiteTagJaHakusana(ekaHakusana, tokaHakusana, null, ekaKentta, tokaKentta, operand));
-                }
-            } else {
 
-                if (viiteTyyppi.length() > 0) {
-                    request.setAttribute("tulokset", rekisteri.haeViiteKahdellaHakuSanalla(ekaHakusana, tokaHakusana, viiteTyyppi, ekaKentta, tokaKentta, operand)); // haetaan viitetyypin kanssa
-                } else {
-                    request.setAttribute("tulokset", rekisteri.haeViiteKahdellaHakuSanalla(ekaHakusana, tokaHakusana, null, ekaKentta, tokaKentta, operand)); // haetaan ilman viitetyyppiä
-                }
+            if (viiteTyyppi.length() > 0) {
+                request.setAttribute("tulokset", rekisteri.haeViiteKahdellaHakuSanalla(ekaHakusana, tokaHakusana, viiteTyyppi, ekaKentta, tokaKentta, operand)); // haetaan viitetyypin kanssa
+            } else {
+                request.setAttribute("tulokset", rekisteri.haeViiteKahdellaHakuSanalla(ekaHakusana, tokaHakusana, null, ekaKentta, tokaKentta, operand)); // haetaan ilman viitetyyppiä
             }
+
         }
         
         RequestDispatcher dispatcher =
