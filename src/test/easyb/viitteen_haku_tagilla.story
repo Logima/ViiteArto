@@ -187,3 +187,58 @@ scenario "asiakas hakee viitettä tagilla articlesta", {
        driver.getPageSource().contains("hemulia").shouldBe true
     }
 }
+
+scenario "asiakas hakee viitettä väärällä tagilla kirjoista", {
+
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:7190/");
+
+    given 'lisätään kirja tagilla', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("title"));
+        element.sendKeys("apinakin osaa koodata");
+        element = driver.findElement(By.name("author"));
+        element.sendKeys("henkka ei");
+        element = driver.findElement(By.name("tag"));
+        element.sendKeys("hemulia");
+        element = driver.findElement(By.name("lisays"));
+        element.submit();
+    }
+
+    when 'haun väärät tiedot on syötetty', {
+
+        WebElement element = driver.findElement(By.name("ekaKentta"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Tag")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("ekaSana"));
+        element.sendKeys("hemulia ei osaa koodata");
+        element = driver.findElement(By.name("haku"));
+        element.submit();
+
+    }
+
+    then 'viitettä ei löydy', {
+       
+       driver.getPageSource().contains("Hakutulokset").shouldBe false
+       driver.getPageSource().contains("hemulia").shouldBe true
+    }
+}
