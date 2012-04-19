@@ -34,17 +34,10 @@ public class ViitteenTiedotServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         if (!muokataanko) {
-            long id = Long.parseLong(request.getParameter("id"));
-
-            Viite viite = rekisteri.haeViite(id);
-            
-            request.setAttribute("tiedot", viite.getTiedot());
-            request.setAttribute("id", viite.getId());
-            request.setAttribute("type", viite.getType());
-            request.setAttribute("tagit", viite.getTagit());
+            asetaTiedot(request);
         } else {
             maaritaViitteenTyyppi(muokattava);
-            request.setAttribute("mtiedot", muokkausTiedot);
+            asetaMuokkaustiedot(request);
             muokataanko = false;
         }
         
@@ -85,5 +78,21 @@ public class ViitteenTiedotServlet extends HttpServlet {
 
     private void muokkaaBook() {
         muokkausTiedot = Viite.getBookKentat();
+    }
+
+    private void asetaTiedot(HttpServletRequest request) {
+        long id = Long.parseLong(request.getParameter("id"));
+
+        Viite viite = rekisteri.haeViite(id);
+
+        request.setAttribute("tiedot", viite.getTiedot());
+        request.setAttribute("id", viite.getId());
+        request.setAttribute("type", viite.getType());
+        request.setAttribute("tagit", viite.getTagit());
+    }
+
+    private void asetaMuokkaustiedot(HttpServletRequest request) {
+        request.setAttribute("mtiedot", muokkausTiedot);
+        request.setAttribute("id", muokattava.getId());
     }
 }
