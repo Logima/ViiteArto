@@ -32,35 +32,11 @@ public class ViitteetServlet extends HttpServlet {
         if (hakuTulokset != null)
             request.setAttribute("hakuTulokset", hakuTulokset);
         
-        if (lomakeTyyppi != null) { // asetetaan viitteen lisäämistä varten täytettävät kentät
-            viiteTyyppi = null;
-            lomakeTiedot.clear();
-            
-            if (lomakeTyyppi.equals("book")) {
-                bookLomake();
-                viiteTyyppi = "Book";
-            } else if (lomakeTyyppi.equals("inproceedings")) {
-                inproceedingsLomake();
-                viiteTyyppi = "Inproceedings";
-            } else if (lomakeTyyppi.equals("article")) {
-                articleLomake();
-                viiteTyyppi = "Article";
-            }
-            
-            lomakeTiedot.put("tag", "Tags: ");
-            request.setAttribute("tiedot", lomakeTiedot);
-            lomakeTyyppi = null;
-        }
+        if (lomakeTyyppi != null)
+            luoLomake(request); // mennään asettamaan viitteen lisäämistä varten täytettävät kentät
         
-        request.setAttribute("type", viiteTyyppi); // viitteen tyyppi
-        
-        if (security.onkoVirheita())
-            request.setAttribute("tiedot", lomakeTiedot);
-        
-        request.setAttribute("errors", security.getVirheIlmoitukset()); // näytetään virheet, jos niitä on
-        security.nollaaVirheet();
-        
-        request.setAttribute("viitteet", rekisteri.getViitteet()); // hakee viitteet tietokannasta
+        asetaViitteetSivulle(request);     
+        asetaMahdollisetVirheIlmoitukset(request);      
         
         RequestDispatcher dispatcher =
                 request.getRequestDispatcher("WEB-INF/views/viitteet.jsp");
@@ -87,5 +63,38 @@ public class ViitteetServlet extends HttpServlet {
 
     private void bookLomake() {
         lomakeTiedot = Viite.getBookKentat();
+    }
+
+    private void luoLomake(HttpServletRequest request) {
+        viiteTyyppi = null;
+        lomakeTiedot.clear();
+
+        if (lomakeTyyppi.equals("book")) {
+            bookLomake();
+            viiteTyyppi = "Book";
+        } else if (lomakeTyyppi.equals("inproceedings")) {
+            inproceedingsLomake();
+            viiteTyyppi = "Inproceedings";
+        } else if (lomakeTyyppi.equals("article")) {
+            articleLomake();
+            viiteTyyppi = "Article";
+        }
+
+        lomakeTiedot.put("tag", "Tags: ");
+        request.setAttribute("tiedot", lomakeTiedot);
+        lomakeTyyppi = null;
+    }
+
+    private void asetaMahdollisetVirheIlmoitukset(HttpServletRequest request) {
+        if (security.onkoVirheita())
+            request.setAttribute("tiedot", lomakeTiedot);
+            
+        request.setAttribute("errors", security.getVirheIlmoitukset()); // näytetään virheet, jos niitä on
+        security.nollaaVirheet();
+    }
+
+    private void asetaViitteetSivulle(HttpServletRequest request) {
+        request.setAttribute("type", viiteTyyppi); // viitteen tyyppi
+        request.setAttribute("viitteet", rekisteri.getViitteet()); // hakee viitteet tietokannasta
     }
 }
