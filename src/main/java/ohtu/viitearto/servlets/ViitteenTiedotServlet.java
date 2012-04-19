@@ -25,6 +25,7 @@ public class ViitteenTiedotServlet extends HttpServlet {
 
     private Rekisteri rekisteri = Rekisteri.getInstance();
     private Viite muokattava;
+    private boolean muokataanko = false;
     private TreeMap<String, String> muokkausTiedot = new TreeMap<String, String>();
     
     @Override
@@ -32,7 +33,7 @@ public class ViitteenTiedotServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        if (muokattava == null) {
+        if (!muokataanko) {
             long id = Long.parseLong(request.getParameter("id"));
 
             Viite viite = rekisteri.haeViite(id);
@@ -44,6 +45,7 @@ public class ViitteenTiedotServlet extends HttpServlet {
         } else {
             maaritaViitteenTyyppi(muokattava);
             request.setAttribute("mtiedot", muokkausTiedot);
+            muokataanko = false;
         }
         
         RequestDispatcher dispatcher =
@@ -59,8 +61,9 @@ public class ViitteenTiedotServlet extends HttpServlet {
         
         long id = Long.parseLong(request.getParameter("id"));
         muokattava = rekisteri.haeViite(id);
-        
-        response.sendRedirect(request.getRequestURI()); // POST-pyynnöt ohjataan doGetille
+        muokataanko = true;
+        System.out.println(request.getRequestURI().toString()+" AHAOEGIHAEO");
+        response.sendRedirect(request.getRequestURI()+"?id="+muokattava.getId()); // POST-pyynnöt ohjataan doGetille
     }
 
     private void maaritaViitteenTyyppi(Viite muokattava) {
