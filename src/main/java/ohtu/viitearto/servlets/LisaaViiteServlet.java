@@ -73,7 +73,7 @@ public class LisaaViiteServlet extends HttpServlet {
             return null;
         }
         
-        Viite uusiInproceedings = new Viite(author, title);
+        Viite uusiInproceedings = new Viite(title, author);
         uusiInproceedings.setType("Inproceedings");
         uusiInproceedings.setBooktitle(booktitle);
         

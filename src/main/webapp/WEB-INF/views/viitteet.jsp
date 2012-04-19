@@ -125,7 +125,7 @@
 
         <c:if test="${not empty viitteet}">
 
-            <table border="1" width="360" cellpadding="3" cellspacing="1" style="background-color: white">
+            <table border="1" width="500" cellpadding="3" cellspacing="1" style="background-color: white">
                 <tr>
                     <th>Id</th>
                     <th>Title</th>
