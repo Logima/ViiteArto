@@ -6,7 +6,9 @@ package ohtu.viitearto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 import javax.persistence.*;
 
 /**
@@ -54,7 +56,7 @@ public class Viite implements Serializable {
     /*
      * Sisältää tiedot viitteen eri kenttien sisällöistä.
      */
-    private ArrayList<String> tiedot;
+    private ArrayList<String> fields;
     
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE, generator="tab")
@@ -65,7 +67,7 @@ public class Viite implements Serializable {
     private List<Tag> tagit; // lista tageista, jotka viitteellä on
 
     public Viite() {
-        tiedot = new ArrayList<String>();
+        fields = new ArrayList<String>();
         tagit = new ArrayList<Tag>();
     }
 
@@ -172,39 +174,39 @@ public class Viite implements Serializable {
     }
     
     public ArrayList<String> getTiedot() {
-        if (tiedot.isEmpty()) {
+        if (fields.isEmpty()) {
             
             if (getTitle() != null && getTitle().length() > 0)
-                tiedot.add("<b>Title:</b> "+getTitle());
+                fields.add("<b>Title:</b> "+getTitle());
 
             if (getAuthor() != null && getAuthor().length() > 0)
-                tiedot.add("<b>Author:</b> "+getAuthor());
+                fields.add("<b>Author:</b> "+getAuthor());
             
             if (getPublisher() != null && getPublisher().length() > 0)
-                tiedot.add("<b>Publisher:</b> "+getPublisher());
+                fields.add("<b>Publisher:</b> "+getPublisher());
             
             if (getBooktitle() != null && getBooktitle().length() > 0)
-                tiedot.add("<b>Booktitle:</b> "+getBooktitle());
+                fields.add("<b>Booktitle:</b> "+getBooktitle());
             
             if (getJournal() != null && getJournal().length() > 0)
-                tiedot.add("<b>Journal:</b> "+getJournal());
+                fields.add("<b>Journal:</b> "+getJournal());
             
             if (getAddress() != null && getAddress().length() > 0)
-                tiedot.add("<b>Address:</b> "+getAddress());
+                fields.add("<b>Address:</b> "+getAddress());
             
             if (getYear() != 0)
-                tiedot.add("<b>Year:</b> "+getYear());
+                fields.add("<b>Year:</b> "+getYear());
             
             if (getVolume() != 0)
-                tiedot.add("<b>Volume:</b> "+getVolume());
+                fields.add("<b>Volume:</b> "+getVolume());
             
             if (getNumber() != 0)
-                tiedot.add("<b>Number:</b> "+getNumber());
+                fields.add("<b>Number:</b> "+getNumber());
             
             if (getPages() != null && getPages().length() > 0)
-                tiedot.add("<b>Pages:</b> "+getPages());
+                fields.add("<b>Pages:</b> "+getPages());
         }
-        return tiedot;
+        return fields;
     }
     
     public void setTagit(List<Tag> tagit) {
@@ -220,6 +222,45 @@ public class Viite implements Serializable {
             }
         }
     }
+    
+    public static TreeMap<String, String> getBookKentat() {
+        TreeMap<String, String> fields = new TreeMap<String, String>();
+        fields.put("title", "<font color=\"red\">*</font> Title: ");
+        fields.put("author", "<font color=\"red\">*</font> Author: ");
+        fields.put("year", "Year: ");
+        fields.put("publisher", "Publisher: ");
+        fields.put("address", "Address: ");
+        
+        return fields;
+    }
+    
+    public static TreeMap<String, String> getArticleKentat() {
+        TreeMap<String, String> fields = new TreeMap<String, String>();
+        fields.put("title", "<font color=\"red\">*</font> Title: ");
+        fields.put("author", "<font color=\"red\">*</font> Author: ");
+        fields.put("publisher", "Publisher: ");
+        fields.put("year", "Year: ");
+        fields.put("address", "Address: ");
+        fields.put("pages", "Pages: ");
+        fields.put("journal", "<font color=\"red\">*</font> Journal: ");
+        fields.put("volume", "Volume: ");
+        fields.put("number", "Number: ");
+        
+        return fields;
+    }
+    
+    public static TreeMap<String, String> getInproceedingsKentat() {
+        TreeMap<String, String> fields = new TreeMap<String, String>();
+        fields.put("title", "<font color=\"red\">*</font> Title: ");
+        fields.put("author", "<font color=\"red\">*</font> Author: ");
+        fields.put("publisher", "Publisher: ");
+        fields.put("year", "Year: ");
+        fields.put("address", "Address: ");
+        fields.put("booktitle", "<font color=\"red\">*</font> Booktitle: ");
+        fields.put("pages", "Pages: ");
+        return fields;
+    }
+    
     
     public List<Tag> getTagit() {
         return tagit;

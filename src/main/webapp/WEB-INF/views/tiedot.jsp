@@ -17,26 +17,49 @@
 
         <br/>
         <b>${type}</b>
-        
+
         <!-- Listaa viitteen kaikki olemassaolevat tiedot -->
         <ul>           
             <c:forEach var="info" items="${tiedot}">
                 <li>${info}</li>
             </c:forEach>
         </ul>
-        
+
         <b>Tagit:</b> 
         <ul>
             <c:forEach var="tag" items="${tagit}">
                 <li>${tag.nimi}</li>
             </c:forEach>
         </ul>
+        
+        <c:if test="${not empty mtiedot}">
+            <form action="/MuokkaaViitetta" method="post">
+                <table border="0" width="300" cellpadding="3" cellspacing="2" style="background-color: white">
 
-        <br/>
-        <form action="/PoistaViite" method="GET">          
-            <input type="hidden" name="id" value="${id}"/>        
-            <input type="submit" name="poisto" value="Poista viite">
-        </form>
+                    <c:forEach var="tiedot"
+                               items="${mtiedot}">
+                        <tr>
+                            <td>${tiedot.value}</td><td><input type="text" value="höhö" name="${tiedot.key}"/></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+
+                <input type="submit" name="muokkaa" value="Tallenna"/>
+            </form>
+            <br/>
+        </c:if>
+   
+            <c:if test="${empty mtiedot}">
+                <form action="/ViitteenTiedot" method="POST">
+                    <input type="hidden" name="id" value="${id}"/>        
+                    <input type="submit" name="muokkaus" value="Muokkaa">
+                </form>
+
+                <form action="/PoistaViite" method="GET">          
+                    <input type="hidden" name="id" value="${id}"/>        
+                    <input type="submit" name="poisto" value="Poista viite">
+                </form>
+            </c:if>
 
         <a href="/Viitteet">Etusivu</a>
     </body>

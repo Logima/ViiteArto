@@ -37,13 +37,13 @@ public class ViitteetServlet extends HttpServlet {
             lomakeTiedot.clear();
             
             if (lomakeTyyppi.equals("book")) {
-                bookLomake(lomakeTiedot);
+                bookLomake();
                 viiteTyyppi = "Book";
             } else if (lomakeTyyppi.equals("inproceedings")) {
-                inproceedingsLomake(lomakeTiedot);
+                inproceedingsLomake();
                 viiteTyyppi = "Inproceedings";
             } else if (lomakeTyyppi.equals("article")) {
-                articleLomake(lomakeTiedot);
+                articleLomake();
                 viiteTyyppi = "Article";
             }
             
@@ -77,33 +77,15 @@ public class ViitteetServlet extends HttpServlet {
         response.sendRedirect(request.getRequestURI()); // POST-pyynnöt ohjataan doGetille
     }
     
-    private void articleLomake(TreeMap<String, String> tiedot) {
-        tiedot.put("title", "<font color=\"red\">*</font> Title: ");
-        tiedot.put("author", "<font color=\"red\">*</font> Author: ");
-        tiedot.put("publisher", "Publisher: ");
-        tiedot.put("year", "Year: ");
-        tiedot.put("address", "Address: ");
-        tiedot.put("pages", "Pages: ");
-        tiedot.put("journal", "<font color=\"red\">*</font> Journal: ");
-        tiedot.put("volume", "Volume: ");
-        tiedot.put("number", "Number: ");
+    private void articleLomake() {
+        lomakeTiedot = Viite.getArticleKentat();
     }
 
-    private void inproceedingsLomake(TreeMap<String, String> tiedot) {
-        tiedot.put("title", "<font color=\"red\">*</font> Title: ");
-        tiedot.put("author", "<font color=\"red\">*</font> Author: ");
-        tiedot.put("publisher", "Publisher: ");
-        tiedot.put("year", "Year: ");
-        tiedot.put("address", "Address: ");
-        tiedot.put("booktitle", "<font color=\"red\">*</font> Booktitle: ");
-        tiedot.put("pages", "Pages: ");
+    private void inproceedingsLomake() {
+        lomakeTiedot = Viite.getInproceedingsKentat();
     }
 
-    private void bookLomake(TreeMap<String, String> tiedot) {
-        tiedot.put("title", "<font color=\"red\">*</font> Title: ");
-        tiedot.put("author", "<font color=\"red\">*</font> Author: ");
-        tiedot.put("year", "Year: ");
-        tiedot.put("publisher", "Publisher: ");
-        tiedot.put("address", "Address: ");
+    private void bookLomake() {
+        lomakeTiedot = Viite.getBookKentat();
     }
 }
