@@ -103,7 +103,8 @@ public class Rekisteri {
         Iterator i = results.iterator();
         while (i.hasNext()) {
             Viite v = (Viite) i.next();
-            if (!v.getField(kentta).contains(haku)) i.remove();
+            if (v.getField(kentta) == null) i.remove();
+            else if (!v.getField(kentta).contains(haku)) i.remove();
         }
         return results;
     }
