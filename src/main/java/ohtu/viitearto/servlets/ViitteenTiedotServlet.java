@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ohtu.viitearto.Rekisteri;
+import ohtu.viitearto.Tietoturva;
 import ohtu.viitearto.Viite;
 
 /**
@@ -24,6 +25,7 @@ import ohtu.viitearto.Viite;
 public class ViitteenTiedotServlet extends HttpServlet {
 
     private Rekisteri rekisteri = Rekisteri.getInstance();
+    private Tietoturva turva = new Tietoturva();
     private Viite muokattava;
     private boolean muokataanko = false;
     private TreeMap<String, String> muokkausTiedot = new TreeMap<String, String>();
@@ -40,6 +42,8 @@ public class ViitteenTiedotServlet extends HttpServlet {
             asetaMuokkaustiedot(request);
             muokataanko = false;
         }
+        
+        asetaMahdollisetVirheIlmoitukset(request);
         
         RequestDispatcher dispatcher =
                 request.getRequestDispatcher("WEB-INF/views/tiedot.jsp");
@@ -96,5 +100,9 @@ public class ViitteenTiedotServlet extends HttpServlet {
         request.setAttribute("mtiedot", muokkausTiedot);
         request.setAttribute("id", muokattava.getId());
         request.setAttribute("type", muokattava.getType());
+    }
+    private void asetaMahdollisetVirheIlmoitukset(HttpServletRequest request) {
+        request.setAttribute("errors", turva.getVirheIlmoitukset()); // näytetään virheet, jos niitä on
+        turva.nollaaVirheet();
     }
 }

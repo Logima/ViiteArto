@@ -82,7 +82,7 @@ scenario "asiakas lisää useita viitteitä ja tallentaa yhden viitteen bibtex-t
         List<WebElement> options2 = element.findElements(By.tagName("option"));
 
         for(WebElement option : options2){
-            if(option.getText().equals("Book")){
+            if(option.getText().equals("Article")){
                 option.click();
                 break;
             }
@@ -102,7 +102,7 @@ scenario "asiakas lisää useita viitteitä ja tallentaa yhden viitteen bibtex-t
         element.submit();
         
 
-        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        element = driver.findElement(By.name("viiteTyyppi"));
         List<WebElement> options3 = element.findElements(By.tagName("option"));
 
         for(WebElement option : options3){

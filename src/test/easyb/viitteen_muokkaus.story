@@ -41,13 +41,13 @@ scenario "asiakas lisää viitteen ja sen jälkeen muokkaa sitä", {
 
         WebElement element = driver.findElement(By.linkText("Helsinginkadun appro"));
         element.click();
-        element = driver.findElement(By.name("muokkaa"));
+        element = driver.findElement(By.name("muokkaus"));
         element.submit();
         element = driver.findElement(By.name("title"));
         element.sendKeys("Elämäni kankkunen");
         element = driver.findElement(By.name("author"));
         element.sendKeys("Snafu");
-        element = driver.findElement(By.name("tallenna"));
+        element = driver.findElement(By.name("tallennus"));
         element.submit();
         
 
