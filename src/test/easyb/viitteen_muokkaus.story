@@ -51,8 +51,6 @@ scenario "asiakas lisää viitteen ja sen jälkeen muokkaa sitä", {
         element.sendKeys("Snafu");
         element = driver.findElement(By.name("tallennus"));
         element.submit();
-        
-
     }
 
     then 'viite on muuttunut', {
