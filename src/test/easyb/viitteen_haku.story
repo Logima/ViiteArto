@@ -698,8 +698,9 @@ scenario "asiakas hakee viitteitä kahdella (TAI) syötteillä eikä tuloslistas
     }
 
     then 'oikeat viitteet löytyvät ja niitä on vain yksi kappale tuloslistassa', {
-       
-       driver.getPageSource().contains("Hakutulokset: [Title: Extreme Apprenticeship").shouldBe true
-       driver.getPageSource().contains("Hakutulokset: [Title: Extreme Programming").shouldBe true
+
+       driver.getPageSource().contains("Hakutulokset").shouldBe true
+       driver.getPageSource().contains("Title: Extreme Apprenticeship").shouldBe true
+       driver.getPageSource().contains("Title: Extreme Programming").shouldBe true
     }
 }
