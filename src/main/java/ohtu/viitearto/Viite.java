@@ -302,6 +302,7 @@ public class Viite implements Serializable {
     
     @Override
     public String toString() {
+        String kakka = "oaieagolagje";
         return "Title: "+getTitle()+"\n Author: "+getAuthor()+"\n Publisher: "+getPublisher()+
                 "\n Pages: "+getPages()+"\n Address: "+getAddress()+"\n Year: "+getYear()+
                 "\n Booktitle: "+getBooktitle()+"\n Journal: "+getJournal()+"\n Volume: "+

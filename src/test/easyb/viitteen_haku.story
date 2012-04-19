@@ -608,3 +608,99 @@ scenario "asiakas muokkaa viitettä ja hakee sen tietokannasta", {
         driver.getPageSource().contains("Hakutulokset").shouldBe true
     }
 }
+
+scenario "asiakas hakee viitteitä kahdella (TAI) syötteillä eikä tuloslistassa ole duplikaatteja", {
+
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:7190/");
+
+    given 'viitteet on listalla', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Inproceedings")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("title"));
+        element.sendKeys("Extreme Apprenticeship Method in Teaching Programming for Beginners");
+        element = driver.findElement(By.name("author"));
+        element.sendKeys("Vihavainen, Arto and Paksula, Matti and Luukkainen, Matti");
+        element = driver.findElement(By.name("booktitle"));
+        element.sendKeys("SIGCSE '11: Proceedings of the 42nd SIGCSE technical symposium on Computer science education");
+
+        element = driver.findElement(By.name("lisays"));
+        element.submit();
+
+        element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options2 = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options2){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("title"));
+        element.sendKeys("Extreme Programming Explained: Embrace Change (2nd Edition)");
+        element = driver.findElement(By.name("author"));
+        element.sendKeys("Beck, Kent and Andres, Cynthia");
+        element = driver.findElement(By.name("pubilsher"));
+        element.sendkeys("Addison-Wesley");
+
+        element = driver.findElement(By.name("lisays"));
+        element.submit();
+
+    }
+
+    when 'haun tiedot on syötetty', {
+
+        WebElement element = driver.findElement(By.name("ekaKentta"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Author")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("tokaKentta"));
+        List<WebElement> options2 = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options2){
+            if(option.getText().equals("Title")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("ekaSana"));
+        element.sendKeys("Kent");
+        element = driver.findElement(By.name("tokaSana"));
+        element.sendKeys("Extreme");
+        element = driver.findElement(By.id("disjunction"));
+        element.click();
+
+        element = driver.findElement(By.name("haku"));
+        element.submit();
+
+    }
+
+    then 'oikeat viitteet löytyvät ja niitä on vain yksi kappale tuloslistassa', {
+       
+       driver.getPageSource().contains("Hakutulokset: [<b>Title:</b> Extreme Apprenticeship").shouldBe true
+       driver.getPageSource().contains("Hakutulokset: [<b>Title:</b> Extreme Programming").shouldBe true
+       driver.getPageSource().indexOf("Addison-Wesley", driver.getPageSource().indexOf("Addison-Wesley")+14).shouldBe -1
+    }
+}
