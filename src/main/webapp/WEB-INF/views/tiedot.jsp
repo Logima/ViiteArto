@@ -17,12 +17,6 @@
 
         <br/>
         <b>${type}</b>
-
-        <!-- Virheilmoitus, jos viitteen muokkaus meni pieleen -->
-        <c:if test="${not empty error}">
-            <br/><br/>
-            <font color="red">${error}</font><br/>
-        </c:if>
         
         <!-- Listaa viitteen kaikki olemassaolevat tiedot -->
         <ul>           

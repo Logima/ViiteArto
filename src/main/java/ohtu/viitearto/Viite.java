@@ -56,8 +56,7 @@ public class Viite implements Serializable {
     }
 
     public void setAuthor(String author) {
-        if (author.length() > 0)
-            fields.put("author", author);   
+        fields.put("author", author);   
         getTiedot().clear();
     }
 
@@ -66,8 +65,7 @@ public class Viite implements Serializable {
     }
 
     public void setBooktitle(String booktitle) {
-        if (booktitle.length() > 0)
-            fields.put("booktitle", booktitle);
+        fields.put("booktitle", booktitle);
         getTiedot().clear();
     }
 
@@ -76,8 +74,7 @@ public class Viite implements Serializable {
     }
 
     public void setJournal(String journal) {
-        if (journal.length() > 0)
-            fields.put("journal", journal);   
+        fields.put("journal", journal);   
         getTiedot().clear();
     }
 
@@ -94,8 +91,7 @@ public class Viite implements Serializable {
     }
 
     public void setPages(String pages) {
-        if (pages.length() > 0)
-            fields.put("pages", pages); 
+        fields.put("pages", pages); 
         getTiedot().clear();
     }
 
@@ -104,8 +100,7 @@ public class Viite implements Serializable {
     }
 
     public void setPublisher(String publisher) {
-        if (publisher.length() > 0)
-            fields.put("publisher", publisher);    
+        fields.put("publisher", publisher);    
         getTiedot().clear();
     }
 
@@ -114,8 +109,7 @@ public class Viite implements Serializable {
     }
 
     public void setTitle(String title) {
-        if (title.length() > 0)
-            fields.put("title", title);
+        fields.put("title", title);
         getTiedot().clear();
     }
 

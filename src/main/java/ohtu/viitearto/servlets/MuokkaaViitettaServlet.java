@@ -107,19 +107,22 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         muokattava.setTitle(title);
         muokattava.setAuthor(author);
         
-        if (publisher != null && publisher.length() > 0)
+        if (publisher != null && publisher.length() > 0) {
             muokattava.setPublisher(publisher);
+        }
         
-        if (address != null && address.length() > 0)
+        if (address != null && address.length() > 0) {
             muokattava.setAddress(address);
+        }
         
         if (year != null && year.length() > 0) {
             try {
                 int nro = Integer.parseInt(year);
                 muokattava.setYear(year);
             } catch (Exception e) {
-                muokattava.setYear("");
             }
+        } else {
+            muokattava.setYear(year);
         }
         
         if (volume != null && volume.length() > 0) {
@@ -127,8 +130,9 @@ public class MuokkaaViitettaServlet extends HttpServlet {
                 int nro = Integer.parseInt(volume);
                 muokattava.setVolume(volume);
             } catch (Exception e) {
-                muokattava.setVolume("");
             }
+        } else {
+            muokattava.setVolume(volume);
         }
         
         if (number != null && number.length() > 0) {
@@ -136,12 +140,14 @@ public class MuokkaaViitettaServlet extends HttpServlet {
                 int nro = Integer.parseInt(number);
                 muokattava.setNumber(number);
             } catch (Exception e) {
-                muokattava.setNumber("");
             }
+        } else {
+            muokattava.setNumber(number);
         }
         
-        if (pages != null && pages.length() > 0)
+        if (pages != null && pages.length() > 0) {
             muokattava.setPages(pages);
+        }
     }
 
 }
