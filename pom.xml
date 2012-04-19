@@ -86,15 +86,6 @@
             <artifactId>jetty-servlet</artifactId>
             <version>7.6.2.v20120308</version>
         </dependency>
-        
-        <!-- java-bibtex -->
-        <dependency>
-            <groupId>org.jbibtex</groupId>
-            <artifactId>java-bibtex</artifactId>
-            <version>r37</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/lib/jbibtex-r37.jar</systemPath>
-        </dependency>
     </dependencies>
 
     <build>
