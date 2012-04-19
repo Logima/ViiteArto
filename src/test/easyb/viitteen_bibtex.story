@@ -39,15 +39,15 @@ scenario "asiakas lisää viitteen ja tallentaa bibtex-tiedot", {
 
     when 'asiakas lataa bibtex-tiedot', {
 
-        WebElement element = driver.findElement(By.name("Helsinginkadun appro"));
-        element.submit();
-        element = driver.findElement(By.name("BibTeX"));
-        element.submit();
+        WebElement element = driver.findElement(By.linkText("Helsinginkadun appro"));
+        element.click();
+        element = driver.findElement(By.linkText("BibTeX"));
+        element.click();
 
     }
 
     then 'viite näkyy sivulla', {
-       driver.getPageSource().contains("Helsinginkadun Appro").shouldBe true
+       driver.getPageSource().contains("Helsinginkadun appro").shouldBe true
        driver.getPageSource().contains("Bileinsinöörit").shouldBe true
     }
 }
