@@ -58,17 +58,9 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         String yearString = turva.estaCrossSiteScripting(request.getParameter("year"));
         String address = turva.estaCrossSiteScripting(request.getParameter("address"));
         
-        turva.tarkistaPakollisetTiedot(title, author, null, null);
-        turva.tarkistaNumeroTiedot(yearString, null, null);
-        
-        if (turva.onkoVirheita()) {
-            doGet(request, response);
-            return;
-        }
-        
         Viite muokattava = rekisteri.haeViite(id);
         
-        muutaTiedot(muokattava, title, author, publisher, address, null, yearString, null, null);
+        muutaTiedot(muokattava, title, author, publisher, address, null, yearString, null, null, null);
         
         rekisteri.lisaaViite(muokattava);
     }
@@ -84,16 +76,11 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         String pages = turva.estaCrossSiteScripting(request.getParameter("pages"));
         String journal = turva.estaCrossSiteScripting(request.getParameter("journal"));
         String volumeString = turva.estaCrossSiteScripting(request.getParameter("volume"));
-        String numberString = turva.estaCrossSiteScripting(request.getParameter("number"));
-        
-        if (turva.onkoVirheita()) {
-            doGet(request, response);
-            return;
-        }        
+        String numberString = turva.estaCrossSiteScripting(request.getParameter("number"));   
         
         Viite muokattava = rekisteri.haeViite(id);
         
-        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, volumeString, numberString);
+        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, volumeString, numberString, null);
         rekisteri.lisaaViite(muokattava);
     }
 
@@ -108,46 +95,63 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         String address = turva.estaCrossSiteScripting(request.getParameter("address"));
         String pages = turva.estaCrossSiteScripting(request.getParameter("pages"));
         
-        turva.tarkistaPakollisetTiedot(title, author, null, booktitle);
-        turva.tarkistaNumeroTiedot(yearString, null, null);
-        
-        if (turva.onkoVirheita()) {
-            doGet(request, response);
-            return;
-        }
-        
         Viite muokattava = rekisteri.haeViite(id);
         
-        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, null, null);
+        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, null, null, booktitle);
         rekisteri.lisaaViite(muokattava);
     }
     
     private void muutaTiedot(Viite muokattava, String title, String author, String publisher, String address, String pages,
-            String year, String volume, String number) {
+            String year, String volume, String number, String booktitle) {
         
         muokattava.setTitle(title);
         muokattava.setAuthor(author);
         
-        if (publisher != null && publisher.length() > 0)
+        if (publisher != null && publisher.length() > 0) {
             muokattava.setPublisher(publisher);
+        }
         
-        if (address != null && address.length() > 0)
+        if (address != null && address.length() > 0) {
             muokattava.setAddress(address);
+        }
         
         if (year != null && year.length() > 0) {
+            try {
+                int nro = Integer.parseInt(year);
+                muokattava.setYear(year);
+            } catch (Exception e) {
+            }
+        } else {
             muokattava.setYear(year);
         }
         
         if (volume != null && volume.length() > 0) {
+            try {
+                int nro = Integer.parseInt(volume);
+                muokattava.setVolume(volume);
+            } catch (Exception e) {
+            }
+        } else {
             muokattava.setVolume(volume);
         }
         
         if (number != null && number.length() > 0) {
+            try {
+                int nro = Integer.parseInt(number);
+                muokattava.setNumber(number);
+            } catch (Exception e) {
+            }
+        } else {
             muokattava.setNumber(number);
         }
         
-        if (pages != null && pages.length() > 0)
+        if (pages != null && pages.length() > 0) {
             muokattava.setPages(pages);
+        }
+        
+        if (booktitle != null && booktitle.length() > 0) {
+            muokattava.setBooktitle(booktitle);
+        }
     }
 
 }

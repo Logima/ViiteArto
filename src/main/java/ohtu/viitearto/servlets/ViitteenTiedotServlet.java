@@ -42,9 +42,7 @@ public class ViitteenTiedotServlet extends HttpServlet {
             asetaMuokkaustiedot(request);
             muokataanko = false;
         }
-        
-        asetaMahdollisetVirheIlmoitukset(request);
-        
+
         RequestDispatcher dispatcher =
                 request.getRequestDispatcher("WEB-INF/views/tiedot.jsp");
         dispatcher.forward(request, response);
@@ -100,11 +98,5 @@ public class ViitteenTiedotServlet extends HttpServlet {
         request.setAttribute("mtiedot", muokkausTiedot);
         request.setAttribute("id", muokattava.getId());
         request.setAttribute("type", muokattava.getType());
-    }
-    private void asetaMahdollisetVirheIlmoitukset(HttpServletRequest request) {
-        if (turva.onkoVirheita())
-            request.setAttribute("error", "Vialliset syötteet, muutoksia ei kirjattu!");
-        
-        turva.nollaaVirheet();
     }
 }
