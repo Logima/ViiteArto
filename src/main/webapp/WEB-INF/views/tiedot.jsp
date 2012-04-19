@@ -48,6 +48,7 @@
                 </table>
 
                 <input type="hidden" name="id" value="${id}"/>
+                <input type="hidden" name="type" value="${type}"/>
                 <input type="submit" name="muokkaa" value="Tallenna"/>
             </form>
             <br/>

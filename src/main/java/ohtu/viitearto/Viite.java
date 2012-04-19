@@ -69,7 +69,9 @@ public class Viite implements Serializable {
     }
 
     public void setBooktitle(String booktitle) {
-        fields.put("booktitle", booktitle);
+        if (booktitle != null)
+            fields.put("booktitle", booktitle);
+        getTiedot().clear();
     }
 
     public String getJournal() {

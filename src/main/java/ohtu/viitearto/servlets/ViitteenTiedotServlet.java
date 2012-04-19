@@ -94,5 +94,6 @@ public class ViitteenTiedotServlet extends HttpServlet {
     private void asetaMuokkaustiedot(HttpServletRequest request) {
         request.setAttribute("mtiedot", muokkausTiedot);
         request.setAttribute("id", muokattava.getId());
+        request.setAttribute("type", muokattava.getType());
     }
 }
