@@ -60,7 +60,7 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         
         Viite muokattava = rekisteri.haeViite(id);
         
-        muutaTiedot(muokattava, title, author, publisher, address, null, yearString, null, null);
+        muutaTiedot(muokattava, title, author, publisher, address, null, yearString, null, null, null);
         
         rekisteri.lisaaViite(muokattava);
     }
@@ -80,7 +80,7 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         
         Viite muokattava = rekisteri.haeViite(id);
         
-        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, volumeString, numberString);
+        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, volumeString, numberString, null);
         rekisteri.lisaaViite(muokattava);
     }
 
@@ -97,12 +97,12 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         
         Viite muokattava = rekisteri.haeViite(id);
         
-        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, null, null);
+        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, null, null, booktitle);
         rekisteri.lisaaViite(muokattava);
     }
     
     private void muutaTiedot(Viite muokattava, String title, String author, String publisher, String address, String pages,
-            String year, String volume, String number) {
+            String year, String volume, String number, String booktitle) {
         
         muokattava.setTitle(title);
         muokattava.setAuthor(author);
@@ -147,6 +147,10 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         
         if (pages != null && pages.length() > 0) {
             muokattava.setPages(pages);
+        }
+        
+        if (booktitle != null && booktitle.length() > 0) {
+            muokattava.setBooktitle(booktitle);
         }
     }
 

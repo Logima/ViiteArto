@@ -44,8 +44,10 @@ scenario "asiakas lisää viitteen ja sen jälkeen muokkaa sitä", {
         element = driver.findElement(By.name("muokkaus"));
         element.submit();
         element = driver.findElement(By.name("title"));
+        element.clear();
         element.sendKeys("Elämäni kankkunen");
         element = driver.findElement(By.name("author"));
+        element.clear();
         element.sendKeys("Snafu");
         element = driver.findElement(By.name("tallennus"));
         element.submit();
