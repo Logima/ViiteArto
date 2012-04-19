@@ -36,6 +36,7 @@
             <form action="/MuokkaaViitetta" method="post">
                 <table border="0" width="300" cellpadding="3" cellspacing="2" style="background-color: white">
 
+                    
                     <c:forEach var="tiedot"
                                items="${mtiedot}">
                         <tr>
@@ -60,6 +61,13 @@
                     <input type="submit" name="poisto" value="Poista viite">
                 </form>
             </c:if>
+            
+        <br/>
+        <a href="/BibtexTulostin?id=${id}">BibTeX</a><br>
+        <form action="/PoistaViite" method="GET">          
+            <input type="hidden" name="id" value="${id}"/>        
+            <input type="submit" name="poisto" value="Poista viite">
+        </form>
 
         <a href="/Viitteet">Etusivu</a>
     </body>

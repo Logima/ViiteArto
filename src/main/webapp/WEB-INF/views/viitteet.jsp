@@ -76,7 +76,7 @@
                 <br/>
 
                 <input type="radio" name="operand" value="and" checked="checked"/> AND
-                <input type="radio" name="operand" value="or" /> OR <br/>
+                <input type="radio" name="operand" value="or" id="disjunction"/> OR <br/>
                 
                 Hakusana: <input type="text" name="tokaSana">
                                 
@@ -130,6 +130,7 @@
                     <th>Id</th>
                     <th>Title</th>
                     <th>Author</th>
+                    <th>Type</th>
                     <th>Poista</th>
                 </tr>
                 <c:forEach var="viite" items="${viitteet}">
@@ -137,6 +138,7 @@
                         <td>${viite.id}</a></td>
                         <td><a href="/ViitteenTiedot?id=${viite.id}">${viite.title}</a></td>
                         <td>${viite.author}</td>
+                        <td>${viite.type}</td>
                         <td><a href="/PoistaViite?id=${viite.id}">Poista</a></td>
 
                     </tr>

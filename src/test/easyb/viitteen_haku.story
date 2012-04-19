@@ -245,8 +245,6 @@ scenario "asiakas hakee olemassa olevan viitteen kahdella (JA) syötteillä", {
         element.sendKeys("pelle peloton");
         element = driver.findElement(By.name("tokaSana"));
         element.sendKeys("apinakin osaa koodata");
-        element = driver.findElement(By.name("AND"));
-        element.submit();
         element = driver.findElement(By.name("haku"));
         element.submit();
 
@@ -260,8 +258,7 @@ scenario "asiakas hakee olemassa olevan viitteen kahdella (JA) syötteillä", {
     }
 }
 
-scenario "asiakas hakee olemassa olevan viitteen kahdella (JA) syötteillä,
-          joista toinen syöte on väärä", {
+scenario "asiakas hakee olemassa olevan viitteen kahdella (JA) syötteillä joista toinen syöte on väärä", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:7190/");
@@ -379,6 +376,8 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä",
         element.sendKeys("testien maailma");
         element = driver.findElement(By.name("author"));
         element.sendKeys("myllyrinne");
+        element = driver.findElement(By.name("journal"));
+        element.sendKeys("linkki");
         element = driver.findElement(By.name("lisays"));
         element.submit();
 
@@ -420,8 +419,8 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä",
         element.sendKeys("pelle peloton");
         element = driver.findElement(By.name("tokaSana"));
         element.sendKeys("testien maailma");
-        element = driver.findElement(By.name("OR"));
-        element.submit();
+        element = driver.findElement(By.id("disjunction"));
+        element.click();
         element = driver.findElement(By.name("haku"));
         element.submit();
 
@@ -431,12 +430,10 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä",
        
        driver.getPageSource().contains("Hakutulokset").shouldBe true
        driver.getPageSource().contains("testien maailma").shouldBe true
-
     }
 }
 
-scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä,
-          joista kumpikaan ei ole oikea", {
+scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä, joista kumpikaan ei ole oikea", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:7190/");
@@ -479,6 +476,8 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä,
         element.sendKeys("testien maailma");
         element = driver.findElement(By.name("author"));
         element.sendKeys("myllyrinne");
+        element = driver.findElement(By.name("journal"));
+        element.sendKeys("linkki");
         element = driver.findElement(By.name("lisays"));
         element.submit();
 
@@ -520,16 +519,13 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä,
         element.sendKeys("testien maailma");
         element = driver.findElement(By.name("tokaSana"));
         element.sendKeys("pelle peloton");
-        element = driver.findElement(By.name("OR"));
-        element.submit();
+        element = driver.findElement(By.id("disjunction"));
+        element.click();
         element = driver.findElement(By.name("haku"));
         element.submit();
-
     }
 
-    then 'viitettä ei löydy', {
-       
+    then 'viitettä ei löydy', { 
        driver.getPageSource().contains("Hakutulokset").shouldBe false
-
     }
 }

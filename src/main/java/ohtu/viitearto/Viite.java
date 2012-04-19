@@ -205,6 +205,20 @@ public class Viite implements Serializable {
             
             if (getPages() != null && getPages().length() > 0)
                 fields.add("<b>Pages:</b> "+getPages());
+            
+            if (getTagit() != null && getTagit().size() > 0) {
+                String listString = "";
+
+                for (int i=0; i < getTagit().size(); ++i) {
+                    
+                    if (i != getTagit().size()-1)
+                        listString += getTagit().get(i).getNimi() + ", ";
+                    else
+                        listString += getTagit().get(i).getNimi();
+                }
+
+                fields.add("<b>Tags:</b> " + listString);
+            }
         }
         return fields;
     }

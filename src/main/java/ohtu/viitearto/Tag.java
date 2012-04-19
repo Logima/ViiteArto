@@ -23,9 +23,6 @@ public class Tag implements Serializable {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn
     private List<Viite> viitteet; // lista viitteistä, joihin tagi kuuluu
-    
-    @Column
-    private Long id;
 
     public Tag() {
     }

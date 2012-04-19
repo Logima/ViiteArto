@@ -57,13 +57,9 @@ public class Tietoturva {
     }
     
     public void tarkistaNumeroTiedot(String yearString, String volumeString, String numberString) {
-        int year = 0;
-        int volume = 0;
-        int number = 0;
-        
         if (yearString != null && yearString.length() > 0) {
             try {
-                year = Integer.parseInt(yearString);
+                int year = Integer.parseInt(yearString);
             } catch (Exception e) {
                 lisaaVirhe("numberError", "Vain numerot sallittuja!");
                 return;
@@ -72,7 +68,7 @@ public class Tietoturva {
         
         if (volumeString != null && volumeString.length() > 0) {
             try {
-                volume = Integer.parseInt(volumeString);
+                int volume = Integer.parseInt(volumeString);
             } catch (Exception e) {
                 lisaaVirhe("numberError", "Vain numerot sallittuja!");
                 return;
@@ -81,7 +77,7 @@ public class Tietoturva {
         
         if (numberString != null && numberString.length() > 0) {
             try {
-                number = Integer.parseInt(numberString);
+                int number = Integer.parseInt(numberString);
             } catch (Exception e) {
                 lisaaVirhe("numberError", "Vain numerot sallittuja!");
             }

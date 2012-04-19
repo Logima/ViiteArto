@@ -112,7 +112,7 @@ public class Rekisteri {
         Query q = null;
         
         if (viiteTyyppi != null) {
-            q = em.createQuery("SELECT v FROM Viite v WHERE v."+ekaKentta+" LIKE :firstParam "+operand+" v."+tokaKentta+" LIKE :secondParam "+operand+" v.type = :typeParam");
+            q = em.createQuery("SELECT v FROM Viite v WHERE v."+ekaKentta+" LIKE :firstParam "+operand+" v."+tokaKentta+" LIKE :secondParam and v.type = :typeParam");
             q.setParameter("firstParam", ekaHaku + "%").setParameter("secondParam", tokaHaku+"%").setParameter("typeParam", viiteTyyppi);
         } else {
             q = em.createQuery("SELECT v FROM Viite v WHERE v."+ekaKentta+" LIKE :firstParam "+operand+" v."+tokaKentta+" LIKE :secondParam");
@@ -141,12 +141,135 @@ public class Rekisteri {
     }
     
     public List<Viite> haeViiteTagJaHakusana(String ekaHaku, String tokaHaku, String viiteTyyppi, String ekaKentta, String tokaKentta, String operand) {
-        em = getEntityManager();
-        
-        Query q = null;
-        
+
         if (ekaKentta.equals("tag")) {
-            
+
+            if (haeTag(ekaHaku) == null || haeTag(ekaHaku).getViitteet() == null) {
+            } else {
+
+                List<Viite> haettavat = haeTag(ekaHaku).getViitteet(); // tagien perusteella haetut
+
+                List<Viite> kopio = new ArrayList<Viite>();
+
+                for (Viite viite : haettavat) {
+                    kopio.add(viite);
+                }
+
+                if (viiteTyyppi != null) {
+                    for (int i = 0; i < kopio.size(); ++i) {
+                        if (!kopio.get(i).getType().equals(viiteTyyppi)) {
+                            kopio.remove(kopio.get(i));
+                        }
+                    }
+                }
+
+                if (tokaKentta.equals("author")) {
+                    for (int i = 0; i < kopio.size(); ++i) {
+                        if (!kopio.get(i).getAuthor().contains(tokaHaku)) {
+                            kopio.remove(kopio.get(i));
+                        }
+                    }
+                } else if (tokaKentta.equals("address")) {
+                    for (int i = 0; i < kopio.size(); ++i) {
+                        if (!kopio.get(i).getAddress().contains(tokaHaku)) {
+                            kopio.remove(kopio.get(i));
+                        }
+                    }
+                } else if (tokaKentta.equals("title")) {
+                    for (int i = 0; i < kopio.size(); ++i) {
+                        if (!kopio.get(i).getTitle().contains(tokaHaku)) {
+                            kopio.remove(kopio.get(i));
+                        }
+                    }
+                } else if (tokaKentta.equals("booktitle")) {
+                    for (int i = 0; i < kopio.size(); ++i) {
+                        if (!kopio.get(i).getBooktitle().contains(tokaHaku)) {
+                            kopio.remove(kopio.get(i));
+                        }
+                    }
+                } else if (tokaKentta.equals("journal")) {
+                    for (int i = 0; i < kopio.size(); ++i) {
+                        if (!kopio.get(i).getJournal().contains(tokaHaku)) {
+                            kopio.remove(kopio.get(i));
+                        }
+                    }
+                } else if (tokaKentta.equals("publisher")) {
+                    for (int i = 0; i < kopio.size(); ++i) {
+                        if (!kopio.get(i).getPublisher().contains(tokaHaku)) {
+                            kopio.remove(kopio.get(i));
+                        }
+                    }
+                }
+
+                return kopio;
+            }
+        } else if (tokaKentta.equals("tag")) {
+
+            if (haeTag(tokaHaku) == null || haeTag(tokaHaku).getViitteet() == null) {
+            } else {
+
+                List<Viite> haettavat = haeTag(tokaHaku).getViitteet(); // tagien perusteella haetut
+
+                List<Viite> kopio = new ArrayList<Viite>();
+
+                for (Viite viite : haettavat) {
+                    kopio.add(viite);
+                }
+
+                if (viiteTyyppi != null) {
+                    for (int i = 0; i < kopio.size(); ++i) {
+                        if (!kopio.get(i).getType().equals(viiteTyyppi)) {
+                            kopio.remove(kopio.get(i));
+                        }
+                    }
+                }
+
+                if (ekaKentta.equals("author")) {
+                    for (int i = 0; i < kopio.size(); ++i) {
+                        if (!kopio.get(i).getAuthor().contains(ekaHaku)) {
+                            kopio.remove(kopio.get(i));
+                        }
+                    }
+                } else if (ekaKentta.equals("address")) {
+                    for (int i = 0; i < kopio.size(); ++i) {
+                        if (!kopio.get(i).getAddress().contains(ekaHaku)) {
+                            kopio.remove(kopio.get(i));
+                        }
+                    }
+                } else if (ekaKentta.equals("title")) {
+                    for (int i = 0; i < kopio.size(); ++i) {
+                        if (!kopio.get(i).getTitle().contains(ekaHaku)) {
+                            kopio.remove(kopio.get(i));
+                        }
+                    }
+                } else if (ekaKentta.equals("booktitle")) {
+                    for (int i = 0; i < kopio.size(); ++i) {
+                        if (!kopio.get(i).getBooktitle().contains(ekaHaku)) {
+                            kopio.remove(kopio.get(i));
+                        }
+                    }
+                } else if (ekaKentta.equals("journal")) {
+                    for (int i = 0; i < kopio.size(); ++i) {
+                        if (!kopio.get(i).getJournal().contains(ekaHaku)) {
+                            kopio.remove(kopio.get(i));
+                        }
+                    }
+                } else if (ekaKentta.equals("publisher")) {
+                    for (int i = 0; i < kopio.size(); ++i) {
+                        if (!kopio.get(i).getPublisher().contains(ekaHaku)) {
+                            kopio.remove(kopio.get(i));
+                        }
+                    }
+                }
+
+                return kopio;
+            }
+        }
+
+        if (ekaKentta.equals("tag")) {
+            em = getEntityManager();
+            Query q;
+
             if (viiteTyyppi != null) {
                 q = em.createQuery("SELECT v FROM Viite v WHERE v." + tokaKentta + " LIKE :firstParam " + operand + " v.type = :typeParam");
                 q.setParameter("firstParam", tokaHaku + "%").setParameter("typeParam", viiteTyyppi);
@@ -155,110 +278,22 @@ public class Rekisteri {
                 q.setParameter("firstParam", tokaHaku + "%");
             }
 
-            List<Viite> kysely = q.getResultList(); // hakusanan perusteella haetut
-
-            List<Viite> haettavat = haeTag(ekaHaku).getViitteet(); // tagien perusteella haetut
-            
-            List<Viite> kopio = new ArrayList<Viite>();
-
-            for (Viite viite : haettavat) {
-                kopio.add(viite);
-            }
-            
-            if (viiteTyyppi != null) {
-                for (int i = 0; i < kopio.size(); ++i) {
-                    if (!kopio.get(i).getType().equals(viiteTyyppi)) {
-                        kopio.remove(kopio.get(i));
-                    }
-                }
-            }
-
-            if (tokaKentta.equals("author")) {
-                for (int i=0; i < kopio.size(); ++i) {
-                    if (!kopio.get(i).getAuthor().contains(tokaHaku))
-                        kopio.remove(kopio.get(i));
-                }
-            } else if (tokaKentta.equals("address")) {           
-                for (int i=0; i < kopio.size(); ++i) {
-                    if (!kopio.get(i).getAddress().contains(tokaHaku))
-                        kopio.remove(kopio.get(i));
-                }
-            } else if (tokaKentta.equals("title")) {
-                for (int i=0; i < kopio.size(); ++i) {
-                    if (!kopio.get(i).getTitle().contains(tokaHaku))
-                        kopio.remove(kopio.get(i));
-                }
-            } else if (tokaKentta.equals("booktitle")) {
-                for (int i=0; i < kopio.size(); ++i) {
-                    if (!kopio.get(i).getBooktitle().contains(tokaHaku))
-                        kopio.remove(kopio.get(i));
-                }
-            } else if (tokaKentta.equals("journal")) {
-                for (int i=0; i < kopio.size(); ++i) {
-                    if (!kopio.get(i).getJournal().contains(tokaHaku))
-                        kopio.remove(kopio.get(i));
-                }
-            } else if (tokaKentta.equals("publisher")) {
-                for (int i=0; i < kopio.size(); ++i) {
-                    if (!kopio.get(i).getPublisher().contains(tokaHaku))
-                        kopio.remove(kopio.get(i));
-                }
-            }
-            
-            return kopio;
+            return q.getResultList();
         } else if (tokaKentta.equals("tag")) {
+            em = getEntityManager();
+            Query q;
 
-            List<Viite> haettavat = haeTag(tokaHaku).getViitteet(); // tagien perusteella haetut
-            
-            List<Viite> kopio = new ArrayList<Viite>();
-
-            for (Viite viite : haettavat) {
-                kopio.add(viite);
-            }
-            
             if (viiteTyyppi != null) {
-                for (int i = 0; i < kopio.size(); ++i) {
-                    if (!kopio.get(i).getType().equals(viiteTyyppi)) {
-                        kopio.remove(kopio.get(i));
-                    }
-                }
+                q = em.createQuery("SELECT v FROM Viite v WHERE v." + ekaKentta + " LIKE :firstParam " + operand + " v.type = :typeParam");
+                q.setParameter("firstParam", ekaHaku + "%").setParameter("typeParam", viiteTyyppi);
+            } else {
+                q = em.createQuery("SELECT v FROM Viite v WHERE v." + ekaKentta + " LIKE :firstParam");
+                q.setParameter("firstParam", ekaHaku + "%");
             }
 
-            if (ekaKentta.equals("author")) {
-                for (int i=0; i < kopio.size(); ++i) {
-                    if (!kopio.get(i).getAuthor().contains(ekaHaku))
-                        kopio.remove(kopio.get(i));
-                }
-            } else if (ekaKentta.equals("address")) {           
-                for (int i=0; i < kopio.size(); ++i) {
-                    if (!kopio.get(i).getAddress().contains(ekaHaku))
-                        kopio.remove(kopio.get(i));
-                }
-            } else if (ekaKentta.equals("title")) {
-                for (int i=0; i < kopio.size(); ++i) {
-                    if (!kopio.get(i).getTitle().contains(ekaHaku))
-                        kopio.remove(kopio.get(i));
-                }
-            } else if (ekaKentta.equals("booktitle")) {
-                for (int i=0; i < kopio.size(); ++i) {
-                    if (!kopio.get(i).getBooktitle().contains(ekaHaku))
-                        kopio.remove(kopio.get(i));
-                }
-            } else if (ekaKentta.equals("journal")) {
-                for (int i=0; i < kopio.size(); ++i) {
-                    if (!kopio.get(i).getJournal().contains(ekaHaku))
-                        kopio.remove(kopio.get(i));
-                }
-            } else if (ekaKentta.equals("publisher")) {
-                for (int i=0; i < kopio.size(); ++i) {
-                    if (!kopio.get(i).getPublisher().contains(ekaHaku))
-                        kopio.remove(kopio.get(i));
-                }
-            }
-            
-            return kopio;
+            return q.getResultList();
         }
-        
+
         return null;
     }
 }

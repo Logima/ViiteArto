@@ -28,6 +28,8 @@
     <servlet>
         <servlet-name>MuokkaaViitettaServlet</servlet-name>
         <servlet-class>ohtu.viitearto.servlets.MuokkaaViitettaServlet</servlet-class>
+        <servlet-name>BibtexTulostinServlet</servlet-name>
+        <servlet-class>ohtu.viitearto.servlets.BibtexTulostinServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ViitteetServlet</servlet-name>
@@ -56,6 +58,8 @@
     <servlet-mapping>
         <servlet-name>MuokkaaViitettaServlet</servlet-name>
         <url-pattern>/MuokkaaViitetta</url-pattern>
+        <servlet-name>BibtexTulostinServlet</servlet-name>
+        <url-pattern>/BibtexTulostin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
