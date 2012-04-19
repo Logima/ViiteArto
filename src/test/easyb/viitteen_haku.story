@@ -529,3 +529,94 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä, 
        driver.getPageSource().contains("Hakutulokset").shouldBe false
     }
 }
+
+scenario "asiakas muokkaa viitettä ja hakee sen tietokannasta", {
+
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:7190/");
+
+    given 'viite on listalla', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("title"));
+        element.sendKeys("PostiKulkee");
+        element = driver.findElement(By.name("author"));
+        element.sendKeys("pelle peloton");
+        element = driver.findElement(By.name("lisays"));
+        element.submit();
+    }
+
+    when 'viitettä on muokattu', {
+
+        WebElement element = driver.findElement(By.linkText("PostiKulkee"));
+        element.click();
+
+        element = driver.findElement(By.name("muokkaus"));
+        element.submit();
+        element = driver.findElement(By.name("title"));
+        element.clear();
+        element.sendKeys("KustiPolkee");
+        element = driver.findElement(By.name("author"));
+        element.clear();
+        element.sendKeys("Snafu");
+
+        element = driver.findElement(By.name("tallennus"));
+        element.submit();
+
+        element = driver.findElement(By.linkText("Etusivu"));
+        element.click();
+    }
+
+    then 'viite löytyy haulla sen uusilla tiedoilla', {
+
+        WebElement element = driver.findElement(By.name("ekaKentta"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Author")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("tokaKentta"));
+        List<WebElement> options2 = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options2){
+            if(option.getText().equals("Title")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("tyyppi"));
+        List<WebElement> options3 = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options3){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("ekaSana"));
+        element.sendKeys("Snafu");
+        element = driver.findElement(By.name("tokaSana"));
+        element.sendKeys("KustiPolkee");
+        element = driver.findElement(By.name("haku"));
+        element.submit();
+
+        driver.getPageSource().contains("Hakutulokset").shouldBe true
+    }
+}
