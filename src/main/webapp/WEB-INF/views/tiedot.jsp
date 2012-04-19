@@ -18,6 +18,15 @@
         <br/>
         <b>${type}</b>
 
+        <!-- Listaa virheet, jos niitä tuli viitettä lisättäessä -->
+        <c:if test="${not empty errors}">
+            <br/>
+            <c:forEach var="error"
+                       items="${errors}">
+                <font color="red">${error}</font><br/>
+            </c:forEach>
+        </c:if>
+        
         <!-- Listaa viitteen kaikki olemassaolevat tiedot -->
         <ul>           
             <c:forEach var="info" items="${tiedot}">
@@ -51,7 +60,7 @@
 
                 <input type="hidden" name="id" value="${id}"/>
                 <input type="hidden" name="type" value="${type}"/>
-                <input type="submit" name="muokkaa" value="Tallenna"/>
+                <input type="submit" name="tallennus" value="Tallenna"/>
             </form>
             <br/>
         </c:if>
