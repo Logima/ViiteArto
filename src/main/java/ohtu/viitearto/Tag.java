@@ -25,6 +25,7 @@ public class Tag implements Serializable {
     private List<Viite> viitteet; // lista viitteistä, joihin tagi kuuluu
 
     public Tag() {
+        viitteet = new ArrayList<Viite>();
     }
     
     public Tag(String nimi) {
