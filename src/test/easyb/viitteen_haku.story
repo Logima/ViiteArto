@@ -656,7 +656,7 @@ scenario "asiakas hakee viitteitä kahdella (TAI) syötteillä eikä tuloslistas
         element = driver.findElement(By.name("author"));
         element.sendKeys("Beck, Kent and Andres, Cynthia");
         element = driver.findElement(By.name("publisher"));
-        element.sendkeys("OhtuGroup");
+        element.sendKeys("OhtuGroup");
 
         element = driver.findElement(By.name("lisays"));
         element.submit();
