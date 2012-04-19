@@ -28,17 +28,22 @@ public class BibtexTulostinServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/x-bibtex;charset=UTF-8");
         
-        long id = Long.parseLong(request.getParameter("id"));
-        
-        Viite viite = rekisteri.haeViite(id);
-        if (viite == null) return;
-        
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + viite.getTitle() + ".bib\"");
-        
-        PrintWriter out = response.getWriter();
-        
-        Bibtex.output(viite, out);
-        out.close();
+        try {
+            long id = Long.parseLong(request.getParameter("id"));
+
+            Viite viite = rekisteri.haeViite(id);
+            if (viite == null) {
+                return;
+            }
+
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + viite.getTitle() + ".bib\"");
+
+            PrintWriter out = response.getWriter();
+
+            Bibtex.output(viite, out);
+            out.close();
+        } catch (Exception e) {
+        }
         
     }
 
