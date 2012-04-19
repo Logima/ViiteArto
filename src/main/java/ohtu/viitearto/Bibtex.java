@@ -24,12 +24,12 @@ public class Bibtex {
                     else if (fieldName.equals("author")) v.setAuthor(fieldValue);
                     else if (fieldName.equals("booktitle")) v.setBooktitle(fieldValue);
                     else if (fieldName.equals("journal")) v.setJournal(fieldValue);
-                    else if (fieldName.equals("number")) v.setNumber(Integer.parseInt(fieldValue));
+                    else if (fieldName.equals("number")) v.setNumber(fieldValue);
                     else if (fieldName.equals("pages")) v.setPages(fieldValue);
                     else if (fieldName.equals("publisher")) v.setPublisher(fieldValue);
                     else if (fieldName.equals("title")) v.setTitle(fieldValue);
-                    else if (fieldName.equals("volume")) v.setVolume(Integer.parseInt(fieldValue));
-                    else if (fieldName.equals("year")) v.setYear(Integer.parseInt(fieldValue));
+                    else if (fieldName.equals("volume")) v.setVolume(fieldValue);
+                    else if (fieldName.equals("year")) v.setYear(fieldValue);
                 } catch(Exception e){
                 }
             }
@@ -62,13 +62,13 @@ public class Bibtex {
         if (v.getAddress() != null && v.getAddress().length() > 0)
             e.addField(new Key("Address"), new StringValue(v.getAddress(), StringValue.Style.BRACED));
 
-        if (v.getYear() != 0)
+        if (v.getYear() != null && v.getAddress().length() > 0)
             e.addField(new Key("Year"), new StringValue(v.getYear() + "", StringValue.Style.BRACED));
 
-        if (v.getVolume() != 0)
+        if (v.getVolume() != null && v.getAddress().length() > 0)
             e.addField(new Key("Volume"), new StringValue(v.getVolume() + "", StringValue.Style.BRACED));
 
-        if (v.getNumber() != 0)
+        if (v.getNumber() != null && v.getAddress().length() > 0)
             e.addField(new Key("Number"), new StringValue(v.getNumber() + "", StringValue.Style.BRACED));
 
         if (v.getPages() != null && v.getPages().length() > 0)

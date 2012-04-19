@@ -90,25 +90,25 @@ public class ViiteTest extends TestCase {
     
     public void testYearMade() {
         
-        viite.setYear(1890);
-        int year = viite.getYear();
-        assertEquals(1890 , year);
+        viite.setYear("1890");
+        String year = viite.getYear();
+        assertEquals("1890" , year);
     
     }
     
     public void testVolume() {
         
-        viite.setVolume(12);
-        int volume = viite.getVolume();
-        assertEquals(12 , volume);
+        viite.setVolume("12");
+        String volume = viite.getVolume();
+        assertEquals("12" , volume);
     
     }
     
     public void testNumber() {
         
-        viite.setNumber(15);
-        int number = viite.getNumber();
-        assertEquals(15 , number);
+        viite.setNumber("15");
+        String number = viite.getNumber();
+        assertEquals("15" , number);
     
     }
     

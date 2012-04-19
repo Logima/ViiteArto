@@ -97,13 +97,16 @@ public class Rekisteri {
         Query q = null;
         
         if (viiteTyyppi != null) {
-            q = em.createQuery("SELECT v FROM Viite v WHERE v."+kentta+" LIKE :fieldParam and v.type = :typeParam");
-            q.setParameter("fieldParam", haku + "%").setParameter("typeParam", viiteTyyppi);
+            q = em.createQuery("SELECT v FROM Viite v WHERE v.type = :typeParam");
+            q.setParameter("typeParam", viiteTyyppi);
         } else {
-            q = em.createQuery("SELECT v FROM Viite v WHERE v."+kentta+" LIKE :fieldParam");
-            q.setParameter("fieldParam", haku + "%");
+            q = em.createQuery("SELECT v FROM Viite v");
         }
-        return q.getResultList();
+        List<Viite> results = q.getResultList();
+        for (Viite v : results) {
+            if (!v.getField(kentta).equals(haku)) results.remove(v);
+        }
+        return results;
     }
     
     public List<Viite> haeViiteKahdellaHakuSanalla(String ekaHaku, String tokaHaku, String viiteTyyppi, String ekaKentta, String tokaKentta, String operand) {

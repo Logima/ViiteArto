@@ -21,42 +21,11 @@ import javax.persistence.*;
 public class Viite implements Serializable {
     
     @Column
-    private String title;  
-    
-    @Column
-    private String author;  
-    
-    @Column
-    private String journal;
-    
-    @Column
-    private String booktitle; 
-    
-    @Column
-    private String publisher;  
-    
-    @Column
-    private String pages; 
-    
-    @Column
-    private String address;
-    
-    @Column
-    private int yearMade;   
-    
-    @Column
-    private int volume;
-    
-    @Column
-    private int number;
+    private HashMap<String, String> fields;
     
     @Column
     private String type;
     
-    /*
-     * Sisältää tiedot viitteen eri kenttien sisällöistä.
-     */
-    private ArrayList<String> fields;
     
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE, generator="tab")
@@ -67,94 +36,94 @@ public class Viite implements Serializable {
     private List<Tag> tagit; // lista tageista, jotka viitteellä on
 
     public Viite() {
-        fields = new ArrayList<String>();
+        fields = new HashMap<String, String>();
         tagit = new ArrayList<Tag>();
     }
 
     public Viite(String title, String author) {
         this();
-        this.title = title;
-        this.author = author;
+        fields.put("title", title);
+        fields.put("author", author);
     }
 
     public String getAddress() {
-        return address;
+        return fields.get("address");
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        fields.put("address", address);
     }
 
     public String getAuthor() {
-        return author;
+        return fields.get("author");
     }
 
     public void setAuthor(String author) {
-        this.author = author;
+        fields.put("author", author);
     }
 
     public String getBooktitle() {
-        return booktitle;
+        return fields.get("booktitle");
     }
 
     public void setBooktitle(String booktitle) {
-        this.booktitle = booktitle;
+        fields.put("booktitle", booktitle);
     }
 
     public String getJournal() {
-        return journal;
+        return fields.get("journal");
     }
 
     public void setJournal(String journal) {
-        this.journal = journal;
+        fields.put("journal", journal);
     }
 
-    public int getNumber() {
-        return number;
+    public String getNumber() {
+        return fields.get("number");
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setNumber(String number) {
+        fields.put("number", number);
     }
 
     public String getPages() {
-        return pages;
+        return fields.get("pages");
     }
 
     public void setPages(String pages) {
-        this.pages = pages;
+        fields.put("pages", pages);
     }
 
     public String getPublisher() {
-        return publisher;
+        return fields.get("publisher");
     }
 
     public void setPublisher(String publisher) {
-        this.publisher = publisher;
+        fields.put("publisher", publisher);
     }
 
     public String getTitle() {
-        return title;
+        return fields.get("title");
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        fields.put("title", title);
     }
 
-    public int getVolume() {
-        return volume;
+    public String getVolume() {
+        return fields.get("volume");
     }
 
-    public void setVolume(int volume) {
-        this.volume = volume;
+    public void setVolume(String volume) {
+        fields.put("volume", volume);
     }
 
-    public int getYear() {
-        return yearMade;
+    public String getYear() {
+        return fields.get("year");
     }
 
-    public void setYear(int yearMade) {
-        this.yearMade = yearMade;
+    public void setYear(String year) {
+        fields.put("year", year);
     }
 
     public Long getId() {
@@ -173,38 +142,48 @@ public class Viite implements Serializable {
         this.type = type;
     }
     
+    public String getField(String kentta) {
+        return fields.get(kentta);
+    }
+    
+    public void setField(String kentta, String arvo) {
+        fields.put(kentta, arvo);
+    }
+    
     public ArrayList<String> getTiedot() {
-        if (fields.isEmpty()) {
+        ArrayList<String> fieldsHtml = new ArrayList<String>();
+        
+        if (fieldsHtml.isEmpty()) {
             
             if (getTitle() != null && getTitle().length() > 0)
-                fields.add("<b>Title:</b> "+getTitle());
+                fieldsHtml.add("<b>Title:</b> "+getTitle());
 
             if (getAuthor() != null && getAuthor().length() > 0)
-                fields.add("<b>Author:</b> "+getAuthor());
+                fieldsHtml.add("<b>Author:</b> "+getAuthor());
             
             if (getPublisher() != null && getPublisher().length() > 0)
-                fields.add("<b>Publisher:</b> "+getPublisher());
+                fieldsHtml.add("<b>Publisher:</b> "+getPublisher());
             
             if (getBooktitle() != null && getBooktitle().length() > 0)
-                fields.add("<b>Booktitle:</b> "+getBooktitle());
+                fieldsHtml.add("<b>Booktitle:</b> "+getBooktitle());
             
             if (getJournal() != null && getJournal().length() > 0)
-                fields.add("<b>Journal:</b> "+getJournal());
+                fieldsHtml.add("<b>Journal:</b> "+getJournal());
             
             if (getAddress() != null && getAddress().length() > 0)
-                fields.add("<b>Address:</b> "+getAddress());
+                fieldsHtml.add("<b>Address:</b> "+getAddress());
             
-            if (getYear() != 0)
-                fields.add("<b>Year:</b> "+getYear());
+            if (getYear() != null && getAddress().length() > 0)
+                fieldsHtml.add("<b>Year:</b> "+getYear());
             
-            if (getVolume() != 0)
-                fields.add("<b>Volume:</b> "+getVolume());
+            if (getVolume() != null && getAddress().length() > 0)
+                fieldsHtml.add("<b>Volume:</b> "+getVolume());
             
-            if (getNumber() != 0)
-                fields.add("<b>Number:</b> "+getNumber());
+            if (getNumber() != null && getAddress().length() > 0)
+                fieldsHtml.add("<b>Number:</b> "+getNumber());
             
             if (getPages() != null && getPages().length() > 0)
-                fields.add("<b>Pages:</b> "+getPages());
+                fieldsHtml.add("<b>Pages:</b> "+getPages());
             
             if (getTagit() != null && getTagit().size() > 0) {
                 String listString = "";
@@ -217,10 +196,10 @@ public class Viite implements Serializable {
                         listString += getTagit().get(i).getNimi();
                 }
 
-                fields.add("<b>Tags:</b> " + listString);
+                fieldsHtml.add("<b>Tags:</b> " + listString);
             }
         }
-        return fields;
+        return fieldsHtml;
     }
     
     public void setTagit(List<Tag> tagit) {

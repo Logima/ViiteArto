@@ -158,7 +158,7 @@ public class LisaaViiteServlet extends HttpServlet {
     }
     
     private void lisaaOptionaalisetTiedot(Viite uusi, String publisher, String address, String pages,
-            String yearString, String volumeString, String numberString) {
+            String year, String volume, String number) {
         
         if (publisher != null && publisher.length() > 0)
             uusi.setPublisher(publisher);
@@ -166,25 +166,16 @@ public class LisaaViiteServlet extends HttpServlet {
         if (address != null && address.length() > 0)
             uusi.setAddress(address);
         
-        if (yearString != null && yearString.length() > 0) {
-            int year = Integer.parseInt(yearString);
-            
-            if (year != 0)
-                uusi.setYear(year);
+        if (year != null && year.length() > 0) {
+            uusi.setYear(year);
         }
         
-        if (volumeString != null && volumeString.length() > 0) {
-            int volume = Integer.parseInt(volumeString);
-            
-            if (volume != 0)
-                uusi.setVolume(volume);
+        if (volume != null && volume.length() > 0) {
+            uusi.setVolume(volume);
         }
         
-        if (numberString != null && numberString.length() > 0) {
-            int number = Integer.parseInt(numberString);
-            
-            if (number != 0)
-                uusi.setNumber(number);
+        if (number != null && number.length() > 0) {
+            uusi.setNumber(number);
         }
         
         if (pages != null && pages.length() > 0)
