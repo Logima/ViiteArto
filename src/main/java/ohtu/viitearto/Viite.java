@@ -265,4 +265,40 @@ public class Viite implements Serializable {
     public HashMap<String, String> getFields() {
         return fields;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Viite other = (Viite) obj;
+        if (this.fields != other.fields && (this.fields == null || !this.fields.equals(other.fields))) {
+            return false;
+        }
+        if ((this.type == null) ? (other.type != null) : !this.type.equals(other.type)) {
+            return false;
+        }
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        if (this.tagit != other.tagit && (this.tagit == null || !this.tagit.equals(other.tagit))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + (this.fields != null ? this.fields.hashCode() : 0);
+        hash = 41 * hash + (this.type != null ? this.type.hashCode() : 0);
+        hash = 41 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 41 * hash + (this.tagit != null ? this.tagit.hashCode() : 0);
+        return hash;
+    }
+    
+    
 }
