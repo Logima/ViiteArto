@@ -58,11 +58,11 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         String yearString = turva.estaCrossSiteScripting(request.getParameter("year"));
         String address = turva.estaCrossSiteScripting(request.getParameter("address"));
              
-        pakollistenTietojenTarkistus(request, response, title, author, null, null);
+        if (!pakollistenTietojenTarkistus(request, response, title, author, null, null)) return;
         
         Viite muokattava = rekisteri.haeViite(id);
         
-        muutaTiedot(muokattava, title, author, publisher, address, null, yearString, null, null, null);
+        muutaTiedot(muokattava, title, author, publisher, address, null, yearString, null, null, null, null);
         
         rekisteri.lisaaViite(muokattava);
     }
@@ -80,11 +80,11 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         String volumeString = turva.estaCrossSiteScripting(request.getParameter("volume"));
         String numberString = turva.estaCrossSiteScripting(request.getParameter("number"));   
         
-        pakollistenTietojenTarkistus(request, response, title, author, journal, null);
+        if (!pakollistenTietojenTarkistus(request, response, title, author, journal, null)) return;
         
         Viite muokattava = rekisteri.haeViite(id);
         
-        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, volumeString, numberString, null);
+        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, volumeString, numberString, null, journal);
         rekisteri.lisaaViite(muokattava);
     }
 
@@ -99,27 +99,24 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         String address = turva.estaCrossSiteScripting(request.getParameter("address"));
         String pages = turva.estaCrossSiteScripting(request.getParameter("pages"));
         
-        pakollistenTietojenTarkistus(request, response, title, author, null, booktitle);
+        if (!pakollistenTietojenTarkistus(request, response, title, author, null, booktitle)) return;
         
         Viite muokattava = rekisteri.haeViite(id);
         
-        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, null, null, booktitle);
+        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, null, null, booktitle, null);
         rekisteri.lisaaViite(muokattava);
     }
     
     private void muutaTiedot(Viite muokattava, String title, String author, String publisher, String address, String pages,
-            String year, String volume, String number, String booktitle) {
+            String year, String volume, String number, String booktitle, String journal) {
         
         muokattava.setTitle(title);
-        muokattava.setAuthor(author);
-        
-        if (publisher != null && publisher.length() > 0) {
-            muokattava.setPublisher(publisher);
-        }
-        
-        if (address != null && address.length() > 0) {
-            muokattava.setAddress(address);
-        }
+        muokattava.setAuthor(author);  
+        muokattava.setPublisher(publisher);
+        muokattava.setAddress(address);
+        muokattava.setPages(pages);
+        muokattava.setBooktitle(booktitle);
+        muokattava.setJournal(journal);
         
         if (year != null && year.length() > 0) {
             try {
@@ -150,21 +147,17 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         } else {
             muokattava.setNumber(number);
         }
-        
-        if (pages != null && pages.length() > 0) {
-            muokattava.setPages(pages);
-        }
-        
-        if (booktitle != null && booktitle.length() > 0) {
-            muokattava.setBooktitle(booktitle);
-        }
     }
 
-    private void pakollistenTietojenTarkistus(HttpServletRequest request, HttpServletResponse response, String title, String author, String journal, String booktitle) throws ServletException, IOException {
+    private boolean pakollistenTietojenTarkistus(HttpServletRequest request, HttpServletResponse response, String title, String author, String journal, String booktitle) throws ServletException, IOException {
         turva.tarkistaPakollisetTiedot(title, author, journal, booktitle);
         
-        if (turva.onkoVirheita())
+        if (turva.onkoVirheita()) {
             doGet(request, response);
+            return false;
+        }
+        
+        return true;
     }
 
 }
