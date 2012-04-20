@@ -60,8 +60,7 @@ scenario "asiakas lisää viitteen (kirja) ja sen jälkeen muokkaa sitä", {
     }
 }
 
-scenario "asiakas lisää viitteen (artikkeli) pakollisilla tiedoilla ja sen
-         jälkeen täydentää viitettä", {
+scenario "asiakas lisää viitteen (artikkeli) pakollisilla tiedoilla ja sen jälkeen täydentää viitettä", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:7190/");
