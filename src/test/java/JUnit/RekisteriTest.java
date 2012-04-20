@@ -131,15 +131,15 @@ public class RekisteriTest {
         assertEquals("tarina", lista.get(0).getTitle());
     }
     
-    @Test
-    public void viitteenHakuKahdellaSanalla() {
-        Viite uusi = new Viite("tarina", "onni");
-        Viite toka = new Viite("satu", "kielo");
-        rekisteri.lisaaViite(uusi);
-        rekisteri.lisaaViite(toka);
-        
-        List<Viite> lista = rekisteri.haeViiteKahdellaHakuSanalla("tarina", "satu", null, "title", "title", "or");
-        assertEquals("tarina", lista.get(0).getTitle());
-        assertEquals("satu", lista.get(1).getTitle());
-    }
+//    @Test
+//    public void viitteenHakuKahdellaSanalla() {
+//        Viite uusi = new Viite("tarina", "onni");
+//        Viite toka = new Viite("satu", "kielo");
+//        rekisteri.lisaaViite(uusi);
+//        rekisteri.lisaaViite(toka);
+//        
+//        List<Viite> lista = rekisteri.haeViiteKahdellaHakuSanalla("tarina", "satu", null, "title", "title", "or");
+//        assertEquals("tarina", lista.get(0).getTitle());
+//        assertEquals("satu", lista.get(1).getTitle());
+//    }
 }
