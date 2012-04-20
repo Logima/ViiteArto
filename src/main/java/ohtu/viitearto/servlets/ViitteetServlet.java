@@ -29,8 +29,10 @@ public class ViitteetServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         
-        if (hakuTulokset != null)
+        if (hakuTulokset != null) {
             request.setAttribute("hakuTulokset", hakuTulokset);
+            hakuTulokset = null;
+        }
         
         if (lomakeTyyppi != null)
             luoLomake(request); // mennään asettamaan viitteen lisäämistä varten täytettävät kentät

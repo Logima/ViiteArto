@@ -110,13 +110,28 @@
         </br>
 
         <!-- Viitehaun tulokset -->
-        
-        <c:if test="${not empty hakuTulokset}">
-            <c:forEach var="tulos"
-                       items="${hakuTulokset}">
-                Hakutulokset: ${tulos.tiedot}<br/>
 
-            </c:forEach>
+        <c:if test="${not empty hakuTulokset}">
+            Hakutulokset: <br/>
+            <table border="1" width="500" cellpadding="3" cellspacing="1" style="background-color: white">
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Type</th>
+                    <th>Poista</th>
+                </tr>
+                <c:forEach var="tulos" items="${hakuTulokset}">
+                    <tr>
+                        <td>${tulos.id}</a></td>
+                        <td><a href="/ViitteenTiedot?id=${tulos.id}">${tulos.title}</a></td>
+                        <td>${tulos.author}</td>
+                        <td>${tulos.type}</td>
+                        <td><a href="/PoistaViite?id=${tulos.id}">Poista</a></td>
+
+                    </tr>
+                </c:forEach>
+            </table>
         </c:if>
    
         <!-- Viitteiden listaus -->

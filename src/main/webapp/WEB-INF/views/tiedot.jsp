@@ -68,6 +68,15 @@
                 </form>
             </c:if>
             
+        <!-- Listaa virheet, jos niitä tuli viitettä muokattaessa -->
+        <c:if test="${not empty errors}">
+            <br/>
+            <c:forEach var="error"
+                       items="${errors}">
+                <font color="red">${error}</font><br/>
+            </c:forEach>
+        </c:if>
+            
         <br/>
         <a href="/BibtexTulostin?id=${id}">BibTeX</a><br>
 

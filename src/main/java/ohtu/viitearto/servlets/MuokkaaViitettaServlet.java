@@ -57,6 +57,8 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         String publisher = turva.estaCrossSiteScripting(request.getParameter("publisher"));
         String yearString = turva.estaCrossSiteScripting(request.getParameter("year"));
         String address = turva.estaCrossSiteScripting(request.getParameter("address"));
+             
+        pakollistenTietojenTarkistus(request, response, title, author, null, null);
         
         Viite muokattava = rekisteri.haeViite(id);
         
@@ -78,6 +80,8 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         String volumeString = turva.estaCrossSiteScripting(request.getParameter("volume"));
         String numberString = turva.estaCrossSiteScripting(request.getParameter("number"));   
         
+        pakollistenTietojenTarkistus(request, response, title, author, journal, null);
+        
         Viite muokattava = rekisteri.haeViite(id);
         
         muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, volumeString, numberString, null);
@@ -94,6 +98,8 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         String booktitle = turva.estaCrossSiteScripting(request.getParameter("booktitle"));
         String address = turva.estaCrossSiteScripting(request.getParameter("address"));
         String pages = turva.estaCrossSiteScripting(request.getParameter("pages"));
+        
+        pakollistenTietojenTarkistus(request, response, title, author, null, booktitle);
         
         Viite muokattava = rekisteri.haeViite(id);
         
@@ -152,6 +158,13 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         if (booktitle != null && booktitle.length() > 0) {
             muokattava.setBooktitle(booktitle);
         }
+    }
+
+    private void pakollistenTietojenTarkistus(HttpServletRequest request, HttpServletResponse response, String title, String author, String journal, String booktitle) throws ServletException, IOException {
+        turva.tarkistaPakollisetTiedot(title, author, journal, booktitle);
+        
+        if (turva.onkoVirheita())
+            doGet(request, response);
     }
 
 }
