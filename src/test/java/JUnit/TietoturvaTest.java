@@ -143,9 +143,27 @@ public class TietoturvaTest {
         String volumeString = "23kaks";
         String numberString = "kymppikaks";
         
-        turva.tarkistaNumeroTiedot(numberString, volumeString, numberString);
+        turva.tarkistaNumeroTiedot(yearString, volumeString, numberString);
         
         assertEquals(true, turva.onkoVirheita());
+    }
+    
+    @Test
+    public void numeroTietojenTarkistukselleKelpaaTyhjatSyotteet() {
+        String yearString = null;
+        String volumeString = null;
+        String numberString = null;
+        
+        turva.tarkistaNumeroTiedot(yearString, volumeString, numberString);
+        
+        assertEquals(false, turva.onkoVirheita());
+    }
+    
+    @Test
+    public void crossSiteScriptinginEstoOnnistuu() {
+        String hyokkays = "<marquee>hyokkays</marquee>";
+        hyokkays = turva.estaCrossSiteScripting(hyokkays);
+        assertEquals("&lt;marquee&gt;hyokkays&lt;/marquee&gt;", hyokkays);
     }
     
     @Test
@@ -166,6 +184,12 @@ public class TietoturvaTest {
     public void getPagesErrorPalauttaaVirheIlmoituksen() {
         turva.lisaaVirhe("pagesError", "Etkö osaa kirjoittaa?");
         assertEquals("Etkö osaa kirjoittaa?", turva.getPagesError());
+    }
+    
+    @Test
+    public void getAddressErrorPalauttaaVirheIlmoituksen() {
+        turva.lisaaVirhe("addressError", "Ei tuolla kukaan asu");
+        assertEquals("Ei tuolla kukaan asu", turva.getAddressError());
     }
 
 }

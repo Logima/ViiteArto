@@ -49,6 +49,7 @@ public class Viite implements Serializable {
 
     public void setAddress(String address) {
         fields.put("address", address);
+        getTiedot().clear();
     }
 
     public String getAuthor() {
@@ -84,6 +85,7 @@ public class Viite implements Serializable {
 
     public void setNumber(String number) {
         fields.put("number", number);
+        getTiedot().clear();
     }
 
     public String getPages() {
@@ -119,6 +121,7 @@ public class Viite implements Serializable {
 
     public void setVolume(String volume) {
         fields.put("volume", volume);
+        getTiedot().clear();
     }
 
     public String getYear() {
@@ -127,13 +130,14 @@ public class Viite implements Serializable {
 
     public void setYear(String year) {
         fields.put("year", year);
+        getTiedot().clear();
     }
 
     public Long getId() {
         return id;
     }
-
-    public void setId(Long id) {
+    
+    public void setId(long id) {
         this.id = id;
     }
     
@@ -302,7 +306,6 @@ public class Viite implements Serializable {
     
     @Override
     public String toString() {
-        String kakka = "oaieagolagje";
         return "Title: "+getTitle()+"\n Author: "+getAuthor()+"\n Publisher: "+getPublisher()+
                 "\n Pages: "+getPages()+"\n Address: "+getAddress()+"\n Year: "+getYear()+
                 "\n Booktitle: "+getBooktitle()+"\n Journal: "+getJournal()+"\n Volume: "+
