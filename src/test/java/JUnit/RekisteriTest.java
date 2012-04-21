@@ -4,8 +4,10 @@
  */
 package JUnit;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import ohtu.viitearto.Tag;
 import ohtu.viitearto.Viite;
 import ohtu.viitearto.Rekisteri;
@@ -103,8 +105,14 @@ public class RekisteriTest {
         rekisteri.lisaaViite(toka);
         
         List<Viite> lista = rekisteri.getViitteet();
-        assertEquals("satu", lista.get(0).getTitle());
-        assertEquals("tarina", lista.get(1).getTitle());
+        ArrayList<String> titleTiedot = new ArrayList<String>();
+        titleTiedot.add(lista.get(0).getTitle());
+        titleTiedot.add(lista.get(1).getTitle());
+        
+        Collections.sort(titleTiedot);
+        
+        assertEquals("satu", titleTiedot.get(0));
+        assertEquals("tarina", titleTiedot.get(1));
     }
     
     @Test
