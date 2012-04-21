@@ -103,8 +103,8 @@ public class RekisteriTest {
         rekisteri.lisaaViite(toka);
         
         List<Viite> lista = rekisteri.getViitteet();
-        assertEquals("tarina", lista.get(0).getTitle());
-        assertEquals("satu", lista.get(1).getTitle());
+        assertEquals("satu", lista.get(0).getTitle());
+        assertEquals("tarina", lista.get(1).getTitle());
     }
     
     @Test

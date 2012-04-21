@@ -60,7 +60,7 @@ scenario "asiakas hakee viitettä tagilla pelkistä kirjoista", {
     then 'oikea viite löytyy', {
        
        driver.getPageSource().contains("Hakutulokset").shouldBe true
-       driver.getPageSource().contains("hemulia").shouldBe true
+       driver.getPageSource().indexOf("henkka").shouldNotEqual driver.getPageSource().lastIndexOf("henkka")
     }
 }
 
@@ -121,8 +121,7 @@ scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
     then 'oikea viite löytyy', {
        
        driver.getPageSource().contains("Hakutulokset").shouldBe true
-       driver.getPageSource().contains("TKTL").shouldBe true
-       driver.getPageSource().contains("hemulia").shouldBe true
+       driver.getPageSource().indexOf("henkka").shouldNotEqual driver.getPageSource().lastIndexOf("henkka")
     }
 }
 scenario "asiakas hakee viitettä tagilla articlesta", {
@@ -183,8 +182,7 @@ scenario "asiakas hakee viitettä tagilla articlesta", {
     then 'oikea viite löytyy', {
        
        driver.getPageSource().contains("Hakutulokset").shouldBe true
-       driver.getPageSource().contains("TKTL").shouldBe true
-       driver.getPageSource().contains("hemulia").shouldBe true
+       driver.getPageSource().indexOf("henkka").shouldNotEqual driver.getPageSource().lastIndexOf("henkka")
     }
 }
 
