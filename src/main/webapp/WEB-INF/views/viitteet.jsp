@@ -160,7 +160,10 @@
                 </c:forEach>
             </table>
             <br>
-            <a href="/BibtexTulostin">BibTeX</a>
+            <form action="/BibtexTulostin" method="GET">
+                <label>Tiedoston nimi: </label><input type="text" name="nimi">
+                <input type="submit" value="BibTeX">
+            </form>
         </c:if>
 
     </body>

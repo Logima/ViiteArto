@@ -48,8 +48,11 @@ public class BibtexTulostinServlet extends HttpServlet {
             if (viitteet == null) {
                 return;
             }
+            
+            String nimi = request.getParameter("nimi").trim();
+            if (nimi.isEmpty()) nimi = "viitteet";
 
-            response.setHeader("Content-Disposition", "attachment; filename=\"viitteet.bib\"");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + nimi + ".bib\"");
 
             PrintWriter out = response.getWriter();
             
