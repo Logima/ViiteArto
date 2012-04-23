@@ -115,39 +115,42 @@ public class RekisteriTest {
         assertEquals("tarina", titleTiedot.get(1));
     }
     
-//    @Test
-//    public void viitteenHakuYhdellaSanalla() {
-//        Viite uusi = new Viite("tarina", "onni");
-//        Viite toka = new Viite("satu", "kielo");
-//        rekisteri.lisaaViite(uusi);
-//        rekisteri.lisaaViite(toka);
-//        
-//        List<Viite> lista = rekisteri.haeViiteYhdellaHakuSanalla("kielo", null, "author");
-//        assertEquals("satu", lista.get(0).getTitle());
-//    }
+    @Test
+    public void viitteenHakuYhdellaSanalla() {
+        Viite uusi = new Viite("tarina", "onni");
+        Viite toka = new Viite("satu", "kielo");
+        rekisteri.lisaaViite(uusi);
+        rekisteri.lisaaViite(toka);
+        
+        List<Viite> lista = rekisteri.haeViiteHakuSanoilla(null, "author", "kielo");
+        assertEquals("satu", lista.get(0).getTitle());
+    }
     
-//    @Test
-//    public void viitteenHakuViiteTyypinPerusteella() {
-//        Viite uusi = new Viite("tarina", "onni");
-//        Viite toka = new Viite("satu", "kielo");
-//        uusi.setAddress("USA");
-//        uusi.setType("Book");
-//        rekisteri.lisaaViite(uusi);
-//        rekisteri.lisaaViite(toka);
-//        
-//        List<Viite> lista = rekisteri.haeViiteYhdellaHakuSanalla("USA", "Book", "address");
-//        assertEquals("tarina", lista.get(0).getTitle());
-//    }
+    @Test
+    public void viitteenHakuViiteTyypinPerusteellaKunTyypitErilaiset() {
+        Viite uusi = new Viite("tarina", "onni");
+        Viite toka = new Viite("satu", "kielo");
+        uusi.setType("Book");
+        toka.setType("Article");
+        rekisteri.lisaaViite(uusi);
+        rekisteri.lisaaViite(toka);
+        
+        List<Viite> lista = rekisteri.haeViiteHakuSanoilla("Book", "all", "a");
+        assertEquals("tarina", lista.get(0).getTitle());
+        assertEquals(false, lista.contains(toka));
+    }
     
-//    @Test
-//    public void viitteenHakuKahdellaSanalla() {
-//        Viite uusi = new Viite("tarina", "onni");
-//        Viite toka = new Viite("satu", "kielo");
-//        rekisteri.lisaaViite(uusi);
-//        rekisteri.lisaaViite(toka);
-//        
-//        List<Viite> lista = rekisteri.haeViiteKahdellaHakuSanalla("tarina", "satu", null, "title", "title", "or");
-//        assertEquals("tarina", lista.get(0).getTitle());
-//        assertEquals("satu", lista.get(1).getTitle());
-//    }
+    @Test
+    public void viitteenHakuViiteTyypinPerusteellaKunTyypitSamat() {
+        Viite uusi = new Viite("tarina", "onni");
+        Viite toka = new Viite("satu", "kielo");
+        uusi.setType("Article");
+        toka.setType("Article");
+        rekisteri.lisaaViite(uusi);
+        rekisteri.lisaaViite(toka);
+        
+        List<Viite> lista = rekisteri.haeViiteHakuSanoilla("Article", "all", "a");
+        
+        assertEquals(true, lista.size() >= 2);
+    }
 }

@@ -87,57 +87,26 @@ public class Rekisteri {
         
         return em.find(Tag.class, tunniste);
     }
-
-//    public List<Viite> haeViiteYhdellaHakuSanalla(String haku, String viiteTyyppi, String kentta) {
-//        em = getEntityManager();
-//        
-//        Query q = null;
-//        
-//        if (viiteTyyppi != null) {
-//            q = em.createQuery("SELECT v FROM Viite v WHERE v.type = :typeParam");
-//            q.setParameter("typeParam", viiteTyyppi);
-//        } else {
-//            q = em.createQuery("SELECT v FROM Viite v");
-//        }
-//        List<Viite> results = q.getResultList();
-//        Iterator i = results.iterator();
-//        while (i.hasNext()) {
-//            Viite v = (Viite) i.next();
-//            if (v.getField(kentta) == null) i.remove();
-//            else if (!v.getField(kentta).contains(haku)) i.remove();
-//        }
-//        return results;
-//    }
-
-    public List<Viite> haeViiteTageilla(String haku, String viiteTyyppi) {
-        Tag t = haeTag(haku);
-        if(t == null) return null;
-        List<Viite> haettavat = t.getViitteet();
-        List<Viite> kopio = new ArrayList<Viite>();
+    
+    public List<Viite> haeViiteTageilla(String viiteTyyppi, String... sanat) {
+        em = getEntityManager();
         
-        for (Viite viite : haettavat) {
-            kopio.add(viite);
-        }  
+        Query q = em.createQuery("SELECT t FROM Tag t");
         
-        if (viiteTyyppi != null) {
-            for (int i=0; i < kopio.size(); ++i) {
-                if (!kopio.get(i).getType().equals(viiteTyyppi)) {
-                    kopio.remove(kopio.get(i));
-                }
-            }
+        List<Tag> results = q.getResultList();  
+        HashSet<Viite> refResults = new HashSet<Viite>();
+        
+        for (Tag t : results) { // loopataan kaikki tagit
+            for (String hakusana : sanat) {
+                if (t.getNimi().contains(hakusana)) // jos tagin nimessä hakusana
+                    refResults.addAll(t.getViitteet()); // lisätään hakutuloksiin viitteet, joilla on kys. tag
+            }  
         }
         
-        return kopio;
+        return new ArrayList<Viite>(refResults);
     }
     
-    public List<Viite> haeViiteHakuSanoilla(String[] sanat, String viiteTyyppi, String kentta) {
-        if (kentta.equals("all"))
-            return haeKaikkienKenttienPerusteella(sanat, viiteTyyppi);
-        else
-            return haeYhdenKentanPerusteella(sanat, viiteTyyppi, kentta);
-    }
-    
-    private List<Viite> haeKaikkienKenttienPerusteella(String[] sanat, String viiteTyyppi) { // sanat ok, viitetyyppi ok
+    public List<Viite> haeViiteHakuSanoilla(String viiteTyyppi, String kentta, String... sanat) {
         em = getEntityManager();
         
         Query q = null;
@@ -149,10 +118,16 @@ public class Rekisteri {
             q = em.createQuery("SELECT v FROM Viite v");
         }
         
+        if (kentta.equals("all"))
+            return haeKaikkienKenttienPerusteella(q, sanat);
+        else
+            return haeYhdenKentanPerusteella(sanat, q, kentta);
+    }
+    
+    private List<Viite> haeKaikkienKenttienPerusteella(Query q, String... sanat) { // sanat ok, viitetyyppi ok    
         List<Viite> results = q.getResultList();    
         ArrayList<Viite> finalResults = new ArrayList<Viite>(); // talletetaan lopulliset hakutulokset
-        
-        
+               
         for (Viite v : results) {    
             for (String field : v.getFields().values()) {
                 for (String hakusana : sanat) {
@@ -165,17 +140,7 @@ public class Rekisteri {
         return finalResults;
     }
 
-    private List<Viite> haeYhdenKentanPerusteella(String[] sanat, String viiteTyyppi, String kentta) {
-        em = getEntityManager();
-        
-        Query q = null;
-
-        if (viiteTyyppi != null) {
-            q = em.createQuery("SELECT v FROM Viite v WHERE v.type = :typeParam");
-            q.setParameter("typeParam", viiteTyyppi);
-        } else {
-            q = em.createQuery("SELECT v FROM Viite v");
-        }
+    private List<Viite> haeYhdenKentanPerusteella(String[] sanat, Query q, String kentta) {
         List<Viite> results = q.getResultList();
         Iterator i = results.iterator();
 
@@ -195,63 +160,4 @@ public class Rekisteri {
         }
         return results;
     }
-    
-//    public List<Viite> haeViiteKahdellaHakuSanalla(String ekaHaku, String tokaHaku, String viiteTyyppi, String ekaKentta, String tokaKentta, String operand) {
-//        
-//        List<Viite> ekaTulos, tokaTulos;
-//        
-//        if (ekaKentta.equals("tag")) {
-//            ekaTulos = haeViiteTageilla(ekaHaku, viiteTyyppi);
-//        } else {
-//            ekaTulos = haeViiteYhdellaHakuSanalla(ekaHaku, viiteTyyppi, ekaKentta);
-//        }
-//        
-//        if (tokaKentta.equals("tag")) {
-//            tokaTulos = haeViiteTageilla(tokaHaku, viiteTyyppi);
-//        } else {
-//            tokaTulos = haeViiteYhdellaHakuSanalla(tokaHaku, viiteTyyppi, tokaKentta);
-//        }
-//        
-//        if (operand.equals("and")) {
-//            Iterator i = ekaTulos.iterator();
-//            while (i.hasNext()) {
-//                Viite v = (Viite) i.next();
-//                if (!tokaTulos.contains(v)) i.remove();
-//            }
-//        } else { // or          
-//            if (!ovatkoTuloksetSamat(ekaTulos, tokaTulos)) {
-//                ekaTulos.addAll(tokaTulos);
-//                ekaTulos = poistaDuplikaatit(ekaTulos);
-//            }
-//        }
-//        
-//        
-//        return ekaTulos;
-//    }
-//
-//    private boolean ovatkoTuloksetSamat(List<Viite> ekaTulos, List<Viite> tokaTulos) {
-//        if (ekaTulos.size() != tokaTulos.size())
-//            return false;
-//        
-//        for (int i=0; i < ekaTulos.size(); ++i) {
-//            if (!ekaTulos.get(i).toString().equals(tokaTulos.get(i).toString()))
-//                return false;
-//        }
-//        
-//        return true;
-//    }
-//    
-//    private List<Viite> poistaDuplikaatit(List<Viite> ekaTulos) {
-//        for (int i=0; i < ekaTulos.size(); ++i) {
-//            for (int j=0; j < ekaTulos.size(); ++j) {
-//                if (j == i)
-//                    continue;
-//                
-//                if (ekaTulos.get(i).toString().equals(ekaTulos.get(j).toString()))
-//                    ekaTulos.remove(ekaTulos.get(j));
-//            }
-//        }
-//        
-//        return ekaTulos;
-//    }
 }
