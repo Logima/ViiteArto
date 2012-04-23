@@ -28,7 +28,7 @@ public class Viite implements Serializable {
     @GeneratedValue(strategy=GenerationType.TABLE, generator="tab")
     private Long id;
     
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinColumn
     private List<Tag> tagit; // lista tageista, jotka viitteellä on
 
@@ -193,16 +193,7 @@ public class Viite implements Serializable {
                 fieldsHtml.add("<b>Pages:</b> "+getPages());
             
             if (getTagit() != null && getTagit().size() > 0) {
-                String listString = "";
-
-                for (int i=0; i < getTagit().size(); ++i) {
-                    
-                    if (i != getTagit().size()-1)
-                        listString += getTagit().get(i).getNimi() + ", ";
-                    else
-                        listString += getTagit().get(i).getNimi();
-                }
-
+                String listString = muutaTagitStringiksi();
                 fieldsHtml.add("<b>Tags:</b> " + listString);
             }
         }
@@ -221,6 +212,8 @@ public class Viite implements Serializable {
                 tagit.get(i).getViitteet().add(this); // tagille
             }
         }
+        
+        fields.put("tags", muutaTagitStringiksi());
     }
     
     public static TreeMap<String, String> getBookKentat() {
@@ -230,6 +223,7 @@ public class Viite implements Serializable {
         fields.put("year", "Year: ");
         fields.put("publisher", "Publisher: ");
         fields.put("address", "Address: ");
+        fields.put("tags", "Tags: ");
         
         return fields;
     }
@@ -245,6 +239,7 @@ public class Viite implements Serializable {
         fields.put("journal", "<font color=\"red\">*</font> Journal: ");
         fields.put("volume", "Volume: ");
         fields.put("number", "Number: ");
+        fields.put("tags", "Tags: ");
         
         return fields;
     }
@@ -258,6 +253,8 @@ public class Viite implements Serializable {
         fields.put("address", "Address: ");
         fields.put("booktitle", "<font color=\"red\">*</font> Booktitle: ");
         fields.put("pages", "Pages: ");
+        fields.put("tags", "Tags: ");
+        
         return fields;
     }
     
@@ -310,6 +307,21 @@ public class Viite implements Serializable {
                 "\n Pages: "+getPages()+"\n Address: "+getAddress()+"\n Year: "+getYear()+
                 "\n Booktitle: "+getBooktitle()+"\n Journal: "+getJournal()+"\n Volume: "+
                 getVolume()+"\n Number: "+getNumber();
+    }
+
+    private String muutaTagitStringiksi() {
+        String listString = "";
+
+        for (int i = 0; i < getTagit().size(); ++i) {
+
+            if (i != getTagit().size() - 1) {
+                listString += getTagit().get(i).getNimi() + ", ";
+            } else {
+                listString += getTagit().get(i).getNimi();
+            }
+        }
+
+        return listString;
     }
     
 }

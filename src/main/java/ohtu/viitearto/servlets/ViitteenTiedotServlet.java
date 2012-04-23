@@ -92,7 +92,6 @@ public class ViitteenTiedotServlet extends HttpServlet {
         request.setAttribute("tiedot", viite.getTiedot());
         request.setAttribute("id", viite.getId());
         request.setAttribute("type", viite.getType());
-        request.setAttribute("tagit", viite.getTagit());
     }
 
     private void asetaMuokkaustiedot(HttpServletRequest request) {

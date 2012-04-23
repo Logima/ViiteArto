@@ -63,6 +63,7 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         Viite muokattava = rekisteri.haeViite(id);
         
         muutaTiedot(muokattava, title, author, publisher, address, null, yearString, null, null, null, null);
+        muokkaaTagit(request, muokattava);
         
         rekisteri.lisaaViite(muokattava);
     }
@@ -85,6 +86,7 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         Viite muokattava = rekisteri.haeViite(id);
         
         muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, volumeString, numberString, null, journal);
+        muokkaaTagit(request, muokattava);
         rekisteri.lisaaViite(muokattava);
     }
 
@@ -104,6 +106,7 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         Viite muokattava = rekisteri.haeViite(id);
         
         muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, null, null, booktitle, null);
+        muokkaaTagit(request, muokattava);
         rekisteri.lisaaViite(muokattava);
     }
     
@@ -158,6 +161,37 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         }
         
         return true;
+    }
+    
+    private void muokkaaTagit(HttpServletRequest request, Viite muokattava) {
+        String tag = turva.estaCrossSiteScripting(request.getParameter("tags"));
+        
+        for (int i=0; i < muokattava.getTagit().size(); ++i) {
+            List<Viite> taginViitteet = muokattava.getTagit().get(i).getViitteet();
+            taginViitteet.remove(muokattava);
+            muokattava.getTagit().get(i).setViitteet(taginViitteet);
+            rekisteri.lisaaTagi(muokattava.getTagit().get(i));
+        }
+        
+        muokattava.setTagit(null);
+        
+        if (tag.length() > 0) {
+
+            String[] tagit = tag.split(",");
+            List<Tag> tagiLista = new ArrayList<Tag>();
+
+            for (int i = 0; i < tagit.length; ++i) {
+                if (rekisteri.haeTag(tagit[i]) == null) { 
+                    Tag uusi = new Tag(tagit[i]);
+                    tagiLista.add(uusi);
+                    rekisteri.lisaaTagi(uusi);
+                } else {
+                    tagiLista.add(rekisteri.haeTag(tagit[i]));
+                }
+            }
+            muokattava.setTagit(tagiLista);
+            
+        }
     }
 
 }

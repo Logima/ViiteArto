@@ -49,7 +49,7 @@ public class Rekisteri {
     public void lisaaTagi(Tag uusi) {
         em = getEntityManager();
         em.getTransaction().begin();
-        em.persist(uusi);
+        em.merge(uusi);
         em.getTransaction().commit();
     }
     
@@ -131,6 +131,8 @@ public class Rekisteri {
         for (Viite v : results) {    
             for (String field : v.getFields().values()) {
                 for (String hakusana : sanat) {
+                    if (field == null || hakusana == null)
+                        continue;
                     if (field.contains(hakusana)) {
                         finalResults.add(v);
                     }
@@ -142,22 +144,15 @@ public class Rekisteri {
 
     private List<Viite> haeYhdenKentanPerusteella(String[] sanat, Query q, String kentta) {
         List<Viite> results = q.getResultList();
-        Iterator i = results.iterator();
+        ArrayList<Viite> finalResults = new ArrayList<Viite>(); // talletetaan lopulliset hakutulokset
 
-        while (i.hasNext()) {
-            Viite v = (Viite) i.next();
-            if (v.getField(kentta) == null) {
-                i.remove();
-            } else {
-                for (int j = 0; j < sanat.length; ++j) {
-                    if (!v.getField(kentta).contains(sanat[j])) {
-                        i.remove();
-                        break;
-                    }
-
-                }
+        for (Viite v : results) {
+            for (String hakusana : sanat) {
+                if (v.getField(kentta).contains(hakusana))
+                    finalResults.add(v);
             }
+            
         }
-        return results;
+        return finalResults;
     }
 }

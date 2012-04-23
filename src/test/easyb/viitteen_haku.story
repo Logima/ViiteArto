@@ -43,7 +43,7 @@ scenario "asiakas hakee olemassa olevan viitteen oikeilla syötteillä", {
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
-            if(option.getText().equals("valitse kaikki")){
+            if(option.getText().equals("Author")){
                 option.click();
                 break;
             }
@@ -68,9 +68,9 @@ scenario "asiakas hakee olemassa olevan viitteen oikeilla syötteillä", {
 
     then 'oikea viite löytyy', {
        
-
        driver.getPageSource().contains("Hakutulokset").shouldBe true
        driver.getPageSource().contains("pelle peloton").shouldBe true
+       driver.getPageSource().indexOf("pelle peloton").shouldNotEqual driver.getPageSource().lastIndexOf("pelle peloton")
 
     }
 }
@@ -105,11 +105,11 @@ scenario "asiakas hakee olemassa olevan viitteen väärillä syötteillä", {
 
     when 'haun väärät tiedot on syötetty', {
 
-        WebElement element = driver.findElement(By.name("ekaKentta"));
+        WebElement element = driver.findElement(By.name("kentta"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
-            if(option.getText().equals("Author")){
+            if(option.getText().equals("Valitse kaikki")){
                 option.click();
                 break;
             }
@@ -125,7 +125,7 @@ scenario "asiakas hakee olemassa olevan viitteen väärillä syötteillä", {
             }
         }
 
-        element = driver.findElement(By.name("ekaSana"));
+        element = driver.findElement(By.name("hakuSanat"));
         element.sendKeys("ei olemassa");
         element = driver.findElement(By.name("haku"));
         element.submit();
@@ -146,7 +146,7 @@ scenario "asiakas hakee olematonta viitettä", {
 
     given 'haun tiedot täytetty', {
 
-        WebElement element = driver.findElement(By.name("ekaKentta"));
+        WebElement element = driver.findElement(By.name("kentta"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
@@ -166,7 +166,7 @@ scenario "asiakas hakee olematonta viitettä", {
             }
         }
 
-        element = driver.findElement(By.name("ekaSana"));
+        element = driver.findElement(By.name("hakuSanat"));
         element.sendKeys("ei olemassa");
 
     }
@@ -186,167 +186,13 @@ scenario "asiakas hakee olematonta viitettä", {
     }
 }
 
-scenario "asiakas hakee olemassa olevan viitteen kahdella (JA) syötteillä", {
+
+scenario "asiakas hakee olemassa olevia viitteitä kahdella syötteellä, joista toinen syöte on väärä", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:7190/");
 
     given 'viite on listalla', {
-        WebElement element = driver.findElement(By.name("viiteTyyppi"));
-        List<WebElement> options = element.findElements(By.tagName("option"));
-
-        for(WebElement option : options){
-            if(option.getText().equals("Book")){
-                option.click();
-                break;
-            }
-        }
-
-        element = driver.findElement(By.name("valinta"));
-        element.submit();
-
-        element = driver.findElement(By.name("title"));
-        element.sendKeys("apinakin osaa koodata");
-        element = driver.findElement(By.name("author"));
-        element.sendKeys("pelle peloton");
-
-        element = driver.findElement(By.name("lisays"));
-        element.submit();
-    }
-
-    when 'haun tiedot on syötetty', {
-
-        WebElement element = driver.findElement(By.name("ekaKentta"));
-        List<WebElement> options = element.findElements(By.tagName("option"));
-
-        for(WebElement option : options){
-            if(option.getText().equals("Author")){
-                option.click();
-                break;
-            }
-        }
-
-        element = driver.findElement(By.name("tokaKentta"));
-        List<WebElement> options2 = element.findElements(By.tagName("option"));
-
-        for(WebElement option : options2){
-            if(option.getText().equals("Title")){
-                option.click();
-                break;
-            }
-        }
-
-        element = driver.findElement(By.name("tyyppi"));
-        List<WebElement> options3 = element.findElements(By.tagName("option"));
-
-        for(WebElement option : options3){
-            if(option.getText().equals("Book")){
-                option.click();
-                break;
-            }
-        }
-
-        element = driver.findElement(By.name("ekaSana"));
-        element.sendKeys("pelle peloton");
-        element = driver.findElement(By.name("tokaSana"));
-        element.sendKeys("apinakin osaa koodata");
-
-        element = driver.findElement(By.name("haku"));
-        element.submit();
-
-    }
-
-    then 'oikea viite löytyy', {
-       
-       driver.getPageSource().contains("Hakutulokset").shouldBe true
-       driver.getPageSource().contains("pelle peloton").shouldBe true
-       driver.getPageSource().contains("apinakin osaa koodata").shouldBe true
-    }
-}
-
-scenario "asiakas hakee olemassa olevan viitteen kahdella (JA) syötteillä joista toinen syöte on väärä", {
-
-    WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:7190/");
-
-    given 'viite on listalla', {
-        WebElement element = driver.findElement(By.name("viiteTyyppi"));
-        List<WebElement> options = element.findElements(By.tagName("option"));
-
-        for(WebElement option : options){
-            if(option.getText().equals("Book")){
-                option.click();
-                break;
-            }
-        }
-
-        element = driver.findElement(By.name("valinta"));
-        element.submit();
-
-        element = driver.findElement(By.name("title"));
-        element.sendKeys("apinakin osaa koodata");
-        element = driver.findElement(By.name("author"));
-        element.sendKeys("pelle peloton");
-
-        element = driver.findElement(By.name("lisays"));
-        element.submit();
-    }
-
-    when 'haun tiedot on syötetty', {
-
-        WebElement element = driver.findElement(By.name("ekaKentta"));
-        List<WebElement> options = element.findElements(By.tagName("option"));
-
-        for(WebElement option : options){
-            if(option.getText().equals("Author")){
-                option.click();
-                break;
-            }
-        }
-
-        element = driver.findElement(By.name("tokaKentta"));
-        List<WebElement> options2 = element.findElements(By.tagName("option"));
-
-        for(WebElement option : options2){
-            if(option.getText().equals("Title")){
-                option.click();
-                break;
-            }
-        }
-
-        element = driver.findElement(By.name("tyyppi"));
-        List<WebElement> options3 = element.findElements(By.tagName("option"));
-
-        for(WebElement option : options3){
-            if(option.getText().equals("Book")){
-                option.click();
-                break;
-            }
-        }
-
-        element = driver.findElement(By.name("ekaSana"));
-        element.sendKeys("pelle peloton");
-        element = driver.findElement(By.name("tokaSana"));
-        element.sendKeys("apina ei osaa koodata");
-
-        element = driver.findElement(By.name("haku"));
-        element.submit();
-
-    }
-
-    then 'viitettä ei löydy', {
-       
-       driver.getPageSource().contains("Hakutulokset").shouldBe false
-
-    }
-}
-
-scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä", {
-
-    WebDriver driver = new HtmlUnitDriver();
-    driver.get("http://localhost:7190/");
-
-    given 'viitteet on listalla', {
         WebElement element = driver.findElement(By.name("viiteTyyppi"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
@@ -382,20 +228,19 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä",
         element.submit();
 
         element = driver.findElement(By.name("title"));
-        element.sendKeys("testien maailma");
+        element.sendKeys("Juhlaa!");
         element = driver.findElement(By.name("author"));
-        element.sendKeys("myllyrinne");
+        element.sendKeys("koodiorjat");
         element = driver.findElement(By.name("journal"));
-        element.sendKeys("linkki");
+        element.sendKeys("HY");
 
         element = driver.findElement(By.name("lisays"));
         element.submit();
-
     }
 
     when 'haun tiedot on syötetty', {
 
-        WebElement element = driver.findElement(By.name("ekaKentta"));
+        WebElement element = driver.findElement(By.name("kentta"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
@@ -405,33 +250,111 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä",
             }
         }
 
-        element = driver.findElement(By.name("tokaKentta"));
+
+        element = driver.findElement(By.name("tyyppi"));
         List<WebElement> options2 = element.findElements(By.tagName("option"));
 
         for(WebElement option : options2){
-            if(option.getText().equals("Title")){
+            if(option.getText().equals("Book")){
                 option.click();
                 break;
             }
         }
+
+        element = driver.findElement(By.name("hakuSanat"));
+        element.sendKeys("pelle peloton,koodiorjat");
+
+        element = driver.findElement(By.name("haku"));
+        element.submit();
+
+    }
+
+    then 'viitettä ei löydy', {
+       
+       driver.getPageSource().contains("Hakutulokset").shouldBe true
+       driver.getPageSource().contains("pelle peloton").shouldBe true
+       driver.getPageSource().indexOf("pelle peloton").shouldNotEqual driver.getPageSource().lastIndexOf("pelle peloton")
+       driver.getPageSource().indexOf("koodiorjat").shouldEqual driver.getPageSource().lastIndexOf("koodiorjat")
+       
+
+    }
+}
+
+scenario "asiakas hakee olemassa olevia viitteitä kahdella syötteellä, joista kumpikin löytyy", {
+
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:7190/");
+
+    given 'viitteet on listalla', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("title"));
+        element.sendKeys("apinakin osaa koodata");
+        element = driver.findElement(By.name("author"));
+        element.sendKeys("pelle peloton");
+
+        element = driver.findElement(By.name("lisays"));
+        element.submit();
+
+        element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options2 = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options2){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("title"));
+        element.sendKeys("testien maailma");
+        element = driver.findElement(By.name("author"));
+        element.sendKeys("myllyrinne");
+
+        element = driver.findElement(By.name("lisays"));
+        element.submit();
+
+    }
+
+    when 'haun tiedot on syötetty', {
+
+        WebElement element = driver.findElement(By.name("kentta"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Valitse kaikki")){
+                option.click();
+                break;
+            }
+        }
+
 
         element = driver.findElement(By.name("tyyppi"));
-        List<WebElement> options3 = element.findElements(By.tagName("option"));
+        List<WebElement> options2 = element.findElements(By.tagName("option"));
 
-        for(WebElement option : options3){
-            if(option.getText().equals("Article")){
+        for(WebElement option : options2){
+            if(option.getText().equals("Book")){
                 option.click();
                 break;
             }
         }
 
-        element = driver.findElement(By.name("ekaSana"));
-        element.sendKeys("pelle peloton");
-        element = driver.findElement(By.name("tokaSana"));
-        element.sendKeys("testien maailma");
-        element = driver.findElement(By.id("disjunction"));
-        element.click();
-
+        element = driver.findElement(By.name("hakuSanat"));
+        element.sendKeys("pelle peloton,testien maailma");
         element = driver.findElement(By.name("haku"));
         element.submit();
 
@@ -441,10 +364,13 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä",
        
        driver.getPageSource().contains("Hakutulokset").shouldBe true
        driver.getPageSource().contains("testien maailma").shouldBe true
+       driver.getPageSource().indexOf("pelle peloton").shouldNotEqual driver.getPageSource().lastIndexOf("pelle peloton")
+       driver.getPageSource().contains("pelle peloton").shouldBe true
+       driver.getPageSource().indexOf("testien maailma").shouldNotEqual driver.getPageSource().lastIndexOf("testien maailma")
     }
 }
 
-scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä, joista kumpikaan ei ole oikea", {
+scenario "asiakas hakee olemassa olevia viitteitä kahdella syötteellä, joista kumpikaan ei ole oikea", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:7190/");
@@ -496,9 +422,9 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä, 
 
     }
 
-    when 'haun tiedot on syötetty (vääriin kenttiin)', {
+    when 'haun tiedot on syötetty (olematon viite)', {
 
-        WebElement element = driver.findElement(By.name("ekaKentta"));
+        WebElement element = driver.findElement(By.name("kentta"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
@@ -508,32 +434,19 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella (TAI) syötteillä, 
             }
         }
 
-        element = driver.findElement(By.name("tokaKentta"));
+
+        element = driver.findElement(By.name("tyyppi"));
         List<WebElement> options2 = element.findElements(By.tagName("option"));
 
         for(WebElement option : options2){
-            if(option.getText().equals("Title")){
-                option.click();
-                break;
-            }
-        }
-
-        element = driver.findElement(By.name("tyyppi"));
-        List<WebElement> options3 = element.findElements(By.tagName("option"));
-
-        for(WebElement option : options3){
             if(option.getText().equals("Article")){
                 option.click();
                 break;
             }
         }
 
-        element = driver.findElement(By.name("ekaSana"));
-        element.sendKeys("testien maailma");
-        element = driver.findElement(By.name("tokaSana"));
-        element.sendKeys("pelle peloton");
-        element = driver.findElement(By.id("disjunction"));
-        element.click();
+        element = driver.findElement(By.name("hakuSanat"));
+        element.sendKeys("testien maailma,pelle peloton");
 
         element = driver.findElement(By.name("haku"));
         element.submit();
@@ -595,7 +508,7 @@ scenario "asiakas muokkaa viitettä ja hakee sen tietokannasta", {
 
     then 'viite löytyy haulla sen uusilla tiedoilla', {
 
-        WebElement element = driver.findElement(By.name("ekaKentta"));
+        WebElement element = driver.findElement(By.name("kentta"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
@@ -606,16 +519,16 @@ scenario "asiakas muokkaa viitettä ja hakee sen tietokannasta", {
         }
 
         element = driver.findElement(By.name("tyyppi"));
-        List<WebElement> options3 = element.findElements(By.tagName("option"));
+        List<WebElement> options2 = element.findElements(By.tagName("option"));
 
-        for(WebElement option : options3){
+        for(WebElement option : options2){
             if(option.getText().equals("Book")){
                 option.click();
                 break;
             }
         }
 
-        element = driver.findElement(By.name("ekaSana"));
+        element = driver.findElement(By.name("hakuSanat"));
         element.sendKeys("KustiPolkee");
         element = driver.findElement(By.name("haku"));
         element.submit();
@@ -624,7 +537,7 @@ scenario "asiakas muokkaa viitettä ja hakee sen tietokannasta", {
     }
 }
 
-scenario "asiakas hakee viitteitä kahdella (TAI) syötteillä eikä tuloslistassa ole duplikaatteja", {
+scenario "asiakas hakee viitteitä kahdella syötteellä, eikä tuloslistassa ole duplikaatteja", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:7190/");
@@ -657,7 +570,7 @@ scenario "asiakas hakee viitteitä kahdella (TAI) syötteillä eikä tuloslistas
         List<WebElement> options2 = element.findElements(By.tagName("option"));
 
         for(WebElement option : options2){
-            if(option.getText().equals("Book")){
+            if(option.getText().equals("Inproceedings")){
                 option.click();
                 break;
             }
@@ -672,6 +585,8 @@ scenario "asiakas hakee viitteitä kahdella (TAI) syötteillä eikä tuloslistas
         element.sendKeys("Beck, Kent and Andres, Cynthia");
         element = driver.findElement(By.name("publisher"));
         element.sendKeys("Addison-Wesley");
+        element = driver.findElement(By.name("booktitle"));
+        element.sendKeys("-");
 
         element = driver.findElement(By.name("lisays"));
         element.submit();
@@ -680,33 +595,29 @@ scenario "asiakas hakee viitteitä kahdella (TAI) syötteillä eikä tuloslistas
 
     when 'haun tiedot on syötetty', {
 
-        WebElement element = driver.findElement(By.name("ekaKentta"));
+        WebElement element = driver.findElement(By.name("kentta"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
-            if(option.getText().equals("Author")){
+            if(option.getText().equals("Valitse kaikki")){
                 option.click();
                 break;
             }
         }
 
-        element = driver.findElement(By.name("tokaKentta"));
+        element = driver.findElement(By.name("tyyppi"));
         List<WebElement> options2 = element.findElements(By.tagName("option"));
 
         for(WebElement option : options2){
-            if(option.getText().equals("Title")){
+            if(option.getText().equals("Inproceedings")){
                 option.click();
                 break;
             }
         }
 
-        element = driver.findElement(By.name("ekaSana"));
-        element.sendKeys("Kent");
-        element = driver.findElement(By.name("tokaSana"));
-        element.sendKeys("Extreme");
-        element = driver.findElement(By.id("disjunction"));
-        element.click();
 
+        element = driver.findElement(By.name("hakuSanat"));
+        element.sendKeys("Kent,Extreme");
         element = driver.findElement(By.name("haku"));
         element.submit();
 

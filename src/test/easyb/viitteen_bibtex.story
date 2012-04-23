@@ -223,8 +223,8 @@ scenario "asiakas lisää useita viitteitä ja tallentaa kaikkien bibtex-tiedot"
 
     when 'asiakas lataa kaikkien viitteiden bibtex-tiedot', {
 
-        element = driver.findElement(By.linkText("BibTeX"));
-        element.click();
+        element = driver.findElement(By.name("bibtexpainallus"));
+        element.submit();
 
     }
 

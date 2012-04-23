@@ -82,7 +82,7 @@ public class ViitteetServlet extends HttpServlet {
             viiteTyyppi = "Article";
         }
 
-        lomakeTiedot.put("tag", "Tags: ");
+//        lomakeTiedot.put("tag", "Tags: ");
         request.setAttribute("tiedot", lomakeTiedot);
         lomakeTyyppi = null;
     }
