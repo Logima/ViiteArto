@@ -32,7 +32,7 @@ scenario "asiakas hakee viitettä tagilla pelkistä kirjoista", {
         element.sendKeys("apinakin osaa koodata");
         element = driver.findElement(By.name("author"));
         element.sendKeys("henkka ei");
-        element = driver.findElement(By.name("tag"));
+        element = driver.findElement(By.name("tags"));
         element.sendKeys("hemulia");
 
         element = driver.findElement(By.name("lisays"));
@@ -92,7 +92,7 @@ scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
         element.sendKeys("TKTL");
         element = driver.findElement(By.name("author"));
         element.sendKeys("henkka ei");
-        element = driver.findElement(By.name("tag"));
+        element = driver.findElement(By.name("tags"));
         element.sendKeys("hemulia");
 
         element = driver.findElement(By.name("lisays"));
@@ -149,7 +149,7 @@ scenario "asiakas hakee viitettä tagilla articlesta", {
         element.sendKeys("TKTL");
         element = driver.findElement(By.name("author"));
         element.sendKeys("henkka ei");
-        element = driver.findElement(By.name("tag"));
+        element = driver.findElement(By.name("tags"));
         element.sendKeys("hemulia");
 
         element = driver.findElement(By.name("lisays"));
@@ -205,7 +205,7 @@ scenario "asiakas hakee viitettä väärällä tagilla kirjoista", {
         element.sendKeys("apinakin osaa koodata");
         element = driver.findElement(By.name("author"));
         element.sendKeys("henkka ei");
-        element = driver.findElement(By.name("tag"));
+        element = driver.findElement(By.name("tags"));
         element.sendKeys("hemulia");
 
         element = driver.findElement(By.name("lisays"));
