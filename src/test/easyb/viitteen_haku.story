@@ -39,11 +39,11 @@ scenario "asiakas hakee olemassa olevan viitteen oikeilla syötteillä", {
 
     when 'haun tiedot on syötetty', {
 
-        WebElement element = driver.findElement(By.name("ekaKentta"));
+        WebElement element = driver.findElement(By.name("kentta"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
-            if(option.getText().equals("Author")){
+            if(option.getText().equals("valitse kaikki")){
                 option.click();
                 break;
             }
@@ -59,7 +59,7 @@ scenario "asiakas hakee olemassa olevan viitteen oikeilla syötteillä", {
             }
         }
 
-        element = driver.findElement(By.name("ekaSana"));
+        element = driver.findElement(By.name("hakuSanat"));
         element.sendKeys("pelle peloton");
         element = driver.findElement(By.name("haku"));
         element.submit();
@@ -68,8 +68,10 @@ scenario "asiakas hakee olemassa olevan viitteen oikeilla syötteillä", {
 
     then 'oikea viite löytyy', {
        
+
        driver.getPageSource().contains("Hakutulokset").shouldBe true
        driver.getPageSource().contains("pelle peloton").shouldBe true
+
     }
 }
 
