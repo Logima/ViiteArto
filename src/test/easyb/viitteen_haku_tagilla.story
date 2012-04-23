@@ -41,7 +41,7 @@ scenario "asiakas hakee viitettä tagilla pelkistä kirjoista", {
 
     when 'haun tiedot on syötetty', {
 
-        WebElement element = driver.findElement(By.name("ekaKentta"));
+        WebElement element = driver.findElement(By.name("kentta"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
@@ -51,7 +51,7 @@ scenario "asiakas hakee viitettä tagilla pelkistä kirjoista", {
             }
         }
 
-        element = driver.findElement(By.name("ekaSana"));
+        element = driver.findElement(By.name("hakuSanat"));
         element.sendKeys("hemulia");
         element = driver.findElement(By.name("haku"));
         element.submit();
@@ -101,7 +101,7 @@ scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
 
     when 'haun tiedot on syötetty', {
 
-        WebElement element = driver.findElement(By.name("ekaKentta"));
+        WebElement element = driver.findElement(By.name("kentta"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
@@ -111,7 +111,7 @@ scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
             }
         }
 
-        element = driver.findElement(By.name("ekaSana"));
+        element = driver.findElement(By.name("hakuSanat"));
         element.sendKeys("hemulia");
         element = driver.findElement(By.name("haku"));
         element.submit();
@@ -158,7 +158,7 @@ scenario "asiakas hakee viitettä tagilla articlesta", {
 
     when 'haun tiedot on syötetty', {
 
-        WebElement element = driver.findElement(By.name("ekaKentta"));
+        WebElement element = driver.findElement(By.name("kentta"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
@@ -168,7 +168,7 @@ scenario "asiakas hakee viitettä tagilla articlesta", {
             }
         }
 
-        element = driver.findElement(By.name("ekaSana"));
+        element = driver.findElement(By.name("hakuSanat"));
         element.sendKeys("hemulia");
         element = driver.findElement(By.name("haku"));
         element.submit();
@@ -214,7 +214,7 @@ scenario "asiakas hakee viitettä väärällä tagilla kirjoista", {
 
     when 'haun väärät tiedot on syötetty', {
 
-        WebElement element = driver.findElement(By.name("ekaKentta"));
+        WebElement element = driver.findElement(By.name("kentta"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
@@ -224,7 +224,7 @@ scenario "asiakas hakee viitettä väärällä tagilla kirjoista", {
             }
         }
 
-        element = driver.findElement(By.name("ekaSana"));
+        element = driver.findElement(By.name("hakuSanat"));
         element.sendKeys("hemulia ei osaa koodata");
         element = driver.findElement(By.name("haku"));
         element.submit();
