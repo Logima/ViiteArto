@@ -88,7 +88,7 @@ public class Rekisteri {
         return em.find(Tag.class, tunniste);
     }
     
-    public List<Viite> haeViiteTageilla(String[] sanat, String viiteTyyppi) {
+    public List<Viite> haeViiteTageilla(String viiteTyyppi, String... sanat) {
         em = getEntityManager();
         
         Query q = em.createQuery("SELECT t FROM Tag t");
@@ -106,7 +106,7 @@ public class Rekisteri {
         return new ArrayList<Viite>(refResults);
     }
     
-    public List<Viite> haeViiteHakuSanoilla(String[] sanat, String viiteTyyppi, String kentta) {
+    public List<Viite> haeViiteHakuSanoilla(String viiteTyyppi, String kentta, String... sanat) {
         em = getEntityManager();
         
         Query q = null;
@@ -119,12 +119,12 @@ public class Rekisteri {
         }
         
         if (kentta.equals("all"))
-            return haeKaikkienKenttienPerusteella(sanat, q, viiteTyyppi);
+            return haeKaikkienKenttienPerusteella(q, sanat);
         else
-            return haeYhdenKentanPerusteella(sanat, q, viiteTyyppi, kentta);
+            return haeYhdenKentanPerusteella(sanat, q, kentta);
     }
     
-    private List<Viite> haeKaikkienKenttienPerusteella(String[] sanat, Query q, String viiteTyyppi) { // sanat ok, viitetyyppi ok    
+    private List<Viite> haeKaikkienKenttienPerusteella(Query q, String... sanat) { // sanat ok, viitetyyppi ok    
         List<Viite> results = q.getResultList();    
         ArrayList<Viite> finalResults = new ArrayList<Viite>(); // talletetaan lopulliset hakutulokset
                
@@ -140,7 +140,7 @@ public class Rekisteri {
         return finalResults;
     }
 
-    private List<Viite> haeYhdenKentanPerusteella(String[] sanat, Query q, String viiteTyyppi, String kentta) {
+    private List<Viite> haeYhdenKentanPerusteella(String[] sanat, Query q, String kentta) {
         List<Viite> results = q.getResultList();
         Iterator i = results.iterator();
 

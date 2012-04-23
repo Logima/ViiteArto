@@ -48,16 +48,16 @@ public class HaeViitteetServlet extends HttpServlet {
 
             if (kentta.equals("tag")) {
                 if (viiteTyyppi.length() > 0) {
-                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(sanat, viiteTyyppi));
+                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(viiteTyyppi, sanat));
                 } else {
-                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(sanat, null));
+                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(null, sanat));
                 }
             } else {
 
                 if (viiteTyyppi.length() > 0) {
-                    request.setAttribute("tulokset", rekisteri.haeViiteHakuSanoilla(sanat, viiteTyyppi, kentta));
+                    request.setAttribute("tulokset", rekisteri.haeViiteHakuSanoilla(viiteTyyppi, kentta, sanat));
                 } else {
-                    request.setAttribute("tulokset", rekisteri.haeViiteHakuSanoilla(sanat, null, kentta));
+                    request.setAttribute("tulokset", rekisteri.haeViiteHakuSanoilla(null, kentta, sanat));
                 }
             }
         }
