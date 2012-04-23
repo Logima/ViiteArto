@@ -23,17 +23,7 @@
             <c:forEach var="info" items="${tiedot}">
                 <li>${info}</li>
             </c:forEach>
-        </ul>
-
-        <c:if test="${not empty tagit}">
-            <b>Tagit:</b> 
-            <ul>
-                <c:forEach var="tag" items="${tagit}">
-                    <li>${tag.nimi}</li>
-                </c:forEach>
-            </ul>
-        </c:if>
-        
+        </ul>    
         
         <!-- Listaa kentät, joiden avulla muokataan viitettä -->
         <c:if test="${not empty mtiedot}">

@@ -137,7 +137,7 @@ public class LisaaViiteServlet extends HttpServlet {
     }
     
     private void lisaaTagit(HttpServletRequest request, Viite viite) {
-        String tag = request.getParameter("tag");
+        String tag = request.getParameter("tags");
         
         if (tag.length() > 0) {
 
@@ -148,6 +148,7 @@ public class LisaaViiteServlet extends HttpServlet {
                 if (rekisteri.haeTag(tagit[i]) == null) { // tarkistetaan onko saman niminen tag jo olemassa
                     Tag uusi = new Tag(tagit[i]);
                     tagiLista.add(uusi);
+                    rekisteri.lisaaTagi(uusi);
                 } else {
                     tagiLista.add(rekisteri.haeTag(tagit[i]));
                 }

@@ -20,7 +20,7 @@ public class Tag implements Serializable {
     @Id
     private String nimi;
     
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinColumn
     private List<Viite> viitteet; // lista viitteistä, joihin tagi kuuluu
 
@@ -47,6 +47,10 @@ public class Tag implements Serializable {
     
     public void setViitteet(List<Viite> viitteet) {
         this.viitteet = viitteet;
+    }
+    
+    public void poistaViite(Viite poistettava) {
+        viitteet.remove(poistettava);
     }
     
 }

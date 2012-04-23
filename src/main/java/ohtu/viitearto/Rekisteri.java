@@ -49,7 +49,7 @@ public class Rekisteri {
     public void lisaaTagi(Tag uusi) {
         em = getEntityManager();
         em.getTransaction().begin();
-        em.persist(uusi);
+        em.merge(uusi);
         em.getTransaction().commit();
     }
     
@@ -131,6 +131,8 @@ public class Rekisteri {
         for (Viite v : results) {    
             for (String field : v.getFields().values()) {
                 for (String hakusana : sanat) {
+                    if (field == null || hakusana == null)
+                        continue;
                     if (field.contains(hakusana)) {
                         finalResults.add(v);
                     }
