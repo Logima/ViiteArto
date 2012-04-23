@@ -34,6 +34,7 @@ scenario "asiakas voi poistaa viitteen listasta", {
         element.sendKeys("pirkko");
         element = driver.findElement(By.name("author"));
         element.sendKeys("väinölä");
+
         element = driver.findElement(By.name("lisays"));
         element.submit();
     }
@@ -76,6 +77,7 @@ scenario "asiakas voi poistaa viitteen sen omalta sivulta", {
         element.sendKeys("pirkko");
         element = driver.findElement(By.name("author"));
         element.sendKeys("väinölä");
+
         element = driver.findElement(By.name("lisays"));
         element.submit();
 

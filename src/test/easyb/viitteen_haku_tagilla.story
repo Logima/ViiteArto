@@ -34,6 +34,7 @@ scenario "asiakas hakee viitettä tagilla pelkistä kirjoista", {
         element.sendKeys("henkka ei");
         element = driver.findElement(By.name("tag"));
         element.sendKeys("hemulia");
+
         element = driver.findElement(By.name("lisays"));
         element.submit();
     }
@@ -112,7 +113,6 @@ scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
 
         element = driver.findElement(By.name("ekaSana"));
         element.sendKeys("hemulia");
-
         element = driver.findElement(By.name("haku"));
         element.submit();
 
@@ -145,13 +145,10 @@ scenario "asiakas hakee viitettä tagilla articlesta", {
 
         element = driver.findElement(By.name("title"));
         element.sendKeys("apinakin osaa koodata");
-
         element = driver.findElement(By.name("journal"));
         element.sendKeys("TKTL");
-
         element = driver.findElement(By.name("author"));
         element.sendKeys("henkka ei");
-
         element = driver.findElement(By.name("tag"));
         element.sendKeys("hemulia");
 
@@ -173,7 +170,6 @@ scenario "asiakas hakee viitettä tagilla articlesta", {
 
         element = driver.findElement(By.name("ekaSana"));
         element.sendKeys("hemulia");
-
         element = driver.findElement(By.name("haku"));
         element.submit();
 
@@ -211,6 +207,7 @@ scenario "asiakas hakee viitettä väärällä tagilla kirjoista", {
         element.sendKeys("henkka ei");
         element = driver.findElement(By.name("tag"));
         element.sendKeys("hemulia");
+
         element = driver.findElement(By.name("lisays"));
         element.submit();
     }

@@ -32,6 +32,7 @@ scenario "asiakas lisää viitteen (kirja) ja sen jälkeen muokkaa sitä", {
         element.sendKeys("Helsinginkadun appro");
         element = driver.findElement(By.name("author"));
         element.sendKeys("Bileinsinöörit");
+
         element = driver.findElement(By.name("lisays"));
         element.submit();
         
@@ -43,12 +44,14 @@ scenario "asiakas lisää viitteen (kirja) ja sen jälkeen muokkaa sitä", {
         element.click();
         element = driver.findElement(By.name("muokkaus"));
         element.submit();
+
         element = driver.findElement(By.name("title"));
         element.clear();
         element.sendKeys("Elämäni kankkunen");
         element = driver.findElement(By.name("author"));
         element.clear();
         element.sendKeys("Snafu");
+
         element = driver.findElement(By.name("tallennus"));
         element.submit();
     }
@@ -97,10 +100,12 @@ scenario "asiakas lisää viitteen (artikkeli) pakollisilla tiedoilla ja sen jä
         element.click();
         element = driver.findElement(By.name("muokkaus"));
         element.submit();
+
         element = driver.findElement(By.name("address"));
         element.sendKeys("valkoinen talo");
         element = driver.findElement(By.name("year"));
         element.sendKeys("2012");
+
         element = driver.findElement(By.name("tallennus"));
         element.submit();
     }

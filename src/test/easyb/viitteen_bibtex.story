@@ -32,6 +32,7 @@ scenario "asiakas lisää viitteen ja tallentaa oikean viitteen bibtex-tiedot", 
         element.sendKeys("Helsinginkadun appro");
         element = driver.findElement(By.name("author"));
         element.sendKeys("Bileinsinöörit");
+
         element = driver.findElement(By.name("lisays"));
         element.submit();
         
@@ -75,6 +76,7 @@ scenario "asiakas lisää useita viitteitä ja tallentaa yhden viitteen bibtex-t
         element.sendKeys("Helsinginkadun appro");
         element = driver.findElement(By.name("author"));
         element.sendKeys("Bileinsinöörit");
+
         element = driver.findElement(By.name("lisays"));
         element.submit();
 
@@ -119,6 +121,7 @@ scenario "asiakas lisää useita viitteitä ja tallentaa yhden viitteen bibtex-t
         element.sendKeys("snafu");
         element = driver.findElement(By.name("author"));
         element.sendKeys("alkoholin orja");
+
         element = driver.findElement(By.name("lisays"));
         element.submit();
         
@@ -166,6 +169,7 @@ scenario "asiakas lisää useita viitteitä ja tallentaa kaikkien bibtex-tiedot"
         element.sendKeys("Helsinginkadun appro");
         element = driver.findElement(By.name("author"));
         element.sendKeys("Bileinsinöörit");
+
         element = driver.findElement(By.name("lisays"));
         element.submit();
 
@@ -210,6 +214,7 @@ scenario "asiakas lisää useita viitteitä ja tallentaa kaikkien bibtex-tiedot"
         element.sendKeys("snafu");
         element = driver.findElement(By.name("author"));
         element.sendKeys("alkoholin orja");
+
         element = driver.findElement(By.name("lisays"));
         element.submit();
         
