@@ -364,8 +364,8 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella syötteellä, joista
        
        driver.getPageSource().contains("Hakutulokset").shouldBe true
        driver.getPageSource().contains("testien maailma").shouldBe true
-       driver.getPageSource().contains("pelle peloton").shouldBe true
        driver.getPageSource().indexOf("pelle peloton").shouldNotEqual driver.getPageSource().lastIndexOf("pelle peloton")
+       driver.getPageSource().contains("pelle peloton").shouldBe true
        driver.getPageSource().indexOf("testien maailma").shouldNotEqual driver.getPageSource().lastIndexOf("testien maailma")
     }
 }
