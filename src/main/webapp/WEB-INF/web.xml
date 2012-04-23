@@ -33,6 +33,10 @@
         <servlet-name>BibtexTulostinServlet</servlet-name>
         <servlet-class>ohtu.viitearto.servlets.BibtexTulostinServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UrlImportServlet</servlet-name>
+        <servlet-class>ohtu.viitearto.servlets.UrlImportServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ViitteetServlet</servlet-name>
         <url-pattern>/Viitteet</url-pattern>
@@ -64,6 +68,10 @@
     <servlet-mapping>
         <servlet-name>BibtexTulostinServlet</servlet-name>
         <url-pattern>/BibtexTulostin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UrlImportServlet</servlet-name>
+        <url-pattern>/UrlImport</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
