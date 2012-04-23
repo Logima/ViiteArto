@@ -43,29 +43,28 @@ public class HaeViitteetServlet extends HttpServlet {
         String viiteTyyppi = request.getParameter("tyyppi");
 
         if (hakusanat.length() > 0) {
-            
+
             String[] sanat = hakusanat.split(",");
-            
-            if (kentta.length() > 0) {
+
+            if (kentta.equals("tag")) {
+                if (viiteTyyppi.length() > 0) {
+                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(sanat, viiteTyyppi));
+                } else {
+                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(sanat, null));
+                }
+            } else {
+
                 if (viiteTyyppi.length() > 0) {
                     request.setAttribute("tulokset", rekisteri.haeViiteHakuSanoilla(sanat, viiteTyyppi, kentta));
                 } else {
                     request.setAttribute("tulokset", rekisteri.haeViiteHakuSanoilla(sanat, null, kentta));
                 }
             }
-            
-            if (kentta.equals("tag")) {
-                
-                if (viiteTyyppi.length() > 0)
-                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(hakusanat, viiteTyyppi));
-                else
-                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(hakusanat, null));
         }
         
         RequestDispatcher dispatcher =
                 getServletContext().getRequestDispatcher("/Viitteet");
         dispatcher.forward(request, response); // viedään request-tiedot eteenpäin Viitteet-servletille
-    }
     }
 
 }
