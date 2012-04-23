@@ -43,7 +43,7 @@ scenario "asiakas hakee olemassa olevan viitteen oikeilla syötteillä", {
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
-            if(option.getText().equals("valitse kaikki")){
+            if(option.getText().equals("Author")){
                 option.click();
                 break;
             }
@@ -68,9 +68,9 @@ scenario "asiakas hakee olemassa olevan viitteen oikeilla syötteillä", {
 
     then 'oikea viite löytyy', {
        
-
        driver.getPageSource().contains("Hakutulokset").shouldBe true
        driver.getPageSource().contains("pelle peloton").shouldBe true
+       driver.getPageSource().indexOf("pelle peloton").shouldNotEqual driver.getPageSource().lastIndexOf("pelle peloton")
 
     }
 }
