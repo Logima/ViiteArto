@@ -142,7 +142,7 @@
             <br>
             <form action="/BibtexTulostin" method="GET">
                 <label>Tiedoston nimi: </label><input type="text" name="nimi">
-                <input type="submit" value="BibTeX">
+                <input type="submit" name="bibtexpainallus" value="BibTeX">
             </form>
         </c:if>
 

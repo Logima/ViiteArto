@@ -42,8 +42,8 @@ scenario "asiakas lisää viitteen ja tallentaa oikean viitteen bibtex-tiedot", 
 
         WebElement element = driver.findElement(By.linkText("Helsinginkadun appro"));
         element.click();
-        element = driver.findElement(By.linkText("BibTeX"));
-        element.click();
+        element = driver.findElement(By.name("bibtexpainallus"));
+        element.submit();
 
     }
 
