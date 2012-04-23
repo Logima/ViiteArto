@@ -166,17 +166,14 @@ public class LisaaViiteServlet extends HttpServlet {
         if (address != null && address.length() > 0)
             uusi.setAddress(address);
         
-        if (year != null && year.length() > 0) {
+        if (year != null && year.length() > 0)
             uusi.setYear(year);
-        }
         
-        if (volume != null && volume.length() > 0) {
+        if (volume != null && volume.length() > 0)
             uusi.setVolume(volume);
-        }
         
-        if (number != null && number.length() > 0) {
+        if (number != null && number.length() > 0)
             uusi.setNumber(number);
-        }
         
         if (pages != null && pages.length() > 0)
             uusi.setPages(pages);

@@ -37,45 +37,35 @@ public class HaeViitteetServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         
-        String ekaHakusana = turva.estaCrossSiteScripting(request.getParameter("ekaSana"));
-        String tokaHakusana = turva.estaCrossSiteScripting(request.getParameter("tokaSana"));
+        String hakusanat = turva.estaCrossSiteScripting(request.getParameter("hakuSanat"));
+        String kentta = request.getParameter("kentta");
         
-        String operand = request.getParameter("operand");
-        
-        String ekaKentta = request.getParameter("ekaKentta");
-        String tokaKentta = request.getParameter("tokaKentta");
         String viiteTyyppi = request.getParameter("tyyppi");
 
-        if (ekaHakusana.length() > 0 && tokaHakusana.length() <= 0) { // haetaan yhdellä hakusanalla
-            if (ekaKentta.equals("tag")) {
+        if (hakusanat.length() > 0) {
+            
+            String[] sanat = hakusanat.split(",");
+            
+            if (kentta.length() > 0) {
+                if (viiteTyyppi.length() > 0) {
+                    request.setAttribute("tulokset", rekisteri.haeViiteHakuSanoilla(sanat, viiteTyyppi, kentta));
+                } else {
+                    request.setAttribute("tulokset", rekisteri.haeViiteHakuSanoilla(sanat, null, kentta));
+                }
+            }
+            
+            if (kentta.equals("tag")) {
                 
                 if (viiteTyyppi.length() > 0)
-                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(ekaHakusana, viiteTyyppi));
+                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(hakusanat, viiteTyyppi));
                 else
-                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(ekaHakusana, null));
-                
-            } else {
-                
-                if (viiteTyyppi.length() > 0)
-                    request.setAttribute("tulokset", rekisteri.haeViiteYhdellaHakuSanalla(ekaHakusana, viiteTyyppi, ekaKentta)); // haetaan viitetyypin kanssa
-                else
-                    request.setAttribute("tulokset", rekisteri.haeViiteYhdellaHakuSanalla(ekaHakusana, null, ekaKentta)); // haetaan ilman viitetyyppiä
-            }
-        }
-        
-        if (ekaHakusana.length() > 0 && tokaHakusana.length() > 0) { // haetaan kahdella hakusanalla
-
-            if (viiteTyyppi.length() > 0) {
-                request.setAttribute("tulokset", rekisteri.haeViiteKahdellaHakuSanalla(ekaHakusana, tokaHakusana, viiteTyyppi, ekaKentta, tokaKentta, operand)); // haetaan viitetyypin kanssa
-            } else {
-                request.setAttribute("tulokset", rekisteri.haeViiteKahdellaHakuSanalla(ekaHakusana, tokaHakusana, null, ekaKentta, tokaKentta, operand)); // haetaan ilman viitetyyppiä
-            }
-
+                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(hakusanat, null));
         }
         
         RequestDispatcher dispatcher =
                 getServletContext().getRequestDispatcher("/Viitteet");
         dispatcher.forward(request, response); // viedään request-tiedot eteenpäin Viitteet-servletille
+    }
     }
 
 }

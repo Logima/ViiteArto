@@ -57,30 +57,10 @@
             
             <h4> Hae viitteitä </h4>
             <form action="/HaeViitteet" method="post">
-                Hakusana: <input type="text" name="ekaSana">
+                Hakusanat: <input type="text" name="hakuSanat">
                                 
-                <select name="ekaKentta">
-                    <option value="author">Author</option>
-                    <option value="title">Title</option>
-                    <option value="booktitle">Booktitle</option>
-                    <option value="journal">Journal</option>
-                    <option value="publisher">Publisher</option>
-                    <option value="tag">Tag</option>
-                    <option value="year">Year</option>
-                    <option value="address">Address</option>
-                    <option value="pages">Pages</option>
-                    <option value="number">Number</option>
-                    <option value="volume">Volume</option>
-                </select><br/>
-                
-                <br/>
-
-                <input type="radio" name="operand" value="and" checked="checked"/> AND
-                <input type="radio" name="operand" value="or" id="disjunction"/> OR <br/>
-                
-                Hakusana: <input type="text" name="tokaSana">
-                                
-                <select name="tokaKentta">
+                <select name="kentta">
+                    <option value="all">Valitse kaikki</option>
                     <option value="author">Author</option>
                     <option value="title">Title</option>
                     <option value="booktitle">Booktitle</option>
