@@ -10,35 +10,17 @@ import org.jbibtex.*;
 public class Bibtex {
     
     public static boolean importFile(File file) {
-        BibTeXDatabase db = parse(file);
-        if (db == null) return false;
-        Rekisteri rekisteri = Rekisteri.getInstance();
-        
-        for (Map.Entry<Key, BibTeXEntry> entry : db.getEntries().entrySet()) {
-            Viite v = new Viite();
-            v.setType(entry.getValue().getType().getValue());
-            for (Map.Entry<Key, Value> entry1 : entry.getValue().getFields().entrySet()) {
-                try {
-                    String fieldName = entry1.getKey().getValue().toLowerCase();
-                    String fieldValue = entry1.getValue().toUserString();
-                    if (fieldName.equals("address")) v.setAddress(fieldValue);
-                    else if (fieldName.equals("author")) v.setAuthor(fieldValue);
-                    else if (fieldName.equals("booktitle")) v.setBooktitle(fieldValue);
-                    else if (fieldName.equals("journal")) v.setJournal(fieldValue);
-                    else if (fieldName.equals("number")) v.setNumber(fieldValue);
-                    else if (fieldName.equals("pages")) v.setPages(fieldValue);
-                    else if (fieldName.equals("publisher")) v.setPublisher(fieldValue);
-                    else if (fieldName.equals("title")) v.setTitle(fieldValue);
-                    else if (fieldName.equals("volume")) v.setVolume(fieldValue);
-                    else if (fieldName.equals("year")) v.setYear(fieldValue);
-                } catch(Exception e){
-                }
-            }
-            rekisteri.lisaaViite(v);
+        try {
+            Reader reader = new FileReader(file);
+            return importFromReader(reader);
+        } catch (FileNotFoundException ex) {
+            return false;
         }
-        
-        
-        return true;
+    }
+    
+    public static boolean importString(String str) {
+        StringReader reader = new StringReader(str);
+        return importFromReader(reader);
     }
     
     public static boolean output(Viite v, Writer writer) {
@@ -55,9 +37,28 @@ public class Bibtex {
         return true;
     }
     
-    private static BibTeXDatabase parse(File file) {
+    private static boolean importFromReader(Reader reader) {
+        BibTeXDatabase db = parse(reader);
+        if (db == null) return false;
+        lisaaKantaan(db);
+        return true;
+    }
+    
+    private static void lisaaKantaan(BibTeXDatabase db) {
+        Rekisteri rekisteri = Rekisteri.getInstance();
+        
+        for (Map.Entry<Key, BibTeXEntry> entry : db.getEntries().entrySet()) {
+            Viite v = new Viite();
+            v.setType(entry.getValue().getType().getValue());
+            for (Map.Entry<Key, Value> field : entry.getValue().getFields().entrySet()) {
+                v.setField(field.getKey().getValue().toLowerCase(), field.getValue().toUserString());
+            }
+            rekisteri.lisaaViite(v);
+        }
+    }
+    
+    private static BibTeXDatabase parse(Reader reader) {
         try {
-            Reader reader = new FileReader(file);
             BibTeXParser parser = new BibTeXParser();
             return parser.parse(reader);
         } catch (Exception e) {

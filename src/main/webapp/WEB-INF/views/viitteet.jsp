@@ -20,9 +20,14 @@
                 <option value="article">Article</option>
             </select>
             <input type="submit" name="valinta" value="Valitse"/>
+        </form><br>
+        
+        <form action="/UrlImport" method="post">
+            <label>URL: </label><input type="text" name="url">
+            <input type="submit" value="Import">
         </form>
 
-        <br/>
+        <br>
 
         <!-- Listaa virheet, jos niitä tuli viitettä lisättäessä -->
         <c:forEach var="error"
@@ -82,12 +87,12 @@
                     <option value="Book">Book</option>
                     <option value="Inproceedings">Inproceedings</option>
                     <option value="Article">Article</option>
-                </select><br/>
+                </select><br>
                 
                 <input type="submit" name="haku" value="Hae"/>
             </form>
                 
-        </br>
+        <br>
 
         <!-- Viitehaun tulokset -->
 
