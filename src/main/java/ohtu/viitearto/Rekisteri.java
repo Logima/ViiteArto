@@ -100,7 +100,17 @@ public class Rekisteri {
             for (String hakusana : sanat) {
                 if (t.getNimi().contains(hakusana)) // jos tagin nimessä hakusana
                     refResults.addAll(t.getViitteet()); // lisätään hakutuloksiin viitteet, joilla on kys. tag
-            }  
+            }
+        }
+        
+        if (viiteTyyppi != null) {
+            Iterator i = refResults.iterator();
+
+            while (i.hasNext()) {
+                Viite viite = (Viite) i.next();
+                if (!viite.getType().equals(viiteTyyppi))
+                    i.remove();
+            }
         }
         
         return new ArrayList<Viite>(refResults);
@@ -124,7 +134,7 @@ public class Rekisteri {
             return haeYhdenKentanPerusteella(sanat, q, kentta);
     }
     
-    private List<Viite> haeKaikkienKenttienPerusteella(Query q, String... sanat) { // sanat ok, viitetyyppi ok    
+    private List<Viite> haeKaikkienKenttienPerusteella(Query q, String... sanat) {    
         List<Viite> results = q.getResultList();    
         ArrayList<Viite> finalResults = new ArrayList<Viite>(); // talletetaan lopulliset hakutulokset
                
