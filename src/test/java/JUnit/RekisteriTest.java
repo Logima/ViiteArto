@@ -153,4 +153,71 @@ public class RekisteriTest {
         
         assertEquals(true, lista.size() >= 2);
     }
+    
+    @Test
+    public void haeViiteTageilla() {
+        Viite uusi = new Viite("viiskauttaviis", "OhtuGroup");
+        ArrayList<Tag> tagit = new ArrayList<Tag>();
+        Tag eka = new Tag("pro");
+        Tag toka = new Tag("coders");
+        rekisteri.lisaaTagi(eka);
+        rekisteri.lisaaTagi(toka);
+        
+        tagit.add(eka);
+        tagit.add(toka);
+        uusi.setTagit(tagit);
+        rekisteri.lisaaViite(uusi);
+        
+        List<Viite> lista = rekisteri.haeViiteTageilla(null, "coders");
+        assertEquals("viiskauttaviis", lista.get(0).getTitle());
+        lista.clear();
+        lista = rekisteri.haeViiteTageilla(null, "pro");
+        assertEquals("viiskauttaviis", lista.get(0).getTitle());
+        
+    }
+    
+    @Test
+    public void haeViiteTageillaJaViiteTyypilla() {
+        Viite uusi = new Viite("viiskauttaviis", "OhtuGroup");
+        Viite toinen = new Viite("MestariKarhu", "Henri");
+        
+        ArrayList<Tag> tagit = new ArrayList<Tag>();
+        Tag eka = new Tag("luukkainen");
+        Tag toka = new Tag("antaa");
+        Tag kolmas = new Tag("täydet");
+        Tag neljas = new Tag("pisteet");
+        rekisteri.lisaaTagi(eka);
+        rekisteri.lisaaTagi(toka);
+        rekisteri.lisaaTagi(kolmas);
+        rekisteri.lisaaTagi(neljas);
+        
+        tagit.add(eka);
+        tagit.add(toka);
+        tagit.add(kolmas);
+        tagit.add(neljas);
+        
+        uusi.setTagit(tagit);
+        uusi.setType("Book");
+        
+        toinen.setTagit(tagit);
+        toinen.setType("Article");
+        
+        rekisteri.lisaaViite(uusi);
+        rekisteri.lisaaViite(toinen);
+        
+        List<Viite> lista = rekisteri.haeViiteTageilla(null, "luukkainen");
+        assertEquals(2, lista.size());
+        
+        lista.clear();
+        
+        lista = rekisteri.haeViiteTageilla("Article", "täydet");
+        assertEquals("MestariKarhu", lista.get(0).getTitle());
+        assertEquals(1, lista.size());
+        
+        lista.clear();
+        
+        lista = rekisteri.haeViiteTageilla("Book", "pisteet");
+        assertEquals("viiskauttaviis", lista.get(0).getTitle());
+        assertEquals(1, lista.size());
+    }
 }

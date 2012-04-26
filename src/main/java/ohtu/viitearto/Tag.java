@@ -47,10 +47,5 @@ public class Tag implements Serializable {
     
     public void setViitteet(List<Viite> viitteet) {
         this.viitteet = viitteet;
-    }
-    
-    public void poistaViite(Viite poistettava) {
-        viitteet.remove(poistettava);
-    }
-    
+    } 
 }
