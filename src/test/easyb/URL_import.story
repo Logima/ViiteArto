@@ -21,12 +21,13 @@ scenario "asiakas lisää viitteen URL-importtia käyttäen", {
         
     }
 
-    when 'URL-osoite importataan', {
+    when 'URL-osoite importataan', {        
         WebElement element = driver.findElement(By.name("import"));
         element.submit();
     }
 
     then 'viite näkyy sivulla', {
+       System.out.println(driver.getPageSource());
        driver.getPageSource().contains("Social networks generate interest in computer science").shouldBe true
     }
 }
