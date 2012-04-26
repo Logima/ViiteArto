@@ -22,7 +22,7 @@ scenario "asiakas lisää viitteen URL-importtia käyttäen", {
     }
 
     when 'URL-osoite importataan', {
-        element = driver.findElement(By.value("Import"));
+        WebElement element = driver.findElement(By.value("Import"));
         element.submit();
     }
 
