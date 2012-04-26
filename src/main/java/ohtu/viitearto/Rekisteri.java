@@ -123,9 +123,11 @@ public class Rekisteri {
             q = em.createQuery("SELECT v FROM Viite v");
         }
         
-        if (kentta.equals("all"))
-            return haeKaikkienKenttienPerusteella(q, sanat);
-        else
+        if (kentta.equals("all")) {
+            HashSet<Viite> kentat = new HashSet<Viite>(haeKaikkienKenttienPerusteella(q, sanat));
+            kentat.addAll(haeViiteTageilla(viiteTyyppi, sanat));
+            return new ArrayList<Viite>(kentat);
+        } else
             return haeYhdenKentanPerusteella(sanat, q, kentta);
     }
     
