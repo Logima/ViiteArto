@@ -3,6 +3,7 @@ package ohtu.viitearto;
 import java.io.*;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang.WordUtils;
 import org.jbibtex.*;
 
 public class Bibtex {
@@ -57,6 +58,8 @@ public class Bibtex {
             for (Map.Entry<Key, Value> field : entry.getValue().getFields().entrySet()) {
                 v.setField(field.getKey().getValue().toLowerCase(), field.getValue().toUserString());
             }
+            String type = WordUtils.capitalize(v.getType());
+            v.setType(type);
             rekisteri.lisaaViite(v);
         }
     }

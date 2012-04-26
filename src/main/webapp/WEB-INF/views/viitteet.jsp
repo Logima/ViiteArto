@@ -22,7 +22,7 @@
         
         <form action="/UrlImport" method="post">
             <label>URL: </label><input type="text" name="url">
-            <input type="submit" value="Import">
+            <input type="submit" name="import" value="Import">
         </form>
 
         <br>
