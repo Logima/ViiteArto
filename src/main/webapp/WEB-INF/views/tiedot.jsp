@@ -32,7 +32,7 @@
                         </tr>
                     </c:forEach>
                         <tr>
-                            <td>Tags: </td><td><input type="text" value="${viiteFields['tags']}" name="tags"></td>
+                            <td>Tags: </td><td><input type="text" value="${tags}" name="tags"></td>
                         </tr>
                 </table>
 

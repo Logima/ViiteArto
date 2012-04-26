@@ -3,6 +3,7 @@ package ohtu.viitearto;
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
+import org.apache.commons.lang.WordUtils;
 
 @Entity
 @TableGenerator(name="tab", initialValue=0, allocationSize=1)
@@ -159,20 +160,15 @@ public class Viite implements Serializable {
             for (Map.Entry<String, String> entry : fields.entrySet()) {
                 if (entry.getKey() == null || entry.getValue() == null ||
                     entry.getKey().length() == 0 || entry.getValue().length() == 0) continue;
-                fieldsHtml.add("<b>" + firstCharToUpper(entry.getKey()) + ":</b> " + entry.getValue());
+                fieldsHtml.add("<b>" + WordUtils.capitalize(entry.getKey()) + ":</b> " + entry.getValue());
                 
             }
             
             if (getTagit() != null && getTagit().size() > 0) {
-                fieldsHtml.add("<b>Tags:</b> " + muutaTagitStringiksi());
+                fieldsHtml.add("<b>Tags:</b> " + getTagitStringina());
             }
         }
         return fieldsHtml;
-    }
-    
-    private String firstCharToUpper(String s) {
-        int firstLen = s.offsetByCodePoints(0, 1);
-        return s.substring(0, firstLen).toUpperCase().concat(s.substring(firstLen));
     }
     
     public void setTagit(List<Tag> tagit) {
@@ -187,8 +183,6 @@ public class Viite implements Serializable {
                 tagit.get(i).getViitteet().add(this); // tagille
             }
         }
-        
-        fields.put("tags", muutaTagitStringiksi());
     }
     
     public static TreeMap<String, String> getBookKentat() {
@@ -273,7 +267,7 @@ public class Viite implements Serializable {
         return hash;
     }
 
-    private String muutaTagitStringiksi() {
+    public String getTagitStringina() {
         String listString = "";
 
         for (int i = 0; i < getTagit().size(); ++i) {

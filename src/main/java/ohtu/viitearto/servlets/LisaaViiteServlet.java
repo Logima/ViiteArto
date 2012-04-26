@@ -2,7 +2,6 @@ package ohtu.viitearto.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.RequestDispatcher;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ohtu.viitearto.*;
+import org.apache.commons.lang.WordUtils;
 
 public class LisaaViiteServlet extends HttpServlet {
 
@@ -32,15 +32,14 @@ public class LisaaViiteServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");       
         
-        String[] type = request.getParameterValues("type");
         
-        Viite uusiViite = lisaaViite(request, response);
+        lisaaViite(request, response);
 
-        rekisteri.lisaaViite(uusiViite);
+        
         request.getRequestDispatcher("/Viitteet").forward(request, response); // ohjataan pyyntö samalle sivulle
     }
 
-    private Viite lisaaViite(HttpServletRequest request, HttpServletResponse response)
+    private void lisaaViite(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         Viite uusiViite = new Viite();
@@ -54,19 +53,19 @@ public class LisaaViiteServlet extends HttpServlet {
         
         for (String kentta : pakollisetKentat.getKentat(request.getParameter("type"))) {
             if (!uusiViite.containsField(kentta)) {
-                secure.lisaaVirhe(kentta, firstCharToUpper(kentta) + " ei saa olla tyhjä!");
+                secure.lisaaVirhe(kentta, WordUtils.capitalize(kentta) + " ei saa olla tyhjä!");
             }
         }
         
         if (secure.onkoVirheita()) {
             doGet(request, response);
-            return null;
+            return;
         }
         
         uusiViite.setType(request.getParameter("type"));
         lisaaTagit(request, uusiViite);
         
-        return uusiViite;
+        rekisteri.lisaaViite(uusiViite);
     }
     
     private void lisaaTagit(HttpServletRequest request, Viite viite) {
@@ -90,10 +89,5 @@ public class LisaaViiteServlet extends HttpServlet {
         viite.setTagit(tagiLista);
 
 
-    }
-    
-    private String firstCharToUpper(String s) {
-        int firstLen = s.offsetByCodePoints(0, 1);
-        return s.substring(0, firstLen).toUpperCase().concat(s.substring(firstLen));
     }
 }
