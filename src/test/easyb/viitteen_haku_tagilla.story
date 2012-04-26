@@ -236,7 +236,7 @@ scenario "asiakas hakee viitettä väärällä tagilla kirjoista", {
        driver.getPageSource().contains("Hakutulokset").shouldBe false
     }
 }
-scenario "viitteen tagia muutettua löytää haettaessa uudella tagilla", {
+scenario "viitteen tagia muutettua löytää haettaessa uudella tagilla_SNAFU suoraan approsta", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:7190/");
@@ -256,15 +256,15 @@ scenario "viitteen tagia muutettua löytää haettaessa uudella tagilla", {
         element.submit();
 
         element = driver.findElement(By.name("field.title"));
-        element.sendKeys("apinakin osaa koodata");
+        element.sendKeys("Mä en tiedä enää");
         element = driver.findElement(By.name("field.author"));
-        element.sendKeys("henkka ei");
+        element.sendKeys("ja siksi lähen oluelle");
         element = driver.findElement(By.name("tags"));
-        element.sendKeys("hemulia");
+        element.sendKeys("niin");
 
         element = driver.findElement(By.name("lisays"));
         element.submit();
-        element = driver.findElement(By.linkText("apinakin osaa koodata"));
+        element = driver.findElement(By.linkText("Mä en tiedä enää"));
         element.click();
         
     }
@@ -274,7 +274,7 @@ scenario "viitteen tagia muutettua löytää haettaessa uudella tagilla", {
         element.submit();
         element = driver.findElement(By.name("tags"));
         element.clear();    
-        element.sendKeys("eiEnääMuumeja");
+        element.sendKeys("jopasta joo");
         element = driver.findElement(By.name("tallennus"));
         element.submit();
         
@@ -282,7 +282,7 @@ scenario "viitteen tagia muutettua löytää haettaessa uudella tagilla", {
         element.click();
         
         element = driver.findElement(By.name("hakuSanat"));
-        element.sendKeys("eiEnääMuumeja");
+        element.sendKeys("jopasta joo");
         element = driver.findElement(By.name("haku"));
         element.submit();
 
@@ -291,7 +291,7 @@ scenario "viitteen tagia muutettua löytää haettaessa uudella tagilla", {
     then 'oikea viite löytyy', {
        
        driver.getPageSource().contains("Hakutulokset").shouldBe true
-       driver.getPageSource().indexOf("apinakin osaa koodata").shouldNotEqual driver.getPageSource().lastIndexOf("apinakin osaa koodata")
+       driver.getPageSource().indexOf("Mä en tiedä enää").shouldNotEqual driver.getPageSource().lastIndexOf("Mä en tiedä enää")
     }
 }
 scenario "viitteen tagia muutetaan ja  se ei löydy haettaessa vanhalla tagilla", {

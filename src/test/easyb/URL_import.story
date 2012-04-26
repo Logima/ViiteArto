@@ -136,7 +136,7 @@ scenario "asiakas lisää useita viitteitä URL-importtia käyttäen ja sitten h
 
        driver.getPageSource().contains("Hakutulokset").shouldBe true
        driver.getPageSource().contains("The dream of a common language: the search for simplicity and stability in computer science education").shouldBe true
-       driver.getPageSource().indexOf("Roberts, Eric").shouldEqual driver.getPageSource().lastIndexOf("Roberts, Eric")
+       driver.getPageSource().indexOf("Roberts, Eric").shouldNotEqual driver.getPageSource().lastIndexOf("Roberts, Eric")
     }
 }
 

@@ -17,7 +17,7 @@ scenario "asiakas voi poistaa viitteen listasta", {
 
     given 'viite on listalla', {
 
-        WebElement element = driver.findElement(By.name("field.viiteTyyppi"));
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
