@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ohtu.viitearto.*;
+import org.apache.commons.lang.WordUtils;
 
 public class MuokkaaViitettaServlet extends HttpServlet {
     private Rekisteri rekisteri = Rekisteri.getInstance();
@@ -31,8 +32,6 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         setId(request, response);
         
-        String type = request.getParameter("type");
-        
         muokkaaViite(request, response);
         
         response.sendRedirect(request.getContextPath()+"/ViitteenTiedot?id="+id);
@@ -46,18 +45,18 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         for (Map.Entry<String, String[]> entry : ((Map<String, String[]>)request.getParameterMap()).entrySet()) {
             String field = entry.getKey();
             String val = secure.estaCrossSiteScripting(entry.getValue()[0]);
-            if (field == null || !field.startsWith("field.") || val == null || val.length() == 0) continue;
+            if (field == null || !field.startsWith("field.") || val == null) continue;
             muokattavaViite.setField(field.substring(6), val);
         }
         
         for (String kentta : pakollisetKentat.getKentat(request.getParameter("type"))) {
-            if (!muokattavaViite.containsField(kentta)) {
-                secure.lisaaVirhe(kentta, firstCharToUpper(kentta) + " ei saa olla tyhjä!");
+            if (!muokattavaViite.containsField(kentta) || muokattavaViite.getField(kentta).length() == 0) {
+                secure.lisaaVirhe(kentta, WordUtils.capitalize(kentta) + " ei saa olla tyhjä!");
             }
         }
         
         if (secure.onkoVirheita()) {
-            doGet(request, response);
+            response.sendRedirect(request.getContextPath()+"/ViitteenTiedot?id="+id);
             return;
         }
         
@@ -65,11 +64,6 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         muokkaaTagit(request, muokattavaViite);
         
         rekisteri.lisaaViite(muokattavaViite);
-    }
-    
-    private String firstCharToUpper(String s) {
-        int firstLen = s.offsetByCodePoints(0, 1);
-        return s.substring(0, firstLen).toUpperCase().concat(s.substring(firstLen));
     }
     
     private void muokkaaTagit(HttpServletRequest request, Viite muokattava) {

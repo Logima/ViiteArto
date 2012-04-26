@@ -1,13 +1,10 @@
 package ohtu.viitearto.servlets;
 
-import java.io.*;
-import java.net.URL;
+import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ohtu.viitearto.Bibtex;
-import ohtu.viitearto.Tietoturva;
 import ohtu.viitearto.UrlImport;
 
 public class UrlImportServlet extends HttpServlet {

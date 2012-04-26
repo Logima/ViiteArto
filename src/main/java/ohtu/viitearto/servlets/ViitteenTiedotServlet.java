@@ -1,13 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ohtu.viitearto.servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.TreeMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,10 +12,6 @@ import ohtu.viitearto.Rekisteri;
 import ohtu.viitearto.Tietoturva;
 import ohtu.viitearto.Viite;
 
-/**
- *
- * @author kennyhei
- */
 public class ViitteenTiedotServlet extends HttpServlet {
 
     private Rekisteri rekisteri = Rekisteri.getInstance();
@@ -57,11 +46,16 @@ public class ViitteenTiedotServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         
-        long id = Long.parseLong(request.getParameter("id"));
-        muokattava = rekisteri.haeViite(id);
-        muokataanko = true;
+        try {
+            long id = Long.parseLong(request.getParameter("id"));
+            muokattava = rekisteri.haeViite(id);
+            muokataanko = true;
+
+            response.sendRedirect(request.getRequestURI() + "?id=" + muokattava.getId()); // POST-pyynnöt ohjataan doGetille
+        } catch (Exception e) {
+            response.sendRedirect(request.getContextPath()+"/Viitteet");
+        }
         
-        response.sendRedirect(request.getRequestURI()+"?id="+muokattava.getId()); // POST-pyynnöt ohjataan doGetille
     }
 
     private void maaritaViitteenTyyppi(Viite muokattava) {
