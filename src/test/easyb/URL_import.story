@@ -77,7 +77,6 @@ scenario "asiakas lisää useita viitteitä URL-importtia käyttäen", {
     }
 
     then 'viitteet näkyy sivulla', {
-       System.out.println(driver.getPageSource());
        driver.getPageSource().contains("Social networks generate interest in computer science").shouldBe true
        driver.getPageSource().contains("The dream of a common language: the search for simplicity and stability in computer science education").shouldBe true
        driver.getPageSource().contains("URL import epäonnistui").shouldBe false

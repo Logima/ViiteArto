@@ -28,8 +28,6 @@ scenario "asiakas hakee olemassa olevan viitteen oikeilla syötteillä", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-
-        System.out.println(driver.getPageSource());
         element = driver.findElement(By.name("field.title"));
         element.sendKeys("apinakin osaa koodata");
         element = driver.findElement(By.name("field.author"));
