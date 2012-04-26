@@ -2,7 +2,6 @@ package ohtu.viitearto;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class UrlImport {
@@ -34,7 +33,7 @@ public class UrlImport {
                     if (str.contains("</pre>")) {
                         break;
                     }
-                    if (save) {
+                    if (save && !str.contains("month = ")) {
                         bibtex += str + "\n";
                     }
                     if (str.contains("<PRE id=\"")) {
