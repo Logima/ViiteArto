@@ -236,3 +236,123 @@ scenario "asiakas hakee viitettä väärällä tagilla kirjoista", {
        driver.getPageSource().contains("Hakutulokset").shouldBe false
     }
 }
+scenario "viitteen tagia muutettua löytää haettaessa uudella tagilla", {
+
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:7190/");
+
+    given 'lisätään kirja tagilla ja valitaan kirja listasta', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("title"));
+        element.sendKeys("apinakin osaa koodata");
+        element = driver.findElement(By.name("author"));
+        element.sendKeys("henkka ei");
+        element = driver.findElement(By.name("tags"));
+        element.sendKeys("hemulia");
+
+        element = driver.findElement(By.name("lisays"));
+        element.submit();
+        element = driver.findElement(By.linkText("apinakin osaa koodata"));
+        element.click();
+        
+    }
+
+    when 'tagi muutetaan ja koitetaan hakea uudella tagilla', {
+        WebElement element = driver.findElement(By.name("muokkaus"));
+        element.submit();
+        element = driver.findElement(By.name("tags"));
+        element.clear();    
+        element.sendKeys("eiEnääMuumeja");
+        element = driver.findElement(By.name("tallennus"));
+        element.submit();
+        
+        element = driver.findElement(By.linkText("Etusivu"));
+        element.click();
+        
+        element = driver.findElement(By.name("hakuSanat"));
+        element.sendKeys("eiEnääMuumeja");
+        element = driver.findElement(By.name("haku"));
+        element.submit();
+
+    }
+
+    then 'oikea viite löytyy', {
+       
+       driver.getPageSource().contains("Hakutulokset").shouldBe true
+       driver.getPageSource().indexOf("apinakin osaa koodata").shouldNotEqual driver.getPageSource().lastIndexOf("apinakin osaa koodata")
+    }
+}
+scenario "viitteen tagia muutetaan ja  se ei löydy haettaessa vanhalla tagilla", {
+
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:7190/");
+
+    given 'lisätään kirja tagilla ja valitaan kirja listasta', {
+        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for(WebElement option : options){
+            if(option.getText().equals("Book")){
+                option.click();
+                break;
+            }
+        }
+
+        element = driver.findElement(By.name("valinta"));
+        element.submit();
+
+        element = driver.findElement(By.name("title"));
+        element.sendKeys("henkan koodausopas");
+        element = driver.findElement(By.name("author"));
+        element.sendKeys("Mestari Karhu");
+        element = driver.findElement(By.name("tags"));
+        element.sendKeys("henkkakoodaa");
+
+        element = driver.findElement(By.name("lisays"));
+        element.submit();
+        element = driver.findElement(By.linkText("henkan koodausopas"));
+        element.click();
+        
+    }
+
+    when 'tagi muutetaan ja koitetaan hakea vanhalla tagilla', {
+        WebElement element = driver.findElement(By.name("muokkaus"));
+        element.submit();
+        element = driver.findElement(By.name("tags"));
+        element.clear();
+        element.sendKeys("eiEnääMuumeja");
+
+        element = driver.findElement(By.name("tallennus"));
+        element.submit();
+
+        System.out.println(driver.getPageSource());
+        
+        element = driver.findElement(By.linkText("Etusivu"));
+        element.click();
+        
+        element = driver.findElement(By.name("hakuSanat"));
+        element.sendKeys("henkkakoodaa");
+        element = driver.findElement(By.name("haku"));
+        element.submit();
+
+    }
+
+    then 'viitettä ei löydy', {
+
+       driver.getPageSource().contains("Hakutulokset").shouldBe false
+       driver.getPageSource().contains("henkan koodausopas").shouldBe true
+       driver.getPageSource().indexOf("Mestari Karhu").shouldEqual driver.getPageSource().lastIndexOf("Mestari Karhu")
+    }
+}
