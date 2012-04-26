@@ -217,7 +217,7 @@ scenario "muokatessa pakollisen tiedon jättäminen tyhjäksi estää muiden tie
        driver.getPageSource().contains("19891").shouldBe false
     }
 }
-scenario "viitettä muokatessa numerotietoihin ei voi syöttää kirjaimia"{
+scenario "viitettä muokatessa numerotietoihin ei voi syöttää kirjaimia", {
 
     WebDriver driver = new HtmlUnitDriver();
     driver.get("http://localhost:7190/");
@@ -244,8 +244,6 @@ scenario "viitettä muokatessa numerotietoihin ei voi syöttää kirjaimia"{
         element.sendKeys("1989");
         element = driver.findElement(By.name("journal"));
         element.sendKeys("Elastisen erälehti");
-        element = driver.findElement(By.name("volume"));
-        element.sendKeys("21");
 
         element = driver.findElement(By.name("lisays"));
         element.submit();
@@ -262,17 +260,13 @@ scenario "viitettä muokatessa numerotietoihin ei voi syöttää kirjaimia"{
         element = driver.findElement(By.name("year"));
         element.sendKeys("ASD");
 
-        element = driver.findElement(By.name("volume"));
-        element.sendKeys("LOL");
         element = driver.findElement(By.name("tallennus"));
         element.submit();
     }
 
     then 'viitteen tiedot eivät ole muuttuneet', {
        driver.getPageSource().contains("1989").shouldBe true
-       driver.getPageSource().contains("21").shouldBe true
        driver.getPageSource().contains("ASD").shouldBe false
-       driver.getPageSource().contains("LOL").shouldBe false
       
     }
 }
