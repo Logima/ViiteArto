@@ -28,9 +28,9 @@ scenario "asiakas lisää viitteen oikeilla syötteillä", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("väinö");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("linna");
         
     }
@@ -65,15 +65,15 @@ scenario "asiakas lisää viitteen oikeilla syötteillä", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("väiski");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("linnanherra");
-        element = driver.findElement(By.name("year"));
+        element = driver.findElement(By.name("field.year"));
         element.sendKeys("2000");
-        element = driver.findElement(By.name("publisher"));
+        element = driver.findElement(By.name("field.publisher"));
         element.sendKeys("otava");
-        element = driver.findElement(By.name("address"));
+        element = driver.findElement(By.name("field.address"));
         element.sendKeys("FIN");
         
     }
@@ -108,7 +108,7 @@ scenario "asiakas lisää viitteen vain titlellä", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("pelkkatitle");
     }
 
@@ -144,7 +144,7 @@ scenario "asiakas lisää viitteen vain authorilla", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("pelkkaAuthor");
         
     }
@@ -179,7 +179,7 @@ scenario "asiakas lisää viitteen vain vuosiluvulla", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("year"));
+        element = driver.findElement(By.name("field.year"));
         element.sendKeys("1923");
         
     }
@@ -214,7 +214,7 @@ scenario "asiakas lisää viitteen vain julkaisija-tiedolla", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("publisher"));
+        element = driver.findElement(By.name("field.publisher"));
         element.sendKeys("Harakka");
         
     }
@@ -249,7 +249,7 @@ scenario "asiakas lisää viitteen vain journal-tiedolla", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("journal"));
+        element = driver.findElement(By.name("field.journal"));
         element.sendKeys("Diary");
     }
 
@@ -283,7 +283,7 @@ scenario "asiakas lisää viitteen vain booktitle-tiedolla", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("booktitle"));
+        element = driver.findElement(By.name("field.booktitle"));
         element.sendKeys("Diary");
     }
 
@@ -317,7 +317,7 @@ scenario "asiakas lisää viitteen vain pages-tiedolla", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("pages"));
+        element = driver.findElement(By.name("field.pages"));
         element.sendKeys("200-250");
     }
 
@@ -351,7 +351,7 @@ scenario "asiakas lisää viitteen vain address-tiedolla", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("address"));
+        element = driver.findElement(By.name("field.address"));
         element.sendKeys("FIN");
     }
 
@@ -385,7 +385,7 @@ scenario "asiakas lisää viitteen vain volume-tiedolla", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("volume"));
+        element = driver.findElement(By.name("field.volume"));
         element.sendKeys("4");
     }
 
@@ -419,7 +419,7 @@ scenario "asiakas lisää viitteen vain numero-tiedolla", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("number"));
+        element = driver.findElement(By.name("field.number"));
         element.sendKeys("4");
     }
 

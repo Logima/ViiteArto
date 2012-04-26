@@ -28,9 +28,9 @@ scenario "asiakas hakee viitettä tagilla pelkistä kirjoista", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("apinakin osaa koodata");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("henkka ei");
         element = driver.findElement(By.name("tags"));
         element.sendKeys("hemulia");
@@ -86,11 +86,11 @@ scenario "asiakas hakee viitettä tagilla inproceedingeistä", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("apinakin osaa koodata");
-        element = driver.findElement(By.name("booktitle"));
+        element = driver.findElement(By.name("field.booktitle"));
         element.sendKeys("TKTL");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("henkka ei");
         element = driver.findElement(By.name("tags"));
         element.sendKeys("hemulia");
@@ -143,11 +143,11 @@ scenario "asiakas hakee viitettä tagilla articlesta", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("apinakin osaa koodata");
-        element = driver.findElement(By.name("journal"));
+        element = driver.findElement(By.name("field.journal"));
         element.sendKeys("TKTL");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("henkka ei");
         element = driver.findElement(By.name("tags"));
         element.sendKeys("hemulia");
@@ -201,9 +201,9 @@ scenario "asiakas hakee viitettä väärällä tagilla kirjoista", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("apinakin osaa koodata");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("henkka ei");
         element = driver.findElement(By.name("tags"));
         element.sendKeys("hemulia");
@@ -255,9 +255,9 @@ scenario "viitteen tagia muutettua löytää haettaessa uudella tagilla", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("apinakin osaa koodata");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("henkka ei");
         element = driver.findElement(By.name("tags"));
         element.sendKeys("hemulia");
@@ -313,9 +313,9 @@ scenario "viitteen tagia muutetaan ja  se ei löydy haettaessa vanhalla tagilla"
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("henkan koodausopas");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("Mestari Karhu");
         element = driver.findElement(By.name("tags"));
         element.sendKeys("henkkakoodaa");
