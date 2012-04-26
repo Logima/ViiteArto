@@ -1,30 +1,22 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ohtu.viitearto.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ohtu.viitearto.Rekisteri;
-import ohtu.viitearto.Tag;
-import ohtu.viitearto.Tietoturva;
-import ohtu.viitearto.Viite;
+import ohtu.viitearto.*;
 
-/**
- *
- * @author Keni
- */
 public class LisaaViiteServlet extends HttpServlet {
 
     private Rekisteri rekisteri = Rekisteri.getInstance();
     private Tietoturva secure = new Tietoturva();
+    private PakollisetKentat pakollisetKentat = new PakollisetKentat();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -41,142 +33,67 @@ public class LisaaViiteServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");       
         
         String[] type = request.getParameterValues("type");
-        Viite uusi = null;
         
-        if (type[0].equals("Book"))
-            uusi = lisaaBookViite(request, response);
-        else if (type[0].equals("Article"))
-            uusi = lisaaArticleViite(request, response);
-        else if (type[0].equals("Inproceedings"))
-            uusi = lisaaInproceedingsViite(request, response);
+        Viite uusiViite = lisaaViite(request, response);
 
-        rekisteri.lisaaViite(uusi);
+        rekisteri.lisaaViite(uusiViite);
         request.getRequestDispatcher("/Viitteet").forward(request, response); // ohjataan pyyntö samalle sivulle
     }
 
-    private Viite lisaaInproceedingsViite(HttpServletRequest request, HttpServletResponse response)
+    private Viite lisaaViite(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String title = secure.estaCrossSiteScripting(request.getParameter("title"));
-        String author = secure.estaCrossSiteScripting(request.getParameter("author"));
-        String publisher = secure.estaCrossSiteScripting(request.getParameter("publisher"));
-        String yearString = secure.estaCrossSiteScripting(request.getParameter("year"));
-        String booktitle = secure.estaCrossSiteScripting(request.getParameter("booktitle"));
-        String address = secure.estaCrossSiteScripting(request.getParameter("address"));
-        String pages = secure.estaCrossSiteScripting(request.getParameter("pages"));
-
-        secure.tarkistaPakollisetTiedot(title, author, null, booktitle);
-        secure.tarkistaNumeroTiedot(yearString, null, null);
+        Viite uusiViite = new Viite();
+        
+        for (Map.Entry<String, String[]> entry : ((Map<String, String[]>)request.getParameterMap()).entrySet()) {
+            String field = entry.getKey();
+            String val = secure.estaCrossSiteScripting(entry.getValue()[0]);
+            if (field == null || !field.startsWith("field.") || val == null || val.length() == 0) continue;
+            uusiViite.setField(field.substring(6), val);
+        }
+        
+        for (String kentta : pakollisetKentat.getKentat(request.getParameter("type"))) {
+            if (!uusiViite.containsField(kentta)) {
+                secure.lisaaVirhe(kentta, firstCharToUpper(kentta) + " ei saa olla tyhjä!");
+            }
+        }
         
         if (secure.onkoVirheita()) {
             doGet(request, response);
             return null;
         }
         
-        Viite uusiInproceedings = new Viite(title, author);
-        uusiInproceedings.setType("Inproceedings");
-        uusiInproceedings.setBooktitle(booktitle);
+        uusiViite.setType(request.getParameter("type"));
+        lisaaTagit(request, uusiViite);
         
-        lisaaOptionaalisetTiedot(uusiInproceedings, publisher, address, pages, yearString, null, null);
-        lisaaTagit(request, uusiInproceedings);
-        
-        return uusiInproceedings;
-    }
-
-    private Viite lisaaArticleViite(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String title = secure.estaCrossSiteScripting(request.getParameter("title"));
-        String author = secure.estaCrossSiteScripting(request.getParameter("author"));
-        String publisher = secure.estaCrossSiteScripting(request.getParameter("publisher"));
-        String yearString = secure.estaCrossSiteScripting(request.getParameter("year"));
-        String address = secure.estaCrossSiteScripting(request.getParameter("address"));
-        String pages = secure.estaCrossSiteScripting(request.getParameter("pages"));
-        String journal = secure.estaCrossSiteScripting(request.getParameter("journal"));
-        String volumeString = secure.estaCrossSiteScripting(request.getParameter("volume"));
-        String numberString = secure.estaCrossSiteScripting(request.getParameter("number"));
-        
-        secure.tarkistaPakollisetTiedot(title, author, journal, null);
-        secure.tarkistaNumeroTiedot(yearString, volumeString, numberString);
-        
-        if (secure.onkoVirheita()) {
-            doGet(request, response);
-            return null;
-        }
-        
-        Viite uusiArticle = new Viite(title, author);
-        uusiArticle.setType("Article");
-        uusiArticle.setJournal(journal);
-        
-        lisaaOptionaalisetTiedot(uusiArticle, publisher, address, pages, yearString, volumeString, numberString);
-        lisaaTagit(request, uusiArticle);
-        
-        return uusiArticle;
-    }
-
-    private Viite lisaaBookViite(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String title = secure.estaCrossSiteScripting(request.getParameter("title"));
-        String author = secure.estaCrossSiteScripting(request.getParameter("author"));
-        String publisher = secure.estaCrossSiteScripting(request.getParameter("publisher"));
-        String yearString = secure.estaCrossSiteScripting(request.getParameter("year"));
-        String address = secure.estaCrossSiteScripting(request.getParameter("address"));
-        
-        secure.tarkistaPakollisetTiedot(title, author, null, null);
-        secure.tarkistaNumeroTiedot(yearString, null, null);
-        
-        if (secure.onkoVirheita()) {
-            doGet(request, response);
-            return null;
-        }
-        
-        Viite uusiBook = new Viite(title, author);
-        uusiBook.setType("Book");
-        
-        lisaaOptionaalisetTiedot(uusiBook, publisher, address, null, yearString, null, null);
-        lisaaTagit(request, uusiBook);
-        
-        return uusiBook;
+        return uusiViite;
     }
     
     private void lisaaTagit(HttpServletRequest request, Viite viite) {
         String tag = request.getParameter("tags");
-        
-        if (tag.length() > 0) {
 
-            String[] tagit = tag.split(",");
-            List<Tag> tagiLista = new ArrayList<Tag>();
+        if (tag.length() == 0) return;
 
-            for (int i = 0; i < tagit.length; ++i) {
-                if (rekisteri.haeTag(tagit[i]) == null) { // tarkistetaan onko saman niminen tag jo olemassa
-                    Tag uusi = new Tag(tagit[i]);
-                    tagiLista.add(uusi);
-                    rekisteri.lisaaTagi(uusi);
-                } else {
-                    tagiLista.add(rekisteri.haeTag(tagit[i]));
-                }
+        String[] tagit = tag.split(",");
+        List<Tag> tagiLista = new ArrayList<Tag>();
+
+        for (int i = 0; i < tagit.length; ++i) {
+            tagit[i] = tagit[i].trim();
+            if (rekisteri.haeTag(tagit[i]) == null) { // tarkistetaan onko saman niminen tag jo olemassa
+                Tag uusi = new Tag(tagit[i]);
+                tagiLista.add(uusi);
+                rekisteri.lisaaTagi(uusi);
+            } else {
+                tagiLista.add(rekisteri.haeTag(tagit[i]));
             }
-            viite.setTagit(tagiLista);
-            
         }
+        viite.setTagit(tagiLista);
+
+
     }
     
-    private void lisaaOptionaalisetTiedot(Viite uusi, String publisher, String address, String pages,
-            String year, String volume, String number) {
-        
-        if (publisher != null && publisher.length() > 0)
-            uusi.setPublisher(publisher);
-        
-        if (address != null && address.length() > 0)
-            uusi.setAddress(address);
-        
-        if (year != null && year.length() > 0)
-            uusi.setYear(year);
-        
-        if (volume != null && volume.length() > 0)
-            uusi.setVolume(volume);
-        
-        if (number != null && number.length() > 0)
-            uusi.setNumber(number);
-        
-        if (pages != null && pages.length() > 0)
-            uusi.setPages(pages);
+    private String firstCharToUpper(String s) {
+        int firstLen = s.offsetByCodePoints(0, 1);
+        return s.substring(0, firstLen).toUpperCase().concat(s.substring(firstLen));
     }
 }

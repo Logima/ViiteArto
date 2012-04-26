@@ -1,9 +1,3 @@
-<%-- 
-    Document   : tiedot
-    Created on : 10.4.2012, 15:21:42
-    Author     : kennyhei
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -34,9 +28,12 @@
                     <c:forEach var="tiedot"
                                items="${mtiedot}">
                         <tr>
-                            <td>${tiedot.value}</td><td><input type="text" value="${viiteFields[tiedot.key]}" name="${tiedot.key}"></td>
+                            <td>${tiedot.value}</td><td><input type="text" value="${viiteFields[tiedot.key]}" name="field.${tiedot.key}"></td>
                         </tr>
                     </c:forEach>
+                        <tr>
+                            <td>Tags: </td><td><input type="text" value="${viiteFields['tags']}" name="tags"></td>
+                        </tr>
                 </table>
 
                 <input type="hidden" name="id" value="${id}">

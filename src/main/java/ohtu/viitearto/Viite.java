@@ -1,17 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ohtu.viitearto;
 
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
-
-/**
- *
- * @author Keni
- */
 
 @Entity
 @TableGenerator(name="tab", initialValue=0, allocationSize=1)
@@ -157,47 +148,31 @@ public class Viite implements Serializable {
         fields.put(kentta, arvo);
     }
     
+    public boolean containsField(String kentta) {
+        return fields.containsKey(kentta);
+    }
+    
     public ArrayList<String> getTiedot() {
         ArrayList<String> fieldsHtml = new ArrayList<String>();
         
         if (fieldsHtml.isEmpty()) {
-            
-            if (getTitle() != null && getTitle().length() > 0)
-                fieldsHtml.add("<b>Title:</b> "+getTitle());
-
-            if (getAuthor() != null && getAuthor().length() > 0)
-                fieldsHtml.add("<b>Author:</b> "+getAuthor());
-            
-            if (getPublisher() != null && getPublisher().length() > 0)
-                fieldsHtml.add("<b>Publisher:</b> "+getPublisher());
-            
-            if (getBooktitle() != null && getBooktitle().length() > 0)
-                fieldsHtml.add("<b>Booktitle:</b> "+getBooktitle());
-            
-            if (getJournal() != null && getJournal().length() > 0)
-                fieldsHtml.add("<b>Journal:</b> "+getJournal());
-            
-            if (getAddress() != null && getAddress().length() > 0)
-                fieldsHtml.add("<b>Address:</b> "+getAddress());
-            
-            if (getYear() != null && getYear().length() > 0)
-                fieldsHtml.add("<b>Year:</b> "+getYear());
-            
-            if (getVolume() != null && getVolume().length() > 0)
-                fieldsHtml.add("<b>Volume:</b> "+getVolume());
-            
-            if (getNumber() != null && getNumber().length() > 0)
-                fieldsHtml.add("<b>Number:</b> "+getNumber());
-            
-            if (getPages() != null && getPages().length() > 0)
-                fieldsHtml.add("<b>Pages:</b> "+getPages());
+            for (Map.Entry<String, String> entry : fields.entrySet()) {
+                if (entry.getKey() == null || entry.getValue() == null ||
+                    entry.getKey().length() == 0 || entry.getValue().length() == 0) continue;
+                fieldsHtml.add("<b>" + firstCharToUpper(entry.getKey()) + ":</b> " + entry.getValue());
+                
+            }
             
             if (getTagit() != null && getTagit().size() > 0) {
-                String listString = muutaTagitStringiksi();
-                fieldsHtml.add("<b>Tags:</b> " + listString);
+                fieldsHtml.add("<b>Tags:</b> " + muutaTagitStringiksi());
             }
         }
         return fieldsHtml;
+    }
+    
+    private String firstCharToUpper(String s) {
+        int firstLen = s.offsetByCodePoints(0, 1);
+        return s.substring(0, firstLen).toUpperCase().concat(s.substring(firstLen));
     }
     
     public void setTagit(List<Tag> tagit) {
@@ -223,7 +198,6 @@ public class Viite implements Serializable {
         fields.put("year", "Year: ");
         fields.put("publisher", "Publisher: ");
         fields.put("address", "Address: ");
-        fields.put("tags", "Tags: ");
         
         return fields;
     }
@@ -239,7 +213,6 @@ public class Viite implements Serializable {
         fields.put("journal", "<font color=\"red\">*</font> Journal: ");
         fields.put("volume", "Volume: ");
         fields.put("number", "Number: ");
-        fields.put("tags", "Tags: ");
         
         return fields;
     }
@@ -253,7 +226,6 @@ public class Viite implements Serializable {
         fields.put("address", "Address: ");
         fields.put("booktitle", "<font color=\"red\">*</font> Booktitle: ");
         fields.put("pages", "Pages: ");
-        fields.put("tags", "Tags: ");
         
         return fields;
     }
@@ -299,14 +271,6 @@ public class Viite implements Serializable {
         hash = 41 * hash + (this.id != null ? this.id.hashCode() : 0);
         hash = 41 * hash + (this.tagit != null ? this.tagit.hashCode() : 0);
         return hash;
-    }
-    
-    @Override
-    public String toString() {
-        return "Title: "+getTitle()+"\n Author: "+getAuthor()+"\n Publisher: "+getPublisher()+
-                "\n Pages: "+getPages()+"\n Address: "+getAddress()+"\n Year: "+getYear()+
-                "\n Booktitle: "+getBooktitle()+"\n Journal: "+getJournal()+"\n Volume: "+
-                getVolume()+"\n Number: "+getNumber();
     }
 
     private String muutaTagitStringiksi() {

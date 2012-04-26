@@ -138,14 +138,6 @@ public class ViiteTest {
     }
     
     @Test
-    public void toStringToimii() {
-        assertEquals("Title: "+null+"\n Author: "+null+"\n Publisher: "+null+
-                "\n Pages: "+null+"\n Address: "+null+"\n Year: "+null+
-                "\n Booktitle: "+null+"\n Journal: "+null+"\n Volume: "+
-                null+"\n Number: "+null, viite.toString());
-    }
-    
-    @Test
     public void tagitTest() {
         ArrayList<Tag> tagit = new ArrayList<Tag>();
         tagit.add(new Tag("ihana"));
@@ -176,19 +168,22 @@ public class ViiteTest {
         
         viite.setTagit(tagit);
         
-        ArrayList<String> tiedot = viite.getTiedot();
+        String tiedot = "";
+        for (String s : viite.getTiedot()) {
+            tiedot += s;
+        }
         
-        assertEquals("<b>Title:</b> Mein Code", tiedot.get(0));
-        assertEquals("<b>Author:</b> OhtuTeam", tiedot.get(1));
-        assertEquals("<b>Publisher:</b> Otava", tiedot.get(2));
-        assertEquals("<b>Booktitle:</b> Opus", tiedot.get(3));
-        assertEquals("<b>Journal:</b> Linkki", tiedot.get(4));
-        assertEquals("<b>Address:</b> FIN", tiedot.get(5));
-        assertEquals("<b>Year:</b> 2012", tiedot.get(6));
-        assertEquals("<b>Volume:</b> 21", tiedot.get(7));
-        assertEquals("<b>Number:</b> 1", tiedot.get(8));
-        assertEquals("<b>Pages:</b> 100", tiedot.get(9));
-        assertEquals("<b>Tags:</b> ihana, koodaus", tiedot.get(10));
+        assertTrue(tiedot.contains("<b>Title:</b> Mein Code"));
+        assertTrue(tiedot.contains("<b>Author:</b> OhtuTeam"));
+        assertTrue(tiedot.contains("<b>Publisher:</b> Otava"));
+        assertTrue(tiedot.contains("<b>Booktitle:</b> Opus"));
+        assertTrue(tiedot.contains("<b>Journal:</b> Linkki"));
+        assertTrue(tiedot.contains("<b>Address:</b> FIN"));
+        assertTrue(tiedot.contains("<b>Year:</b> 2012"));
+        assertTrue(tiedot.contains("<b>Volume:</b> 21"));
+        assertTrue(tiedot.contains("<b>Number:</b> 1"));
+        assertTrue(tiedot.contains("<b>Pages:</b> 100"));
+        assertTrue(tiedot.contains("<b>Tags:</b> ihana, koodaus"));
         
     }
     

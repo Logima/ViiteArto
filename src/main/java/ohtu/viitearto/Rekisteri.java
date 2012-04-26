@@ -1,19 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ohtu.viitearto;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-/**
- *
- * @author Keni
- */
 public class Rekisteri {
 
     private static Rekisteri instance;
@@ -103,7 +98,7 @@ public class Rekisteri {
             }
         }
         
-        if (viiteTyyppi != null) {
+        if (viiteTyyppi != null && viiteTyyppi.length() > 0) {
             Iterator i = refResults.iterator();
 
             while (i.hasNext()) {
@@ -121,7 +116,7 @@ public class Rekisteri {
         
         Query q = null;
         
-        if (viiteTyyppi != null) {
+        if (viiteTyyppi != null && viiteTyyppi.length() > 0) {
             q = em.createQuery("SELECT v FROM Viite v WHERE v.type = :typeParam");
             q.setParameter("typeParam", viiteTyyppi);
         } else {

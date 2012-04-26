@@ -1,12 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ohtu.viitearto.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,12 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ohtu.viitearto.Rekisteri;
 import ohtu.viitearto.Tietoturva;
-import ohtu.viitearto.Viite;
 
-/**
- *
- * @author kennyhei
- */
 public class HaeViitteetServlet extends HttpServlet {
 
     private Rekisteri rekisteri = Rekisteri.getInstance();
@@ -47,18 +36,9 @@ public class HaeViitteetServlet extends HttpServlet {
             String[] sanat = hakusanat.split(",");
 
             if (kentta.equals("tag")) {
-                if (viiteTyyppi.length() > 0) {
-                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(viiteTyyppi, sanat));
-                } else {
-                    request.setAttribute("tulokset", rekisteri.haeViiteTageilla(null, sanat));
-                }
+                request.setAttribute("tulokset", rekisteri.haeViiteTageilla(viiteTyyppi, sanat));
             } else {
-
-                if (viiteTyyppi.length() > 0) {
-                    request.setAttribute("tulokset", rekisteri.haeViiteHakuSanoilla(viiteTyyppi, kentta, sanat));
-                } else {
-                    request.setAttribute("tulokset", rekisteri.haeViiteHakuSanoilla(null, kentta, sanat));
-                }
+                request.setAttribute("tulokset", rekisteri.haeViiteHakuSanoilla(viiteTyyppi, kentta, sanat));
             }
         }
         

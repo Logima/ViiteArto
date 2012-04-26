@@ -1,33 +1,26 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ohtu.viitearto.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ohtu.viitearto.Rekisteri;
-import ohtu.viitearto.Tag;
-import ohtu.viitearto.Tietoturva;
-import ohtu.viitearto.Viite;
-/**
- *
- * @author hekarhu
- */
+import ohtu.viitearto.*;
+
 public class MuokkaaViitettaServlet extends HttpServlet {
     private Rekisteri rekisteri = Rekisteri.getInstance();
-    private Tietoturva turva = new Tietoturva();
+    private Tietoturva secure = new Tietoturva();
+    private PakollisetKentat pakollisetKentat = new PakollisetKentat();
     private long id;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        setId(request, response);
         
         response.sendRedirect(request.getContextPath()+"/ViitteenTiedot?id="+id);
     }
@@ -36,135 +29,51 @@ public class MuokkaaViitettaServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        setId(request, response);
         
         String type = request.getParameter("type");
         
-        if (type.equals("Book"))
-            muokkaaBook(request, response);
-        else if (type.equals("Article"))
-            muokkaaArticle(request, response);
-        else
-            muokkaaInproceedings(request, response);
+        muokkaaViite(request, response);
         
         response.sendRedirect(request.getContextPath()+"/ViitteenTiedot?id="+id);
     }
 
-    private void muokkaaBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        id = Long.parseLong(request.getParameter("id"));
+    private void muokkaaViite(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         
-        String title = turva.estaCrossSiteScripting(request.getParameter("title"));
-        String author = turva.estaCrossSiteScripting(request.getParameter("author"));
-        String publisher = turva.estaCrossSiteScripting(request.getParameter("publisher"));
-        String yearString = turva.estaCrossSiteScripting(request.getParameter("year"));
-        String address = turva.estaCrossSiteScripting(request.getParameter("address"));
-             
-        if (!pakollistenTietojenTarkistus(request, response, title, author, null, null)) return;
+        Viite muokattavaViite = rekisteri.haeViite(id);
         
-        Viite muokattava = rekisteri.haeViite(id);
+        for (Map.Entry<String, String[]> entry : ((Map<String, String[]>)request.getParameterMap()).entrySet()) {
+            String field = entry.getKey();
+            String val = secure.estaCrossSiteScripting(entry.getValue()[0]);
+            if (field == null || !field.startsWith("field.") || val == null || val.length() == 0) continue;
+            muokattavaViite.setField(field.substring(6), val);
+        }
         
-        muutaTiedot(muokattava, title, author, publisher, address, null, yearString, null, null, null, null);
-        muokkaaTagit(request, muokattava);
+        for (String kentta : pakollisetKentat.getKentat(request.getParameter("type"))) {
+            if (!muokattavaViite.containsField(kentta)) {
+                secure.lisaaVirhe(kentta, firstCharToUpper(kentta) + " ei saa olla tyhjä!");
+            }
+        }
         
-        rekisteri.lisaaViite(muokattava);
-    }
-
-    private void muokkaaArticle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        id = Long.parseLong(request.getParameter("id"));
+        if (secure.onkoVirheita()) {
+            doGet(request, response);
+            return;
+        }
         
-        String title = turva.estaCrossSiteScripting(request.getParameter("title"));
-        String author = turva.estaCrossSiteScripting(request.getParameter("author"));
-        String publisher = turva.estaCrossSiteScripting(request.getParameter("publisher"));
-        String yearString = turva.estaCrossSiteScripting(request.getParameter("year"));
-        String address = turva.estaCrossSiteScripting(request.getParameter("address"));
-        String pages = turva.estaCrossSiteScripting(request.getParameter("pages"));
-        String journal = turva.estaCrossSiteScripting(request.getParameter("journal"));
-        String volumeString = turva.estaCrossSiteScripting(request.getParameter("volume"));
-        String numberString = turva.estaCrossSiteScripting(request.getParameter("number"));   
+        muokattavaViite.setType(request.getParameter("type"));
+        muokkaaTagit(request, muokattavaViite);
         
-        if (!pakollistenTietojenTarkistus(request, response, title, author, journal, null)) return;
-        
-        Viite muokattava = rekisteri.haeViite(id);
-        
-        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, volumeString, numberString, null, journal);
-        muokkaaTagit(request, muokattava);
-        rekisteri.lisaaViite(muokattava);
-    }
-
-    private void muokkaaInproceedings(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        id = Long.parseLong(request.getParameter("id"));
-        
-        String title = turva.estaCrossSiteScripting(request.getParameter("title"));
-        String author = turva.estaCrossSiteScripting(request.getParameter("author"));
-        String publisher = turva.estaCrossSiteScripting(request.getParameter("publisher"));
-        String yearString = turva.estaCrossSiteScripting(request.getParameter("year"));
-        String booktitle = turva.estaCrossSiteScripting(request.getParameter("booktitle"));
-        String address = turva.estaCrossSiteScripting(request.getParameter("address"));
-        String pages = turva.estaCrossSiteScripting(request.getParameter("pages"));
-        
-        if (!pakollistenTietojenTarkistus(request, response, title, author, null, booktitle)) return;
-        
-        Viite muokattava = rekisteri.haeViite(id);
-        
-        muutaTiedot(muokattava, title, author, publisher, address, pages, yearString, null, null, booktitle, null);
-        muokkaaTagit(request, muokattava);
-        rekisteri.lisaaViite(muokattava);
+        rekisteri.lisaaViite(muokattavaViite);
     }
     
-    private void muutaTiedot(Viite muokattava, String title, String author, String publisher, String address, String pages,
-            String year, String volume, String number, String booktitle, String journal) {
-        
-        muokattava.setTitle(title);
-        muokattava.setAuthor(author);  
-        muokattava.setPublisher(publisher);
-        muokattava.setAddress(address);
-        muokattava.setPages(pages);
-        muokattava.setBooktitle(booktitle);
-        muokattava.setJournal(journal);
-        
-        if (year != null && year.length() > 0) {
-            try {
-                int nro = Integer.parseInt(year);
-                muokattava.setYear(year);
-            } catch (Exception e) {
-            }
-        } else {
-            muokattava.setYear(year);
-        }
-        
-        if (volume != null && volume.length() > 0) {
-            try {
-                int nro = Integer.parseInt(volume);
-                muokattava.setVolume(volume);
-            } catch (Exception e) {
-            }
-        } else {
-            muokattava.setVolume(volume);
-        }
-        
-        if (number != null && number.length() > 0) {
-            try {
-                int nro = Integer.parseInt(number);
-                muokattava.setNumber(number);
-            } catch (Exception e) {
-            }
-        } else {
-            muokattava.setNumber(number);
-        }
-    }
-
-    private boolean pakollistenTietojenTarkistus(HttpServletRequest request, HttpServletResponse response, String title, String author, String journal, String booktitle) throws ServletException, IOException {
-        turva.tarkistaPakollisetTiedot(title, author, journal, booktitle);
-        
-        if (turva.onkoVirheita()) {
-            doGet(request, response);
-            return false;
-        }
-        
-        return true;
+    private String firstCharToUpper(String s) {
+        int firstLen = s.offsetByCodePoints(0, 1);
+        return s.substring(0, firstLen).toUpperCase().concat(s.substring(firstLen));
     }
     
     private void muokkaaTagit(HttpServletRequest request, Viite muokattava) {
-        String tag = turva.estaCrossSiteScripting(request.getParameter("tags"));
+        String tag = secure.estaCrossSiteScripting(request.getParameter("tags"));
         
         for (int i=0; i < muokattava.getTagit().size(); ++i) {
             List<Viite> taginViitteet = muokattava.getTagit().get(i).getViitteet();
@@ -175,23 +84,29 @@ public class MuokkaaViitettaServlet extends HttpServlet {
         
         muokattava.setTagit(null);
         
-        if (tag.length() > 0) {
+        if (tag.length() == 0) return;
 
-            String[] tagit = tag.split(",");
-            List<Tag> tagiLista = new ArrayList<Tag>();
+        String[] tagit = tag.split(",");
+        List<Tag> tagiLista = new ArrayList<Tag>();
 
-            for (int i = 0; i < tagit.length; ++i) {
-                if (rekisteri.haeTag(tagit[i]) == null) { 
-                    Tag uusi = new Tag(tagit[i]);
-                    tagiLista.add(uusi);
-                    rekisteri.lisaaTagi(uusi);
-                } else {
-                    tagiLista.add(rekisteri.haeTag(tagit[i]));
-                }
+        for (int i = 0; i < tagit.length; ++i) {
+            tagit[i] = tagit[i].trim();
+            if (rekisteri.haeTag(tagit[i]) == null) {
+                Tag uusi = new Tag(tagit[i]);
+                tagiLista.add(uusi);
+                rekisteri.lisaaTagi(uusi);
+            } else {
+                tagiLista.add(rekisteri.haeTag(tagit[i]));
             }
-            muokattava.setTagit(tagiLista);
-            
         }
+        muokattava.setTagit(tagiLista);
     }
 
+    private void setId(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            id = Long.parseLong(request.getParameter("id"));
+        } catch (Exception e) {
+            response.sendRedirect(request.getContextPath()+"/Viitteet");
+        }
+    }
 }
