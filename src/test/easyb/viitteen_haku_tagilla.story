@@ -336,8 +336,6 @@ scenario "viitteen tagia muutetaan ja  se ei löydy haettaessa vanhalla tagilla"
 
         element = driver.findElement(By.name("tallennus"));
         element.submit();
-
-        System.out.println(driver.getPageSource());
         
         element = driver.findElement(By.linkText("Etusivu"));
         element.click();
