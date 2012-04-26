@@ -37,6 +37,12 @@ public class Bibtex {
         return true;
     }
     
+    public static String outputString(Viite v) {
+        StringWriter sw = new StringWriter();
+        if(!output(v, sw)) return null;
+        return sw.toString();
+    }
+    
     private static boolean importFromReader(Reader reader) {
         BibTeXDatabase db = parse(reader);
         if (db == null) return false;

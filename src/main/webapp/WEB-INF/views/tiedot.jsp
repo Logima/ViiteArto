@@ -68,6 +68,10 @@
         </c:if>
             
         <br>
+        <c:if test="${not empty bibtex}">
+            <pre style="border: 1px solid; background-color: #eee; padding: 5px; display: inline-block;">${bibtex}</pre>
+            <br>
+        </c:if>
         <a href="/BibtexTulostin?id=${id}">BibTeX</a><br>
 
         <a href="/Viitteet">Etusivu</a>

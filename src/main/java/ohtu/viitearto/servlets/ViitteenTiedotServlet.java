@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import ohtu.viitearto.Bibtex;
 import ohtu.viitearto.Rekisteri;
 import ohtu.viitearto.Tietoturva;
 import ohtu.viitearto.Viite;
@@ -92,6 +93,7 @@ public class ViitteenTiedotServlet extends HttpServlet {
         request.setAttribute("tiedot", viite.getTiedot());
         request.setAttribute("id", viite.getId());
         request.setAttribute("type", viite.getType());
+        request.setAttribute("bibtex", Bibtex.outputString(viite));
     }
 
     private void asetaMuokkaustiedot(HttpServletRequest request) {
