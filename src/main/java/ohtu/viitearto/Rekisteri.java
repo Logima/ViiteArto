@@ -136,7 +136,7 @@ public class Rekisteri {
     
     private List<Viite> haeKaikkienKenttienPerusteella(Query q, String... sanat) {    
         List<Viite> results = q.getResultList();    
-        ArrayList<Viite> finalResults = new ArrayList<Viite>(); // talletetaan lopulliset hakutulokset
+        HashSet<Viite> finalResults = new HashSet<Viite>(); // talletetaan lopulliset hakutulokset
                
         for (Viite v : results) {    
             for (String field : v.getFields().values()) {
@@ -149,12 +149,12 @@ public class Rekisteri {
                 }
             }
         }
-        return finalResults;
+        return new ArrayList<Viite>(finalResults);
     }
 
     private List<Viite> haeYhdenKentanPerusteella(String[] sanat, Query q, String kentta) {
         List<Viite> results = q.getResultList();
-        ArrayList<Viite> finalResults = new ArrayList<Viite>(); // talletetaan lopulliset hakutulokset
+        HashSet<Viite> finalResults = new HashSet<Viite>(); // talletetaan lopulliset hakutulokset
 
         for (Viite v : results) {
             for (String hakusana : sanat) {
@@ -163,6 +163,6 @@ public class Rekisteri {
             }
             
         }
-        return finalResults;
+        return new ArrayList<Viite>(finalResults);
     }
 }

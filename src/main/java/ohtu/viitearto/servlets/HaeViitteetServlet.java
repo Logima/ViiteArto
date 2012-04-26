@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import ohtu.viitearto.Rekisteri;
 import ohtu.viitearto.Tietoturva;
 import ohtu.viitearto.Viite;
+import org.apache.commons.lang.WordUtils;
 
 /**
  *
