@@ -31,3 +31,26 @@ scenario "asiakas lisää viitteen URL-importtia käyttäen", {
        driver.getPageSource().contains("Social networks generate interest in computer science").shouldBe true
     }
 }
+
+scenario "asiakas lisää viitteen väärää URL:ia käyttäen", {
+
+    WebDriver driver = new HtmlUnitDriver();
+    driver.get("http://localhost:7190/");
+
+    given 'URL-osoite annettu', {
+
+        WebElement element = driver.findElement(By.name("url"));
+        element.sendKeys("http://www.keijonkaljakauppa.fi");
+        
+    }
+
+    when 'URL-osoite importataan', {        
+        WebElement element = driver.findElement(By.name("import"));
+        element.submit();
+    }
+
+    then 'virheilmoitus näkyy sivulla', {
+       System.out.println(driver.getPageSource());
+       driver.getPageSource().contains("URL import epäonnistui").shouldBe true
+    }
+}
