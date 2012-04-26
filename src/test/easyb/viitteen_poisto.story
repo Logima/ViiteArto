@@ -17,7 +17,7 @@ scenario "asiakas voi poistaa viitteen listasta", {
 
     given 'viite on listalla', {
 
-        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        WebElement element = driver.findElement(By.name("field.viiteTyyppi"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
@@ -27,20 +27,20 @@ scenario "asiakas voi poistaa viitteen listasta", {
             }
         }
 
-        element = driver.findElement(By.name("valinta"));
+        element = driver.findElement(By.name("field.valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("pirkko");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("väinölä");
 
-        element = driver.findElement(By.name("lisays"));
+        element = driver.findElement(By.name("field.lisays"));
         element.submit();
     }
 
     when 'viite löytyy listalta', {
-        element = driver.findElement(By.linkText("pirkko"));
+        element = driver.findElement(By.linkText("field.pirkko"));
         String link = element.getAttribute("href");
         id = link.substring(link.indexOf('='));
         element = driver.findElement(By.xpath("//a[@href='/PoistaViite?id" + id + "']"));
@@ -60,7 +60,7 @@ scenario "asiakas voi poistaa viitteen sen omalta sivulta", {
 
     given 'olemassaolevan viitteen linkkiä klikataan', {
 
-        WebElement element = driver.findElement(By.name("viiteTyyppi"));
+        WebElement element = driver.findElement(By.name("field.viiteTyyppi"));
         List<WebElement> options = element.findElements(By.tagName("option"));
 
         for(WebElement option : options){
@@ -70,18 +70,18 @@ scenario "asiakas voi poistaa viitteen sen omalta sivulta", {
             }
         }
 
-        element = driver.findElement(By.name("valinta"));
+        element = driver.findElement(By.name("field.valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("pirkko");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("väinölä");
 
-        element = driver.findElement(By.name("lisays"));
+        element = driver.findElement(By.name("field.lisays"));
         element.submit();
 
-        element = driver.findElement(By.linkText("pirkko"));
+        element = driver.findElement(By.linkText("field.pirkko"));
         String link = element.getAttribute("href");
         id = link.substring(link.indexOf('='));
         element.click();
@@ -89,7 +89,7 @@ scenario "asiakas voi poistaa viitteen sen omalta sivulta", {
     }
 
     when 'viite poistetaan sen omalla sivulla', {
-        element = driver.findElement(By.name("poisto"));
+        element = driver.findElement(By.name("field.poisto"));
         element.submit();
     }
 
