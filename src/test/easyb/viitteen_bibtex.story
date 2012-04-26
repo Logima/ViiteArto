@@ -28,9 +28,9 @@ scenario "asiakas lisää viitteen ja tallentaa oikean viitteen bibtex-tiedot", 
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("Helsinginkadun appro");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("Bileinsinöörit");
 
         element = driver.findElement(By.name("lisays"));
@@ -72,9 +72,9 @@ scenario "asiakas lisää useita viitteitä ja tallentaa yhden viitteen bibtex-t
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("Helsinginkadun appro");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("Bileinsinöörit");
 
         element = driver.findElement(By.name("lisays"));
@@ -93,11 +93,11 @@ scenario "asiakas lisää useita viitteitä ja tallentaa yhden viitteen bibtex-t
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("Krapula");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("Johtaja Eronen");
-        element = driver.findElement(By.name("journal"));
+        element = driver.findElement(By.name("field.journal"));
         element.sendKeys("Mikälie");
 
         element = driver.findElement(By.name("lisays"));
@@ -117,9 +117,9 @@ scenario "asiakas lisää useita viitteitä ja tallentaa yhden viitteen bibtex-t
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("snafu");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("alkoholin orja");
 
         element = driver.findElement(By.name("lisays"));
@@ -165,9 +165,9 @@ scenario "asiakas lisää useita viitteitä ja tallentaa kaikkien bibtex-tiedot"
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("Helsinginkadun appro");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("Bileinsinöörit");
 
         element = driver.findElement(By.name("lisays"));
@@ -186,11 +186,11 @@ scenario "asiakas lisää useita viitteitä ja tallentaa kaikkien bibtex-tiedot"
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("Krapula");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("Johtaja Eronen");
-        element = driver.findElement(By.name("journal"));
+        element = driver.findElement(By.name("field.journal"));
         element.sendKeys("Mikälie");
 
         element = driver.findElement(By.name("lisays"));
@@ -210,9 +210,9 @@ scenario "asiakas lisää useita viitteitä ja tallentaa kaikkien bibtex-tiedot"
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("snafu");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("alkoholin orja");
 
         element = driver.findElement(By.name("lisays"));

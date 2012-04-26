@@ -29,9 +29,9 @@ scenario "asiakas valitsee listasta viitteen, joka avautuu omalle sivulleen", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("Avaudun");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("OmalleSivulleTesti");
 
         element = driver.findElement(By.name("lisays"));
@@ -71,9 +71,9 @@ scenario "asiakas palaa viitteen sivulta takaisin etusivulle", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("PalaanTakaisin");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("EtusivulleTest");
 
         element = driver.findElement(By.name("lisays"));

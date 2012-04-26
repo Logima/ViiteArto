@@ -28,9 +28,11 @@ scenario "asiakas hakee olemassa olevan viitteen oikeilla syötteillä", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+
+        System.out.println(driver.getPageSource());
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("apinakin osaa koodata");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("pelle peloton");
 
         element = driver.findElement(By.name("lisays"));
@@ -94,9 +96,9 @@ scenario "asiakas hakee olemassa olevan viitteen väärillä syötteillä", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("japa");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("snafu");
 
         element = driver.findElement(By.name("lisays"));
@@ -206,9 +208,9 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella syötteellä, joista
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("apinakin osaa koodata");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("pelle peloton");
 
         element = driver.findElement(By.name("lisays"));
@@ -227,11 +229,11 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella syötteellä, joista
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("Juhlaa!");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("koodiorjat");
-        element = driver.findElement(By.name("journal"));
+        element = driver.findElement(By.name("field.journal"));
         element.sendKeys("HY");
 
         element = driver.findElement(By.name("lisays"));
@@ -299,9 +301,9 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella syötteellä, joista
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("apinakin osaa koodata");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("pelle peloton");
 
         element = driver.findElement(By.name("lisays"));
@@ -320,9 +322,9 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella syötteellä, joista
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("testien maailma");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("myllyrinne");
 
         element = driver.findElement(By.name("lisays"));
@@ -389,9 +391,9 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella syötteellä, joista
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("apinakin osaa koodata");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("pelle peloton");
 
         element = driver.findElement(By.name("lisays"));
@@ -410,11 +412,11 @@ scenario "asiakas hakee olemassa olevia viitteitä kahdella syötteellä, joista
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("testien maailma");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("myllyrinne");
-        element = driver.findElement(By.name("journal"));
+        element = driver.findElement(By.name("field.journal"));
         element.sendKeys("linkki");
 
         element = driver.findElement(By.name("lisays"));
@@ -476,9 +478,9 @@ scenario "asiakas muokkaa viitettä ja hakee sen tietokannasta", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("PostiKulkee");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("pelle peloton");
 
         element = driver.findElement(By.name("lisays"));
@@ -492,10 +494,10 @@ scenario "asiakas muokkaa viitettä ja hakee sen tietokannasta", {
 
         element = driver.findElement(By.name("muokkaus"));
         element.submit();
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.clear();
         element.sendKeys("KustiPolkee");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.clear();
         element.sendKeys("Snafu");
 
@@ -556,11 +558,11 @@ scenario "asiakas hakee viitteitä kahdella syötteellä, eikä tuloslistassa ol
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("Extreme Apprenticeship Method in Teaching Programming for Beginners");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("Vihavainen, Arto and Paksula, Matti and Luukkainen, Matti");
-        element = driver.findElement(By.name("booktitle"));
+        element = driver.findElement(By.name("field.booktitle"));
         element.sendKeys("SIGCSE '11: Proceedings of the 42nd SIGCSE technical symposium on Computer science education");
 
         element = driver.findElement(By.name("lisays"));
@@ -579,13 +581,13 @@ scenario "asiakas hakee viitteitä kahdella syötteellä, eikä tuloslistassa ol
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("Extreme Programming Explained: Embrace Change (2nd Edition)");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("Beck, Kent and Andres, Cynthia");
-        element = driver.findElement(By.name("publisher"));
+        element = driver.findElement(By.name("field.publisher"));
         element.sendKeys("Addison-Wesley");
-        element = driver.findElement(By.name("booktitle"));
+        element = driver.findElement(By.name("field.booktitle"));
         element.sendKeys("-");
 
         element = driver.findElement(By.name("lisays"));

@@ -27,7 +27,6 @@ scenario "asiakas lisää viitteen URL-importtia käyttäen", {
     }
 
     then 'viite näkyy sivulla', {
-       System.out.println(driver.getPageSource());
        driver.getPageSource().contains("Social networks generate interest in computer science").shouldBe true
     }
 }
@@ -50,7 +49,6 @@ scenario "asiakas lisää viitteen väärää URL:ia käyttäen", {
     }
 
     then 'virheilmoitus näkyy sivulla', {
-       System.out.println(driver.getPageSource());
        driver.getPageSource().contains("URL import epäonnistui").shouldBe true
     }
 }
