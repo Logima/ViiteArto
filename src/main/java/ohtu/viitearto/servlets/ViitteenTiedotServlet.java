@@ -60,23 +60,11 @@ public class ViitteenTiedotServlet extends HttpServlet {
 
     private void maaritaViitteenTyyppi(Viite muokattava) {
         if (muokattava.getType().equals("Book"))
-            muokkaaBook();
+            muokkausTiedot = Viite.getBookKentat();
         else if (muokattava.getType().equals("Inproceedings"))
-            muokkaaInproceedings();
+            muokkausTiedot = Viite.getInproceedingsKentat();
         else
-            muokkaaArticle();
-    }
-
-    private void muokkaaArticle() {
-        muokkausTiedot = Viite.getArticleKentat();
-    }
-
-    private void muokkaaInproceedings() {
-        muokkausTiedot = Viite.getInproceedingsKentat();
-    }
-
-    private void muokkaaBook() {
-        muokkausTiedot = Viite.getBookKentat();
+            muokkausTiedot = Viite.getArticleKentat();
     }
 
     private void asetaTiedot(HttpServletRequest request) {

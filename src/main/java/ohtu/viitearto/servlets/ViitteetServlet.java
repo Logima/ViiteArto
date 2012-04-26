@@ -1,8 +1,6 @@
 package ohtu.viitearto.servlets;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 import javax.servlet.RequestDispatcher;
@@ -54,35 +52,22 @@ public class ViitteetServlet extends HttpServlet {
         
         response.sendRedirect(request.getRequestURI()); // POST-pyynnöt ohjataan doGetille
     }
-    
-    private void articleLomake() {
-        lomakeTiedot = Viite.getArticleKentat();
-    }
-
-    private void inproceedingsLomake() {
-        lomakeTiedot = Viite.getInproceedingsKentat();
-    }
-
-    private void bookLomake() {
-        lomakeTiedot = Viite.getBookKentat();
-    }
 
     private void luoLomake(HttpServletRequest request) {
         viiteTyyppi = null;
         lomakeTiedot.clear();
 
         if (lomakeTyyppi.equals("book")) {
-            bookLomake();
+            lomakeTiedot = Viite.getBookKentat();
             viiteTyyppi = "Book";
         } else if (lomakeTyyppi.equals("inproceedings")) {
-            inproceedingsLomake();
+            lomakeTiedot = Viite.getInproceedingsKentat();
             viiteTyyppi = "Inproceedings";
         } else if (lomakeTyyppi.equals("article")) {
-            articleLomake();
+            lomakeTiedot = Viite.getArticleKentat();
             viiteTyyppi = "Article";
         }
-
-//        lomakeTiedot.put("tag", "Tags: ");
+        
         request.setAttribute("tiedot", lomakeTiedot);
         lomakeTyyppi = null;
     }
