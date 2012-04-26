@@ -28,9 +28,9 @@ scenario "asiakas lisää viitteen (kirja) ja sen jälkeen muokkaa sitä", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("Helsinginkadun appro");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("Bileinsinöörit");
 
         element = driver.findElement(By.name("lisays"));
@@ -45,10 +45,10 @@ scenario "asiakas lisää viitteen (kirja) ja sen jälkeen muokkaa sitä", {
         element = driver.findElement(By.name("muokkaus"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.clear();
         element.sendKeys("Elämäni kankkunen");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.clear();
         element.sendKeys("Snafu");
 
@@ -82,11 +82,11 @@ scenario "asiakas lisää viitteen (artikkeli) pakollisilla tiedoilla ja sen jä
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("Koodia");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("your next President, mr. Eronen");
-        element = driver.findElement(By.name("journal"));
+        element = driver.findElement(By.name("field.journal"));
         element.sendKeys("your next President, mr. Eronen");
 
         element = driver.findElement(By.name("lisays"));
@@ -101,9 +101,9 @@ scenario "asiakas lisää viitteen (artikkeli) pakollisilla tiedoilla ja sen jä
         element = driver.findElement(By.name("muokkaus"));
         element.submit();
 
-        element = driver.findElement(By.name("address"));
+        element = driver.findElement(By.name("field.address"));
         element.sendKeys("valkoinen talo");
-        element = driver.findElement(By.name("year"));
+        element = driver.findElement(By.name("field.year"));
         element.sendKeys("2012");
 
         element = driver.findElement(By.name("tallennus"));
@@ -135,11 +135,11 @@ scenario "muokatessa asiakas ei pysty jättämään pakollisia tietoja tyhjiksi"
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("Uusielämä");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("KARHU III");
-        element = driver.findElement(By.name("journal"));
+        element = driver.findElement(By.name("field.journal"));
         element.sendKeys("tsapadapaduu");
         element = driver.findElement(By.name("lisays"));
         element.submit();
@@ -153,7 +153,7 @@ scenario "muokatessa asiakas ei pysty jättämään pakollisia tietoja tyhjiksi"
         element = driver.findElement(By.name("muokkaus"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.clear();
 
         element = driver.findElement(By.name("tallennus"));
@@ -184,12 +184,13 @@ scenario "muokatessa pakollisen tiedon jättäminen tyhjäksi estää muiden tie
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("LifeIsShort");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("TakeItEasy");
-        element = driver.findElement(By.name("year"));
+        element = driver.findElement(By.name("field.year"));
         element.sendKeys("1989");
+
         element = driver.findElement(By.name("lisays"));
         element.submit();
         
@@ -202,10 +203,10 @@ scenario "muokatessa pakollisen tiedon jättäminen tyhjäksi estää muiden tie
         element = driver.findElement(By.name("muokkaus"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.clear();
 
-        element = driver.findElement(By.name("year"));
+        element = driver.findElement(By.name("field.year"));
         element.sendKeys("1");
         element = driver.findElement(By.name("tallennus"));
         element.submit();
@@ -236,13 +237,13 @@ scenario "viitettä muokatessa numerotietoihin ei voi syöttää kirjaimia", {
         element = driver.findElement(By.name("valinta"));
         element.submit();
 
-        element = driver.findElement(By.name("title"));
+        element = driver.findElement(By.name("field.title"));
         element.sendKeys("Elastinen");
-        element = driver.findElement(By.name("author"));
+        element = driver.findElement(By.name("field.author"));
         element.sendKeys("elämää");
-        element = driver.findElement(By.name("year"));
+        element = driver.findElement(By.name("field.year"));
         element.sendKeys("1989");
-        element = driver.findElement(By.name("journal"));
+        element = driver.findElement(By.name("field.journal"));
         element.sendKeys("Elastisen erälehti");
 
         element = driver.findElement(By.name("lisays"));
@@ -257,7 +258,7 @@ scenario "viitettä muokatessa numerotietoihin ei voi syöttää kirjaimia", {
         element = driver.findElement(By.name("muokkaus"));
         element.submit();
 
-        element = driver.findElement(By.name("year"));
+        element = driver.findElement(By.name("field.year"));
         element.sendKeys("ASD");
 
         element = driver.findElement(By.name("tallennus"));
