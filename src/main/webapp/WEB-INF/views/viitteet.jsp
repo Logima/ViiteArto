@@ -19,7 +19,7 @@
                 <option value="inproceedings">Inproceedings</option>
                 <option value="article">Article</option>
             </select>
-            <input type="submit" name="valinta" value="Valitse"/>
+            <input type="submit" name="valinta" value="Valitse">
         </form><br>
         
         <form action="/UrlImport" method="post">
@@ -32,14 +32,14 @@
         <!-- Listaa virheet, jos niitä tuli viitettä lisättäessä -->
         <c:forEach var="error"
                    items="${errors}">
-            <font color="red">${error}</font><br/>
+            <font color="red">${error}</font><br>
         </c:forEach>
 
         <!-- Viitteen lisäämistä tarvittava lomake, joka looppaa kentät, joita voi täyttää
              lomakkeessa -->
         <c:if test="${not empty tiedot}">
             
-            <b>${type}</b><br/><br/>
+            <b>${type}</b><br><br>
             <b>Tähdellä merkityt tiedot ovat pakollisia.</b>
             
             <form action="/LisaaViite" method="post">
@@ -54,7 +54,7 @@
                 </table>
 
                 <input type="hidden" name="type" value="${type}"> <!-- Viitteen tyyppi -->
-                <input type="submit" name="lisays" value="Lisää viite"/>
+                <input type="submit" name="lisays" value="Lisää viite">
             </form>
         </c:if>
 
@@ -89,7 +89,7 @@
                     <option value="Article">Article</option>
                 </select><br>
                 
-                <input type="submit" name="haku" value="Hae"/>
+                <input type="submit" name="haku" value="Hae">
             </form>
                 
         <br>
@@ -97,7 +97,7 @@
         <!-- Viitehaun tulokset -->
 
         <c:if test="${not empty hakuTulokset}">
-            Hakutulokset: <br/>
+            Hakutulokset: <br>
             <table border="1" width="500" cellpadding="3" cellspacing="1" style="background-color: white">
                 <tr>
                     <th>Id</th>

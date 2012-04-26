@@ -15,7 +15,7 @@
     <body>
         <h1>Viitteen tiedot</h1>
 
-        <br/>
+        <br>
         <b>${type}</b>
         
         <!-- Listaa viitteen kaikki olemassaolevat tiedot -->
@@ -34,26 +34,26 @@
                     <c:forEach var="tiedot"
                                items="${mtiedot}">
                         <tr>
-                            <td>${tiedot.value}</td><td><input type="text" value="${viiteFields[tiedot.key]}" name="${tiedot.key}"/></td>
+                            <td>${tiedot.value}</td><td><input type="text" value="${viiteFields[tiedot.key]}" name="${tiedot.key}"></td>
                         </tr>
                     </c:forEach>
                 </table>
 
-                <input type="hidden" name="id" value="${id}"/>
-                <input type="hidden" name="type" value="${type}"/>
-                <input type="submit" name="tallennus" value="Tallenna"/>
+                <input type="hidden" name="id" value="${id}">
+                <input type="hidden" name="type" value="${type}">
+                <input type="submit" name="tallennus" value="Tallenna">
             </form>
-            <br/>
+            <br>
         </c:if>
    
             <c:if test="${empty mtiedot}">
                 <form action="/ViitteenTiedot" method="POST">
-                    <input type="hidden" name="id" value="${id}"/>        
+                    <input type="hidden" name="id" value="${id}">        
                     <input type="submit" name="muokkaus" value="Muokkaa">
                 </form>
 
                 <form action="/PoistaViite" method="GET">          
-                    <input type="hidden" name="id" value="${id}"/>        
+                    <input type="hidden" name="id" value="${id}">        
                     <input type="submit" name="poisto" value="Poista viite">
                 </form>
             </c:if>
@@ -63,11 +63,11 @@
             <br/>
             <c:forEach var="error"
                        items="${errors}">
-                <font color="red">${error}</font><br/>
+                <font color="red">${error}</font><br>
             </c:forEach>
         </c:if>
             
-        <br/>
+        <br>
         <a href="/BibtexTulostin?id=${id}">BibTeX</a><br>
 
         <a href="/Viitteet">Etusivu</a>
